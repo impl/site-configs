@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 { self, inputs, lib, machinesDir, profilesDir, ... }:
 let
   machines = self.mods.importDir machinesDir;

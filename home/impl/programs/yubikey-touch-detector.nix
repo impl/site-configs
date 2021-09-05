@@ -1,3 +1,11 @@
+# SPDX-FileCopyrightText: 2019-2021 Jörg Thalheim
+# SPDX-FileCopyrightText: 2021 Noah Fontes
+#
+# SPDX-License-Identifier: MIT
+#
+# Portions of this file are derived from
+# https://github.com/Mic92/nur-packages/blob/2d058f84775f1eb115e5005af7f8d6847d5149e2/pkgs/yubikey-touch-detector/default.nix
+
 { lib, machineConfig, pkgs, ... }: with lib; mkIf (machineConfig.profiles.physical.enable && machineConfig.profiles.userInteractive.enable) (let
   pkg = with pkgs; buildGoModule rec {
     pname = "yubikey-touch-detector";

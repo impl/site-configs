@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 {
   configuration = { config, inputs, machineConfig, pkgs, ... }: {
     nixpkgs.config.allowUnfree = true;

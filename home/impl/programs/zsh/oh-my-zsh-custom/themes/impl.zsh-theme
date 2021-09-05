@@ -1,6 +1,10 @@
 #! /usr/bin/env zsh -f
 # -*- mode: sh -*-
 
+# SPDX-FileCopyrightText: 2021 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 # The Mercurial prompt rendering function can be absurdly slow.
 # This is because `hg status` takes forever.
 eval "_$( whence -f hg_dirty )"
