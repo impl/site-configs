@@ -1,0 +1,151 @@
+"-------------------------------------------------------------------------------
+" vim initial setup
+"-------------------------------------------------------------------------------
+
+filetype off
+
+" whitespace stuff
+set nowrap
+set softtabstop=4
+
+filetype plugin indent on     " required!
+
+" replace default leader backslash with comma
+let mapleader = ","
+
+"-------------------------------------------------------------------------------
+" color scheme & syntax highlighting
+"-------------------------------------------------------------------------------
+
+" CSApprox can shut up
+let g:CSApprox_verbose_level = 0
+
+colorscheme base16-default-dark
+syntax on
+
+"-------------------------------------------------------------------------------
+" customizations
+"-------------------------------------------------------------------------------
+
+" disable arrow keys in normal mode
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+
+" navigate splits with the arrow keys
+nnoremap <right> <c-w>l
+nnoremap <left> <c-w>h
+nnoremap <up> <c-w>k
+nnoremap <down> <c-w>j
+
+" highlight trailing spaces
+set list listchars=tab:\ \ ,trail:·
+
+" split-it mapping
+nmap <leader>-  :new<cr>
+nmap <leader>\|  :vnew<cr>
+nmap <leader>\  :rightbelow vnew<cr>
+nmap <leader>_  :rightbelow new<cr>
+
+" fix tmux arrow key mappings
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xup>=\e[1;*a"
+    execute "set <xdown>=\e[1;*b"
+    execute "set <xright>=\e[1;*c"
+    execute "set <xleft>=\e[1;*d"
+endif
+
+" resize split w/ shift+arrow
+nmap <silent> <s-down> :resize -5<cr>
+nmap <silent> <s-up> :resize +5<cr>
+nmap <silent> <s-left> :vertical resize -5<cr>
+nmap <silent> <s-right> :vertical resize +5<cr>
+
+" allow backspace to delete end-of-line in insert mode
+set backspace=indent,eol,start
+
+"-------------------------------------------------------------------------------
+" plugin configs
+"-------------------------------------------------------------------------------
+
+" airline
+"""""""""
+set laststatus=2   " always show the statusline
+set encoding=utf-8 " necessary to show unicode glyphs
+let g:airline_theme = "base16"
+let g:airline#extensions#tabline#formatter = "unique_tail_improved"
+let g:airline#extensions#tabline#enabled = 1
+
+
+" ctrlp
+""""""""
+" open buffer list on
+nnoremap <c-b> :CtrlPBuffer<cr>
+" clear ctrlp cache then open ctrlp
+nnoremap <silent> <c-l> :clearctrlpcache<cr>\|:ctrlp<cr>
+" search .* files/folders
+let g:ctrlp_show_hidden = 1
+" custom file/folder ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|pyc)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+" add wildignores for python projects
+set wildignore+=*/.ve/*,*/.venv/*
+set wildignore+=*/*.egg-info/*,*/.tox/*
+
+
+" nerdtree
+"""""""""""
+map <leader>n :NERDTreeToggle<cr>
+let nerdtreeshowhidden=1
+let nerdtreeignore = ['\.pyc$']
+
+
+" zoomwin
+""""""""""
+"map <leader>\ <c-w>o
+map <leader><leader> <c-w>o
+
+
+" tabularize
+"""""""""""""
+nmap <leader>a+ :tabularize /=<cr>
+vmap <leader>a+ :tabularize /=<cr>
+nmap <leader>a= :tabularize /^[^=]*\zs=/<cr>
+vmap <leader>a= :tabularize /^[^=]*\zs=/<cr>
+nmap <leader>a; :tabularize /:<cr>
+vmap <leader>a; :tabularize /:<cr>
+nmap <leader>a: :tabularize /:\s*\zs/l0r1<cr>
+vmap <leader>a: :tabularize /:\s*\zs/l0r1<cr>
+nmap <leader>ap :tabularize /import<cr>
+vmap <leader>ap :tabularize /import<cr>
+
+
+" jsx
+""""""
+let g:jsx_ext_required = 0
+
+
+" syntastic
+""""""""""""
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = "✖"
+let g:syntastic_style_error_symbol = "❃"
+let g:syntastic_warning_symbol = "❗"
+let g:syntastic_style_warning_symbol = "❗"
+
+" vim-go
+"""""""""
+
+let g:go_metalinter_autosave = 1

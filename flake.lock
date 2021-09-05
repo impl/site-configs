@@ -1,0 +1,88 @@
+{
+  "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1630789937,
+        "narHash": "sha256-HEIrpDQ9Fevsx/4BQK2ZUW5AMq/GzhpfMaxyPlaSKyA=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "2952168ed59aa369a560563de2e00eab19f42d1b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nix-sops": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1630816270,
+        "narHash": "sha256-/IWeZCYXNJ0OHX4fPxAYMRLZuhRHN2GTkKa5V0uI8hc=",
+        "owner": "impl",
+        "repo": "nix-sops",
+        "rev": "ec97de3c943d478d168e9793445627bbff148571",
+        "type": "github"
+      },
+      "original": {
+        "owner": "impl",
+        "repo": "nix-sops",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1630140382,
+        "narHash": "sha256-ntXepAHFlAEtaYIU5EzckRUODeeMgpu1u2Yug+4LFNc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "08ef0f28e3a41424b92ba1d203de64257a9fca6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nur": {
+      "locked": {
+        "lastModified": 1630814844,
+        "narHash": "sha256-EyyedTUkYtconFcl6HPFI67qSS5Q5vUmNeS0rmsGCFE=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "863cd7787fc6608ead57a7b3beed1758276d07a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nix-sops": "nix-sops",
+        "nixpkgs": "nixpkgs",
+        "nur": "nur"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
