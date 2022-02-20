@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   # Disable deprecated option.
   networking.useDHCP = false;
@@ -21,6 +21,16 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  # Enable common cross-system build compatibility.
+  boot.binfmt.emulatedSystems = lib.remove pkgs.hostPlatform.system [
+    "aarch64-linux"
+    "mips64el-linux"
+    "powerpc64-linux"
+    "riscv64-linux"
+    "x86_64-linux"
+    "wasm64-wasi"
+  ];
 
   # Do not allow mutable users, not now, not ever.
   users.mutableUsers = false;

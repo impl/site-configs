@@ -15,9 +15,10 @@ in
 
     config = mkIf cfg.enable {
       profiles = {
-        printing.enable = true;
         gui.enable = true;
+        mdns.enable = true;
         physical.enable = true;
+        printing.enable = true;
         sound.enable = true;
       };
     };

@@ -11,6 +11,7 @@
     ./desktop.nix
     ./physical.nix
     ./gui.nix
+    ./mdns.nix
     ./printing.nix
     ./sound.nix
     ./user-interactive.nix
