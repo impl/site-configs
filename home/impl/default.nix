@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -18,9 +18,11 @@
       ./programs/xmonad
       ./programs/zsh
       ./programs/direnv.nix
+      ./programs/dropbox.nix
       ./programs/git.nix
       ./programs/gnupg.nix
       ./programs/jq.nix
+      ./programs/keepass.nix
       ./programs/kitty.nix
       ./programs/picom.nix
       ./programs/rofi.nix

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -8,14 +8,21 @@
       enable = true;
       package = let
         polybar = pkgs.polybar.overrideAttrs (old: {
-          version = "unstable-2021-07-11";
+          version = "unstable-2022-02-06";
           src = pkgs.fetchFromGitHub {
             owner = "polybar";
             repo = "polybar";
-            rev = "45f3462240cddfca15a52092633f77d2d4fa55278";
-            sha256 = "sha256-EAaRZrpmNRZ7p1JQ/sBZygiKQQVYd3hqm3Wlk/RKuO4=";
+            rev = "ab915fb724546e7abfcb35cbaf863ce2bca613ec";
+            sha256 = "sha256-HE6CbO5ImFwMxlhQTSPiayMM60fyW94av0Qc5FHjQWY=";
             fetchSubmodules = true;
           };
+          buildInputs = old.buildInputs ++ [ pkgs.libuv ];
+          prePatch = ''
+            substituteInPlace CMakeLists.txt --replace /etc "$out/etc"
+            substituteInPlace src/utils/file.cpp --replace /etc "$out/etc"
+            substituteInPlace contrib/bash/polybar --replace 'etc_path=/etc' "etc_path=$out/etc"
+            substituteInPlace contrib/zsh/_polybar --replace 'etc_path=/etc' "etc_path=$out/etc"
+          '';
           patches = [
             ./remove-ewmh-checks.patch
           ];
@@ -141,7 +148,7 @@
   (mkIf (machineConfig.networking.hostName == "beignet") {
     services.polybar.settings = {
       "bar/top" = {
-        monitor = "\${env:MONITOR:HDMI1}";
+        monitor = mkForce "\${env:MONITOR:HDMI1}";
       };
     };
   })

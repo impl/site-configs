@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -29,6 +29,7 @@
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       multi-account-containers
       ublock-origin
+      (import ./kee.nix { inherit lib pkgs; })
     ];
     profiles."impl" = {
       settings = {
@@ -52,6 +53,7 @@
               "ublock0-button"
               "containers-panelmenu"
               "ublock0_raymondhill_net-browser-action"
+              "keefox_chris_tomlinson-browser-action"
               "screenshots_mozilla_org-browser-action"
               "_testpilot-containers-browser-action"
             ];

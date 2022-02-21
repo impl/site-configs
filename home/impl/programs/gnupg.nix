@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -8,6 +8,9 @@
     settings = {
       "no-autostart" = true;
       "trusted-key" = "0xF5B2BE1B9AAD98FE291655973665FFF79D387BAA";
+    };
+    scdaemonSettings = {
+      "disable-ccid" = true;
     };
   };
 
