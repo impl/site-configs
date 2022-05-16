@@ -4,9 +4,14 @@
 
 {
   configuration = { config, inputs, machineConfig, pkgs, ... }: {
-    nixpkgs.config.allowUnfree = true;
+    # https://github.com/nix-community/home-manager/issues/2942
+    # nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfreePredicate = (_: true);
     nixpkgs.overlays = [
       inputs.nur.overlay
+      (self: super: {
+        makeDesktopItem = args@{ extraConfig ? {}, ... }: super.makeDesktopItem (args // { extraConfig = { "Version" = "1.0"; } // extraConfig; });
+      })
     ];
 
     imports = [
@@ -17,6 +22,7 @@
       ./programs/vim
       ./programs/xmonad
       ./programs/zsh
+      ./programs/deezer.nix
       ./programs/direnv.nix
       ./programs/dropbox.nix
       ./programs/git.nix
@@ -24,6 +30,7 @@
       ./programs/jq.nix
       ./programs/keepass.nix
       ./programs/kitty.nix
+      ./programs/mate.nix
       ./programs/picom.nix
       ./programs/rofi.nix
       ./programs/vscode.nix

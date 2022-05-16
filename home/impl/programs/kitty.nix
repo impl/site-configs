@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -6,6 +6,7 @@
   programs.kitty = {
     enable = true;
     settings = {
+      enable_audio_bell = "no";
       window_padding_width = "5";
     };
   };
