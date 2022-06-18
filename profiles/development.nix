@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, ... }: with lib; let
+{ config, lib, pkgs, ... }: with lib; let
   cfg = config.profiles.development;
 in
 {
