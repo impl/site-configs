@@ -62,6 +62,8 @@ in lib.mkMerge [
 
     time.timeZone = "America/Los_Angeles";
 
+    networking.interfaces.wlp1s0.useDHCP = true;
+
     # Enable profiles for this configuration.
     profiles = {
       hardware.cpu.amd.enable = true;
