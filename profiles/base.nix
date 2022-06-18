@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, pkgs, ... }:
+{ lib, pkgs, ... }: with lib;
 {
-  # Disable deprecated option.
-  networking.useDHCP = false;
+  networking.useNetworkd = true;
+  networking.useDHCP = mkOverride 500 false;
 
   # Internationalization.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -21,16 +21,6 @@
       experimental-features = nix-command flakes
     '';
   };
-
-  # Enable common cross-system build compatibility.
-  boot.binfmt.emulatedSystems = lib.remove pkgs.hostPlatform.system [
-    "aarch64-linux"
-    "mips64el-linux"
-    "powerpc64-linux"
-    "riscv64-linux"
-    "x86_64-linux"
-    "wasm64-wasi"
-  ];
 
   # Do not allow mutable users, not now, not ever.
   users.mutableUsers = false;

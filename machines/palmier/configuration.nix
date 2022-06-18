@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -24,6 +24,8 @@ in lib.mkMerge [
       file = ./config.sops.yaml;
       key = ''["config"]["sops"]["ageKey"]'';
     };
+
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     boot.supportedFilesystems = [ "btrfs" ];
 
@@ -60,20 +62,17 @@ in lib.mkMerge [
 
     time.timeZone = "America/Los_Angeles";
 
-    networking.interfaces.eno1.useDHCP = true;
-    networking.interfaces.wlp2s0.useDHCP = true;
-
     # Enable profiles for this configuration.
     profiles = {
-      hardware.cpu.intel.enable = true;
+      hardware.cpu.amd.enable = true;
       hardware.disk.ssd.enable = true;
-      hardware.gpu.intel.enable = true;
+      hardware.gpu.amd.enable = true;
       locations.home.enable = true;
       desktop.enable = true;
       development.enable = true;
       wireless = {
         enable = true;
-        interfaces = [ "wlp2s0" ];
+        interfaces = [ "wlp1s0" ];
       };
     };
 
@@ -97,7 +96,7 @@ in lib.mkMerge [
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "21.05"; # Did you read the comment?
+    system.stateVersion = "22.05"; # Did you read the comment?
   }
   (mkUser {
     name = "root";

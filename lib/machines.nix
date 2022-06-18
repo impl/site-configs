@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,15 +7,20 @@ let
   machines = self.mods.importDir machinesDir;
 in
 {
+  mkNixosConfiguration = cfg: lib.nixosSystem (cfg // {
+    modules =
+      [
+        inputs.nix-sops.nixosModule
+        profilesDir
+      ]
+      ++ cfg.modules;
+  });
+
   mkNixosConfigurations = { extraModules ? [] }:
     let
-      mkNixosConfiguration = hostName: cfg: lib.nixosSystem (cfg // {
+      cfgWithHostName = hostName: cfg: (cfg // {
         modules =
-          [
-            inputs.nix-sops.nixosModule
-            profilesDir
-          ]
-          ++ cfg.modules
+          cfg.modules
           ++ extraModules
           ++ [
             {
@@ -26,5 +31,5 @@ in
           ];
       });
     in
-      builtins.mapAttrs mkNixosConfiguration machines;
+      builtins.mapAttrs (hostName: cfg: self.machines.mkNixosConfiguration (cfgWithHostName hostName cfg)) machines;
 }

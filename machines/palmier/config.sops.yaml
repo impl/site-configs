@@ -1,0 +1,47 @@
+config:
+    sops:
+        ageKey: ENC[AES256_GCM,data:D4aUEmSYBkAM0o4LPDlIEisvZPEjtF/ZxCgPIKhNiTSAhKXuf5vA9d3zlEOu8vAzJiEgF0zAbBcKM+85DLO8DvFFeQmGrQ982Un1VwUUrDoBlMQTs8NnYVHQBPs5BkP/2WP7d/8b87NdZavt4b/vhufr6yRU6TyHTPRjFIFXFvtx/T5IWHblfuSlvhziVOFb2nApIS3MuP8Su8+oFAENrad54GkyhWTlN4PJYqsvYg+y4Vo2Yfap2XtChrh8,iv:LrYOf1uXEjEX+hJWeMod12uHsw/gtks0E+6tdAhBBj0=,tag:NQqSqF8B3PugLygSe/OEAw==,type:str]
+    users:
+        users:
+            root:
+                hashedPassword: ENC[AES256_GCM,data:uWg8kJVlBykMwYmgq5bCUgpRgNtqM3t74Q4x6QRqXPX6XS2jMBgNZ2xvcFr/5PvzNuYMKsClyGuIs0D6c6UByUHhsgny4CDHiMagt+knUooPOtkniTZFHAZ8tpTzWAS7v/ogZy2gXT9mog==,iv:RhX/7n9xXEoOKsPd9KsNVgqUrRHxdB29Yyr8osdBJzQ=,tag:njRiav3iqIyVCCbXAMXz6A==,type:str]
+            impl:
+                hashedPassword: ENC[AES256_GCM,data:whW6F3v8dyk4u7aezC7/XdWkG7V0Va+MKXPJyVhJc8hzznEm4QM2+oyDJvGITp5OojKKLT0wWAldd2ifM+3IL5X6Jjv8WEakEfqabmrbU3qwxAWvaOazQ6RYShkqCXJyEg6A/qWJ6g==,iv:Zuun1S4Bid3eEts2TJfyMjwLj9nNxa71d0SDoGOpgs8=,tag:Tecn2G4fM7RrIu/WFyA96g==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArL1d2VEwrL0pNTjhqN044
+            K2dhNGpQWnR4T2M1R1k4RDExOUpxSHB2UzNZCjBlK0Nad3hMTnQ4SFpsaGNoRDB5
+            MlpMTVljbWo1NXFvaldQdHNLK2FJSzAKLS0tIFY4SHhhVllXb21GcFhoQU1qTUxV
+            d0pBMDNXVVU3THcxRi81bmJLSlFKNk0KFo3YlBz8Zee1761UcBcHIapVJb2VViHT
+            lRC5/cs0b9PIDavpmRIpMVoRaq9M6JGIzTrADSN/VGg6Ch2390XDNw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-06-12T06:12:14Z"
+    mac: ENC[AES256_GCM,data:qmQL4FS05f5m5rtuxaZa4n2X7uVQkYBIfv/jb5mYESNF27PPp2X7vrhaQhblmBgrK4pM7Bz8kr46L3PhbciEk4EmBcKiIW+z7xHGc1Qh6V05mX9BZ66pWv/IPQEtQ19ggKBBQlMiTyFlSYHpj8oSQVV5peUHXlGfYgHmiFRThpc=,iv:FKbYgOM/U3CTqS4QDQKiZyc+ZGzxzWSYtWeUcGD+n0E=,tag:eN+/EhkO5nCkW89zTk4MRA==,type:str]
+    pgp:
+        - created_at: "2022-06-12T06:10:35Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            wcDMA9AVtx3VeNCNAQv/faLuqrOIgl6hgKTmYDZjIWAPriFPwmidUz5/a92euTJf
+            RuCxnawvj/XGm5aayGZU4fWdKhlk+Jy3MEvCQsJwol3Dlru/hL/bwf2fzfzcdfiB
+            ivxbH09TMTCCweg5xuk2Q/QJ1AXWC8BxHvzrj9FTLDTXPjeM/ZvVfRYbh1X4naJm
+            FTUfZmpIC5X8HzwfRkH939PTHlwoFQY6Lz7bPH+9xaWedVJKi8JpxZ137qbtUqjh
+            fjoFBjqeXlq7M7GpLp/Aea1UxKZPmxEKbzkjx5XrccaczHvQFTZuV7lHNHMfWfai
+            eWHKlN8H3nbihpXhrmA8OLmorC+E5QMZBtjya3rNehEF+CcGuPyil06svB25/u8Y
+            nmweudH25Ht03WRGWhuDR6EBP1r3HDbTyg4xN0SeUDlvv4WVzrO75YqJ1kfSlmL5
+            fvMoSib1aR3nMztv1FvEWyDzJL/FW82ZpfGsuwEKtGrT0dbNWvN+7L+GklxYk6NQ
+            D3R7dhJ2cW3YDYneYstJ0lEBww5MiXYO7Fmd7TUFen8bmY3kaff0HG0MYGrkbF/2
+            eBXdP3JuHBwqlNXc2CBpivDHyz6ljrJNEH16uMnykFndXIjPqJkXIsmuRhNC/mzX
+            YIs=
+            =rc5D
+            -----END PGP MESSAGE-----
+          fp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+    unencrypted_suffix: _unencrypted
+    version: 3.7.3

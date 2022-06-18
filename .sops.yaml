@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2022 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
+creation_rules:
+- path_regex: ^machines/beignet/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+  age: age1mzk5dgdc03aatjv707dv4m6ekmxkwr8s2hz4f93j2nnt5kf6m4qqmu5qp5
+- path_regex: ^machines/palmier/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+  age: age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu
+- path_regex: ^profiles/locations/home/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+  age: >-
+    age1mzk5dgdc03aatjv707dv4m6ekmxkwr8s2hz4f93j2nnt5kf6m4qqmu5qp5,
+    age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu
+- path_regex: ^home/impl/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA

@@ -9,6 +9,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-sops = {
+      url = "github:impl/nix-sops";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
@@ -16,15 +22,9 @@
     nur = {
       url = "github:nix-community/NUR";
     };
-
-    nix-sops = {
-      url = "github:impl/nix-sops";
-      inputs.home-manager.follows = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ self, home-manager, nixpkgs, ... }:
     let
       lib = nixpkgs.lib.extend (final: prev: {
         my = import ./lib {
@@ -47,6 +47,17 @@
       inherit nixosConfigurations homeConfigurations;
 
       lib = lib.my;
+
+      # Create installer packages for each system type we define.
+      packages = with lib; mapAttrs' (_: nixosConfiguration: let
+        system = nixosConfiguration.config.nixpkgs.system;
+        installerConfiguration = lib.my.mkNixosConfiguration {
+          inherit system;
+          modules = [ ./installer ];
+        };
+      in nameValuePair system {
+        installer = installerConfiguration.config.system.build.isoImage;
+      }) nixosConfigurations;
 
       # These templates should be used when building a new machine to reference
       # the repo.

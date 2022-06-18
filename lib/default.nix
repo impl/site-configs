@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -20,7 +20,7 @@ let
       mods = importLib { file = ./mods.nix; };
 
       inherit (self.homes) mkHomeConfigurations;
-      inherit (self.machines) mkNixosConfigurations;
+      inherit (self.machines) mkNixosConfiguration mkNixosConfigurations;
       inherit (self.mods) importDir;
     };
 in lib.makeExtensible mkLib
