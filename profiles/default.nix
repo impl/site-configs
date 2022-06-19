@@ -7,6 +7,7 @@
     ./hardware/cpu
     ./hardware/disk
     ./hardware/gpu
+    ./hardware/power.nix
     ./locations/home
     ./base.nix
     ./desktop.nix

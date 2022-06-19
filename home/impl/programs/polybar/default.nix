@@ -42,6 +42,24 @@
             label.connected = "%essid%";
           };
         in nameValuePair "net-${interface}" def) (if machineConfig.networking.wireless.enable then machineConfig.networking.wireless.interfaces else []));
+
+        batteryModules = listToAttrs (map (battery: let
+          def = {
+            type = "internal/battery";
+            time.format = "%H:%M";
+            format.full = "󱐋";
+            format.charging = "󰂄 <label-charging>";
+            format.discharging = "<ramp-capacity> <label-discharging>";
+
+            inherit battery;
+            inherit (machineConfig.profiles.hardware.power) adapter;
+            ramp.capacity = [ "󱃍" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+            label.charging = "%percentage%% %{F#882e3436}%time%%{F-}";
+            label.discharging = "%percentage%% %{F#882e3436}%time%%{F-}";
+          };
+        in nameValuePair "bat-${battery}" def) (if machineConfig.profiles.hardware.power.adapter != null then machineConfig.profiles.hardware.power.batteries else []));
+
+        machineModules = wirelessModules // batteryModules;
       in {
         "colors" = {
           "text" = "#2e3436";
@@ -89,7 +107,7 @@
           cursor.click = "pointer";
 
           modules = {
-            left = concatStringsSep " " ([ "time" "date" ] ++ (attrNames wirelessModules) ++ [ "workspaces "]);
+            left = concatStringsSep " " ([ "time" "date" ] ++ (attrNames machineModules) ++ [ "workspaces "]);
             right = "title";
           };
 
@@ -139,7 +157,7 @@
         "module/title" = {
           type = "internal/xwindow";
         };
-      } // (mapAttrs' (name: nameValuePair "module/${name}") wirelessModules);
+      } // (mapAttrs' (name: nameValuePair "module/${name}") machineModules);
       script = ''
         polybar top &
       '';

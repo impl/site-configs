@@ -69,6 +69,10 @@ in lib.mkMerge [
       hardware.cpu.amd.enable = true;
       hardware.disk.ssd.enable = true;
       hardware.gpu.amd.enable = true;
+      hardware.power = {
+        adapter = "AC";
+        batteries = [ "BAT0" ];
+      };
       locations.home.enable = true;
       desktop.enable = true;
       development.enable = true;
