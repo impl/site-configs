@@ -17,8 +17,8 @@ in
           mkHomeConfiguration = userName: cfg:
             let
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration (cfg // {
-                extraModules = [ inputs.nix-sops.homeModule ];
-                extraSpecialArgs = {
+                extraModules = (cfg.extraModules or []) ++ [ inputs.nix-sops.homeModule ];
+                extraSpecialArgs = (cfg.extraSpecialArgs or {}) // {
                   inherit inputs machineConfig;
                 };
 

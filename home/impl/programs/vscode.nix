@@ -3,6 +3,11 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+  theme.font.packages = with pkgs; [
+    fira-mono
+    fira-code
+  ];
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.overrideAttrs (old: {
@@ -14,25 +19,27 @@
     extensions = let
       loadAfter = deps: pkg: pkg.overrideAttrs (old: {
         nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.jq pkgs.moreutils ];
-        preInstall = old.preInstall or [] ++ [ ''
+        preInstall = (old.preInstall or "") + ''
           jq '.extensionDependencies |= . + $deps' \
             --argjson deps ${escapeShellArg (builtins.toJSON deps)} \
             package.json | sponge package.json
-        '' ];
+        '';
       });
     in
       pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
-          publisher = "cab404";
-          name = "vscode-direnv";
-          version = "1.0.0";
-          sha256 = "sha256-+nLH+T9v6TQCqKZw6HPN/ZevQ65FVm2SAo2V9RecM3Y=";
+          publisher = "mkhl";
+          name = "direnv";
+          version = "0.6.1";
+          sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
         }
-      ] ++ map (loadAfter [ "cab404.vscode-direnv" ]) (
+      ] ++ map (loadAfter [ "mkhl.direnv" ]) (
         with pkgs.vscode-extensions; [
           bbenoist.nix
           editorconfig.editorconfig
           golang.go
+          matklad.rust-analyzer
+          vadimcn.vscode-lldb
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             publisher = "mrded";
@@ -61,6 +68,10 @@
         "editor.tabSize" = 2;
       };
 
+      "[rust]" = {
+        "editor.formatOnSave" = true;
+      };
+
       "docker.showStartPage" = false;
 
       "editor.fontFamily" = "'Fira Code'";
@@ -87,6 +98,8 @@
 
       "workbench.colorTheme" = "RailsCasts";
       "workbench.editor.untitled.hint" = "hidden";
+
+      "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
     };
   };
 }

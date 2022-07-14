@@ -26,32 +26,26 @@
 
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:
     let
-      lib = nixpkgs.lib.extend (final: prev: {
-        my = import ./lib {
-          inherit inputs;
-          lib = final;
-        };
-
-        hm = home-manager.lib.hm;
-      });
+      lib = import ./lib {
+        inherit inputs;
+        lib = nixpkgs.lib;
+      };
 
       # Default NixOS configurations. Usually extended using custom
       # `lib.mkNixosConfigurations`.
-      nixosConfigurations = lib.my.mkNixosConfigurations {};
+      nixosConfigurations = lib.mkNixosConfigurations {};
 
       # Default Home Manager configurations. Generally fine as-is because
       # Home Manager doesn't need to know about host hardware.
-      homeConfigurations = lib.my.mkHomeConfigurations nixosConfigurations;
+      homeConfigurations = lib.mkHomeConfigurations nixosConfigurations;
     in
     {
-      inherit nixosConfigurations homeConfigurations;
-
-      lib = lib.my;
+      inherit lib nixosConfigurations homeConfigurations;
 
       # Create installer packages for each system type we define.
-      packages = with lib; mapAttrs' (_: nixosConfiguration: let
+      packages = with nixpkgs.lib; mapAttrs' (_: nixosConfiguration: let
         system = nixosConfiguration.config.nixpkgs.system;
-        installerConfiguration = lib.my.mkNixosConfiguration {
+        installerConfiguration = lib.mkNixosConfiguration {
           inherit system;
           modules = [ ./installer ];
         };

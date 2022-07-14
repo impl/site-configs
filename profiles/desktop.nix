@@ -26,6 +26,9 @@ in
     # mate-screensaver to work as intended).
     security.pam.services."other" = mkForce { unixAuth = true; };
 
+    # We want to automatically unlock a user's default keyring if possible.
+    services.gnome.gnome-keyring.enable = true;
+
     services.upower.enable = config.powerManagement.enable;
   };
 }

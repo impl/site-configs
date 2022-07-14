@@ -2,17 +2,18 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  home.packages = pkgs.mate.basePackages ++
-    pkgs.mate.extraPackages ++
+{ config, lib, libX, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+  home.packages = with pkgs; mate.basePackages ++
+    mate.extraPackages ++
     [
-      pkgs.at-spi2-core
-      pkgs.desktop-file-utils
-      pkgs.glib
-      pkgs.gtk3.out
-      pkgs.shared-mime-info
-      pkgs.xdg-user-dirs
-      pkgs.yelp
+      at-spi2-core
+      dconf
+      desktop-file-utils
+      glib
+      gtk3.out
+      shared-mime-info
+      xdg-user-dirs
+      yelp
     ];
 
   home.sessionVariables = {
@@ -24,17 +25,17 @@
   services.gnome-keyring.enable = true;
 
   gtk = {
-    gtk3 = {
+    gtk3 = with config.theme.colors; with libX.colors; {
       # MATE themes have their own configuration for MATE applications. See,
       # e.g.,
       # https://github.com/mate-desktop/mate-themes/blob/master/desktop-themes/BlueMenta/gtk-3.0/mate-applications.css
       extraCss = ''
         MsdOsdWindow.background.osd {
-          background-color: rgba(246, 245, 244, 0.6);
+          background-color: ${toCSS (scaleAlpha (-40) primary)};
         }
 
         MsdOsdWindow.background.osd .progressbar {
-          background-color: #f6f5f4;
+          background-color: ${toCSS primary};
         }
       '';
     };
@@ -53,12 +54,8 @@
     };
   };
 
-  dconf.settings =
-  let
-    theme = config.gtk.theme.name;
-    generalFont = config.gtk.font.name;
-    monospaceFont = "Noto Mono";
-    fontSize = config.gtk.font.size;
+  dconf.settings = let
+    themeCfg = config.theme;
   in
   {
     "org/mate/desktop/session/required-components" = {
@@ -67,15 +64,15 @@
     };
 
     "org/mate/desktop/peripherals/mouse" = {
-      "cursor-theme" = theme;
+      "cursor-theme" = themeCfg.gtk.themeName;
     };
 
     "org/mate/desktop/interface" = {
-      "gtk-theme" = theme;
-      "icon-theme" = config.gtk.iconTheme.name;
-      "font-name" = "${generalFont} ${toString fontSize}";
-      "document-font-name" = "${generalFont} ${toString fontSize}";
-      "monospace-font-name" = "${monospaceFont} ${toString fontSize}";
+      "gtk-theme" = themeCfg.gtk.themeName;
+      "icon-theme" = themeCfg.icons.name;
+      "font-name" = "${themeCfg.font.generalFont} ${toString themeCfg.font.size}";
+      "document-font-name" = "${themeCfg.font.generalFont} ${toString themeCfg.font.size}";
+      "monospace-font-name" = "${themeCfg.font.monospaceFont} ${toString themeCfg.font.size}";
     };
 
     "org/mate/desktop/font-rendering" = {
@@ -89,11 +86,15 @@
       "input-feedback-sounds" = false;
     };
 
-    "org/mate/desktop/background" = {
-      "picture-filename" = "${../wallpapers/zhifei-zhou-K3BTXlsXx4A-unsplash.jpg}";
-      "picture-options" = "zoom";
-      "show-desktop-icons" = false;
-    };
+    "org/mate/desktop/background" = mkMerge [
+      {
+        "show-desktop-icons" = false;
+      }
+      (mkIf (themeCfg.wallpaper.file != null) {
+        "picture-filename" = "${themeCfg.wallpaper.file}";
+        "picture-options" = "zoom";
+      })
+    ];
 
     "org/mate/notification-daemon" = {
       "do-not-disturb" = false;

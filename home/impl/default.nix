@@ -3,7 +3,11 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 {
-  configuration = { config, inputs, machineConfig, pkgs, ... }: {
+  configuration = { config, inputs, lib, machineConfig, pkgs, ... }: {
+    _module.args = {
+      libX = import ./lib { inherit lib; };
+    };
+
     # https://github.com/nix-community/home-manager/issues/2942
     # nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnfreePredicate = (_: true);
@@ -15,13 +19,12 @@
     ];
 
     imports = [
-      ./modules/gui.nix
-      ./modules/user-interactive.nix
+      ./profiles
       ./programs/firefox
-      ./programs/polybar
       ./programs/vim
       ./programs/xmonad
       ./programs/zsh
+      ./programs/bat.nix
       ./programs/deezer.nix
       ./programs/direnv.nix
       ./programs/dropbox.nix
@@ -31,10 +34,13 @@
       ./programs/keepass.nix
       ./programs/kitty.nix
       ./programs/mate.nix
+      ./programs/nix-index.nix
       ./programs/picom.nix
+      ./programs/polybar.nix
       ./programs/rofi.nix
       ./programs/vscode.nix
       ./programs/yubikey-touch-detector.nix
+      ./theme
     ];
 
     xdg.userDirs = {

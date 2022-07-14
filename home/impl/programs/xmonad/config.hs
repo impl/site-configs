@@ -1,4 +1,4 @@
--- SPDX-FileCopyrightText: 2021 Noah Fontes
+-- SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 --
 -- SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -43,7 +43,7 @@ main = xmonad . docks . ewmh $ def
 myEventHook = refocusLastWhen (return True)
 
 myKeys conf@(XConfig {modMask = mod}) = M.fromList $
-  [ ((mod, xK_p), spawn "@rofi@ -font 'Noto Sans 10' -modi drun,ssh,window -show drun -show-icons")
+  [ ((mod, xK_p), spawn "@rofi@ -font '@font@ @fontSize@' -modi drun,ssh,window -show drun -show-icons")
 
   , ((mod .|. shiftMask, xK_l), spawn "mate-screensaver-command --lock")
 
@@ -73,14 +73,15 @@ myLayout outer = addTabsLeft shrinkText myTabbedTheme $ subLayout [] Simplest ou
 mySpacing = spacingRaw False (Border 5 0 5 0) True (Border 0 5 0 5) True
 
 myTabbedTheme = def
-  { activeColor = "#f6f5f4"
-  , inactiveColor = "#5b676b"
-  , urgentColor = "#ff6d4f"
+  { activeColor = "@activeColor@"
+  , inactiveColor = "@inactiveColor@"
+  , urgentColor = "@urgentColor@"
   , activeBorderWidth = 0
   , inactiveBorderWidth = 0
   , urgentBorderWidth = 0
-  , activeTextColor = "#2e3436"
-  , fontName = "xft:Noto Sans-10"
+  , activeTextColor = "@activeTextColor@"
+  , inactiveTextColor = "@inactiveTextColor@"
+  , fontName = "xft:@font@-@fontSize@"
   , decoHeight = 25
   , decoWidth = 150
   }

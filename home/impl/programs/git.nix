@@ -2,9 +2,12 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
+{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.git = {
     enable = true;
+    package = pkgs.git.override {
+      sendEmailSupport = true;
+    };
     userEmail = "noah@noahfontes.com";
     userName = "Noah Fontes";
     signing = {
