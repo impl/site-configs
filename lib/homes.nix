@@ -16,16 +16,22 @@ in
 
           mkHomeConfiguration = userName: cfg:
             let
-              homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration (cfg // {
-                extraModules = (cfg.extraModules or []) ++ [ inputs.nix-sops.homeModule ];
-                extraSpecialArgs = (cfg.extraSpecialArgs or {}) // {
+              homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration {
+                extraSpecialArgs = {
                   inherit inputs machineConfig;
                 };
-
-                system = machineConfig.nixpkgs.system;
-                username = userName;
-                homeDirectory = machineConfig.users.users.${userName}.home;
-              });
+                pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
+                modules = [
+                  inputs.nix-sops.homeModule
+                  cfg
+                  {
+                    home = {
+                      username = userName;
+                      homeDirectory = machineConfig.users.users.${userName}.home;
+                    };
+                  }
+                ];
+              };
             in
               lib.nameValuePair "${userName}@${hostName}" homeConfiguration;
         in

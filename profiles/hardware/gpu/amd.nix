@@ -24,7 +24,10 @@ in
       hardware.opengl.extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     }
     (mkIf config.profiles.gui.enable {
-      services.xserver.videoDrivers = [ "amdgpu" ];
+      services.xserver = {
+        videoDrivers = [ "amdgpu" ];
+        deviceSection = ''Option "TearFree" "true"'';
+      };
     })
   ]);
 }
