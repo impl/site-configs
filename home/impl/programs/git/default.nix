@@ -3,6 +3,16 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
+  sops.secrets."programs/git/config-send-email" = {
+    sources = [
+      { file = ./config-send-email.sops; }
+    ];
+  };
+
+  home.file.".config/git/config-send-email" = {
+    source = config.sops.secrets."programs/git/config-send-email".target;
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.git.override {
@@ -35,6 +45,9 @@
       # Editors
       ".vscode/"
     ];
+    includes = [
+      { path = "${config.home.homeDirectory}/${config.home.file.".config/git/config-send-email".target}"; }
+    ];
     extraConfig = {
       init = {
         defaultBranch = "main";
@@ -52,6 +65,9 @@
       };
       url = {
         "git@github.com:" = { insteadOf = "https://github.com/"; };
+      };
+      sendemail = {
+        confirm = "always";
       };
     };
   };

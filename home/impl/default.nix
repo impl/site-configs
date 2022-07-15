@@ -19,13 +19,13 @@
     ./profiles
     ./programs/direnv
     ./programs/firefox
+    ./programs/git
     ./programs/vim
     ./programs/xmonad
     ./programs/zsh
     ./programs/bat.nix
     ./programs/deezer.nix
     ./programs/dropbox.nix
-    ./programs/git.nix
     ./programs/gnupg.nix
     ./programs/jq.nix
     ./programs/keepass.nix
