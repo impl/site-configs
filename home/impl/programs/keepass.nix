@@ -5,5 +5,6 @@
 { lib, pkgs, machineConfig, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
   home.packages = with pkgs; [
     (keepass.override { plugins = [ keepass-keepassrpc ]; })
+    my.karp
   ];
 }

@@ -12,9 +12,7 @@
   nixpkgs.config.allowUnfreePredicate = (_: true);
   nixpkgs.overlays = [
     inputs.nur.overlay
-    (self: super: {
-      makeDesktopItem = args@{ extraConfig ? {}, ... }: super.makeDesktopItem (args // { extraConfig = { "Version" = "1.0"; } // extraConfig; });
-    })
+    (import ./overlay)
   ];
 
   imports = [
