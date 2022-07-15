@@ -19,13 +19,13 @@
 
   imports = [
     ./profiles
+    ./programs/direnv
     ./programs/firefox
     ./programs/vim
     ./programs/xmonad
     ./programs/zsh
     ./programs/bat.nix
     ./programs/deezer.nix
-    ./programs/direnv.nix
     ./programs/dropbox.nix
     ./programs/git.nix
     ./programs/gnupg.nix
