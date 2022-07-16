@@ -33,7 +33,7 @@
   # libc versions can be incompatible, but luckily we have the exact machine
   # configuration for OpenGL so we can set up matching versions here.
   home.sessionVariablesExtra = let
-    openGLPkgs = machineConfig.hardware.opengl.extraPackages;
+    openGLPkgs = (machineConfig.hardware.opengl.extraPackages or []) ++ (machineConfig.hardware.opengl.extraPackages32 or []);
   in ''
     export LIBGL_DRIVERS_PATH=${makeSearchPathOutput "lib" "lib/dri" openGLPkgs}''${LIBGL_DRIVERS_PATH:+:''${LIBGL_DRIVERS_PATH}}
     export LIBVA_DRIVERS_PATH=${makeSearchPathOutput "out" "lib/dri" openGLPkgs}''${LIBVA_DRIVERS_PATH:+:''${LIBVA_DRIVERS_PATH}}

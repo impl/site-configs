@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, inputs, lib, machineConfig, pkgs, ... }: {
+args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
   _module.args = {
     libX = import ./lib { inherit lib; };
   };
@@ -12,7 +12,7 @@
   nixpkgs.config.allowUnfreePredicate = (_: true);
   nixpkgs.overlays = [
     inputs.nur.overlay
-    (import ./overlay)
+    (import ./overlay args)
   ];
 
   imports = [
@@ -35,6 +35,7 @@
     ./programs/picom.nix
     ./programs/polybar.nix
     ./programs/rofi.nix
+    ./programs/steam.nix
     ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
     ./theme

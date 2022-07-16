@@ -31,8 +31,7 @@ in
 
     services.gvfs.enable = true;
 
-    hardware.opengl.extraPackages = [
-      pkgs.mesa.drivers
-    ];
+    hardware.opengl.extraPackages = [ pkgs.mesa.drivers ];
+    hardware.opengl.extraPackages32 = [ pkgs.driversi686Linux.mesa.drivers ];
   };
 }
