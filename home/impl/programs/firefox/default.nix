@@ -2,10 +2,55 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  programs.firefox = {
+{ config, lib, machineConfig, pkgs, pkgsX, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+  programs.firefox = let
+    containersJSON = let
+      maxUserContextId = 4294967295;
+      mkIdentity = args@{ userContextId, name, icon ? "tree", color ? "", public ? true }: {
+        inherit userContextId name icon color public;
+      };
+      text = builtins.toJSON rec {
+        version = 4;
+        identities = [
+          (mkIdentity { userContextId = 1; name = "Personal"; icon = "fingerprint"; color = "green"; })
+          (mkIdentity { userContextId = 2; name = "Work (Montviridian)"; icon = "briefcase"; color = "yellow"; })
+          (mkIdentity { userContextId = 3; name = "Work (MBCoA)"; icon = "briefcase"; color = "red"; })
+          (mkIdentity { userContextId = 4; name = "Temporary"; color = "orange"; })
+          (mkIdentity { userContextId = 5; name = "userContextIdInternal.thumbnail"; public = false; })
+          (mkIdentity { userContextId = maxUserContextId; name = "userContextIdInternal.webextStorageLocal"; public = false; })
+        ];
+        lastUserContextId = builtins.foldl' (acc: identity:
+          if identity.userContextId >= acc && identity.userContextId < maxUserContextId then identity.userContextId + 1 else acc
+        ) 1 identities;
+      };
+    in pkgs.writeText "containers.json" text;
+  in
+  {
     enable = true;
-    package = pkgs.firefox.override {
+    package = let
+      # Firefox will blindly overwrite symlinks if we're not careful, so instead
+      # of simply using a home.file configuration option for some profile data,
+      # we wrap the process and bind mount the relevant files (read only, of
+      # course).
+      firefox = pkgs.wrapFirefox (pkgsX.buildBubblewrap {
+        name = "firefox";
+        inherit (pkgs.firefox-unwrapped) meta passthru;
+        bwrapArgs = [
+          "--bind" "/" "/"
+          "--dev-bind" "/dev" "/dev"
+          "--ro-bind" "${containersJSON}" "${config.home.homeDirectory}/.mozilla/firefox/${config.programs.firefox.profiles."impl".path}/containers.json"
+          "--die-with-parent"
+          "--new-session"
+        ];
+        runScript = "${pkgs.firefox-unwrapped}/bin/firefox";
+        extraInstallCommands = ''
+          shopt -s extglob
+          for orig in ${pkgs.firefox-unwrapped}/!(bin); do
+            cp -r $orig $out
+          done
+        '';
+      }) {};
+    in firefox.override {
       extraPrefs = ''
         lockPref('extensions.autoDisableScopes', 0);
       '';

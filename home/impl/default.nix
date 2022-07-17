@@ -5,6 +5,7 @@
 args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
   _module.args = {
     libX = import ./lib { inherit lib; };
+    pkgsX = pkgs.callPackage ./pkgs {};
   };
 
   # https://github.com/nix-community/home-manager/issues/2942
