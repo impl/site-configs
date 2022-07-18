@@ -32,9 +32,36 @@
       # of simply using a home.file configuration option for some profile data,
       # we wrap the process and bind mount the relevant files (read only, of
       # course).
-      firefox = pkgs.wrapFirefox (pkgsX.buildBubblewrap {
+      firefox = pkgs.firefox.override {
+        extraPrefs = ''
+          lockPref('extensions.autoDisableScopes', 0);
+        '';
+        extraPolicies = {
+          DisableFirefoxAccounts = true;
+          DisableTelemetry = true;
+          DisablePocket = true;
+          DisplayBookmarksToolbar = false;
+          FirefoxHome = {
+            Pocket = false;
+            Snippets = false;
+          };
+          NoDefaultBookmarks = true;
+          OfferToSaveLogins = false;
+          UserMessaging = {
+            ExtensionRecommendations = false;
+            SkipOnboarding = true;
+          };
+          DNSOverHTTPS = {
+            Enabled = false;
+            Locked = true;
+          };
+        };
+      };
+      bubblewrappedFirefox = extraArgs: let
+        finalFirefox = firefox.override extraArgs;
+      in pkgsX.buildBubblewrap {
         name = "firefox";
-        inherit (pkgs.firefox-unwrapped) meta passthru;
+        inherit (finalFirefox) meta passthru;
         bwrapArgs = [
           "--bind" "/" "/"
           "--dev-bind" "/dev" "/dev"
@@ -42,35 +69,15 @@
           "--die-with-parent"
           "--new-session"
         ];
-        runScript = "${pkgs.firefox-unwrapped}/bin/firefox";
+        runScript = "${finalFirefox}/bin/firefox";
         extraInstallCommands = ''
           shopt -s extglob
-          for orig in ${pkgs.firefox-unwrapped}/!(bin); do
-            cp -r $orig $out
+          for orig in ${finalFirefox}/!(bin); do
+            ln -sn $orig $out
           done
         '';
-      }) {};
-    in firefox.override {
-      extraPrefs = ''
-        lockPref('extensions.autoDisableScopes', 0);
-      '';
-      extraPolicies = {
-        DisableFirefoxAccounts = true;
-        DisableTelemetry = true;
-        DisablePocket = true;
-        DisplayBookmarksToolbar = false;
-        FirefoxHome = {
-          Pocket = false;
-          Snippets = false;
-        };
-        NoDefaultBookmarks = true;
-        OfferToSaveLogins = false;
-        UserMessaging = {
-          ExtensionRecommendations = false;
-          SkipOnboarding = true;
-        };
       };
-    };
+    in makeOverridable bubblewrappedFirefox {};
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       multi-account-containers
       ublock-origin
