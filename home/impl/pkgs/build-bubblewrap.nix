@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { bubblewrap, lib, runCommandLocal, writeShellScriptBin }:
-args@{ name, meta ? {}, passthru ? {}, bwrapArgs, runScript, extraAttrs ? {}, extraInstallCommands ? "", ... }:
+{ name, meta ? {}, passthru ? {}, bwrapArgs, runScript, extraAttrs ? {}, extraInstallCommands ? "", ... }:
 let
   wrapper = writeShellScriptBin "${name}-wrapper"
     ''

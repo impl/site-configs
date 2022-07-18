@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -8,7 +8,7 @@ root = true
 end_of_line = lf
 charset = utf-8
 
-[*.{json,md,nix,yaml}]
+[*.{json,md,nix,xml,yaml}]
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true

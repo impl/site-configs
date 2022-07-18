@@ -21,6 +21,7 @@ args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
     ./programs/direnv
     ./programs/firefox
     ./programs/git
+    ./programs/keepass
     ./programs/vim
     ./programs/xmonad
     ./programs/zsh
@@ -29,7 +30,6 @@ args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
     ./programs/dropbox.nix
     ./programs/gnupg.nix
     ./programs/jq.nix
-    ./programs/keepass.nix
     ./programs/kitty.nix
     ./programs/mate.nix
     ./programs/nix-index.nix
