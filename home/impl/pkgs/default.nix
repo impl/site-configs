@@ -4,5 +4,6 @@
 
 { lib, newScope }: lib.makeScope newScope (pkgs: {
   buildBubblewrap = pkgs.callPackage ./build-bubblewrap.nix {};
+  deezer = pkgs.callPackage ./deezer.nix {};
   karp = pkgs.callPackage ./karp.nix {};
 })
