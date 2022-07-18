@@ -18,7 +18,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.RefocusLast
 import XMonad.Layout.Decoration
-import XMonad.Layout.NoBorders (noBorders)
+import XMonad.Layout.NoBorders as NB
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
@@ -29,7 +29,7 @@ import qualified XMonad.StackSet as W
 import qualified XMonad.Util.WindowState as WS
 
 main :: IO()
-main = xmonad . docks . ewmh $ def
+main = xmonad . docks . ewmhFullscreen . ewmh $ def
   { handleEventHook = myEventHook <> handleEventHook def
   , keys = myKeys <> keys mateConfig
   , layoutHook = myLayoutHook $ layoutHook def
@@ -40,7 +40,9 @@ main = xmonad . docks . ewmh $ def
   , terminal = "@kitty@"
   }
 
-myEventHook = refocusLastWhen (return True)
+myEventHook = mconcat
+  [ refocusLastWhen (return True)
+  ]
 
 myKeys conf@(XConfig {modMask = mod}) = M.fromList $
   [ ((mod, xK_p), spawn "@rofi@ -font '@font@ @fontSize@' -modi drun,ssh,window -show drun -show-icons")
@@ -58,7 +60,8 @@ myKeys conf@(XConfig {modMask = mod}) = M.fromList $
 
 myLayoutHook =
   avoidStruts .
-  noBorders .
+  (NB.lessBorders NB.OnlyScreenFloat) .
+  NB.noBorders .
   refocusLastLayoutHook .
   trackFloating .
   windowNavigation .
