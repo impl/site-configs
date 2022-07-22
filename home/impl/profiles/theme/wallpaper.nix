@@ -4,11 +4,11 @@
 
 { config, lib, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.wallpaper;
+  cfg = config.profiles.theme.wallpaper;
 in
 {
   options = {
-    theme.wallpaper = {
+    profiles.theme.wallpaper = {
       file = mkOption {
         type = types.nullOr types.path;
         default = null;

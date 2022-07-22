@@ -25,7 +25,7 @@
   services.gnome-keyring.enable = true;
 
   gtk = {
-    gtk3 = with config.theme.colors; with libX.colors; {
+    gtk3 = with config.profiles.theme.colors; with libX.colors; {
       # MATE themes have their own configuration for MATE applications. See,
       # e.g.,
       # https://github.com/mate-desktop/mate-themes/blob/master/desktop-themes/BlueMenta/gtk-3.0/mate-applications.css
@@ -55,7 +55,7 @@
   };
 
   dconf.settings = let
-    themeCfg = config.theme;
+    themeCfg = config.profiles.theme;
   in
   {
     "org/mate/desktop/session/required-components" = {

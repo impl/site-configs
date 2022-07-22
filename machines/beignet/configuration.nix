@@ -89,7 +89,7 @@ in lib.mkMerge [
     # Or disable the firewall altogether.
     networking.firewall.enable = false;
 
-    nix.allowedUsers = [ "@wheel" ];
+    nix.settings.allowed-users = [ "@wheel" ];
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

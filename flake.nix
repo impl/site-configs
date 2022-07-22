@@ -55,13 +55,12 @@
 
       # These templates should be used when building a new machine to reference
       # the repo.
-      templates = {
+      templates = rec {
         machine = {
           description = "A machine declared in the machines directory of this repository";
           path = ./templates/machine;
         };
+        default = machine;
       };
-
-      defaultTemplate = self.templates.machine;
     };
 }

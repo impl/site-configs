@@ -13,7 +13,7 @@ args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
   nixpkgs.config.allowUnfreePredicate = (_: true);
   nixpkgs.overlays = [
     inputs.nur.overlay
-    (import ./overlay args)
+    (import ./overlay)
   ];
 
   imports = [

@@ -7,7 +7,7 @@
     xmonad = {
       enable = true;
       enableContribAndExtras = true;
-      config = with config.theme; with libX.colors; pkgs.substituteAll {
+      config = with config.profiles.theme; with libX.colors; pkgs.substituteAll {
         src = ./config.hs;
         kitty = "${pkgs.kitty}/bin/kitty";
         rofi = "${pkgs.rofi}/bin/rofi";

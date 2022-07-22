@@ -10,7 +10,7 @@ in
   mkNixosConfiguration = cfg: lib.nixosSystem (cfg // {
     modules =
       [
-        inputs.nix-sops.nixosModule
+        inputs.nix-sops.nixosModules.default
         profilesDir
       ]
       ++ cfg.modules;

@@ -4,11 +4,11 @@
 
 { config, lib, libX, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.colors;
+  cfg = config.profiles.theme.colors;
 in
 {
   options = {
-    theme.colors = {
+    profiles.theme.colors = {
       primary = mkOption {
         type = libX.colors.type;
         example = literalExpression ''libX.colors.hex "#ffab1234"'';

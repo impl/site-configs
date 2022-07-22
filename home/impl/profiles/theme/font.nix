@@ -4,11 +4,11 @@
 
 { config, lib, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.font;
+  cfg = config.profiles.theme.font;
 in
 {
   options = {
-    theme.font = {
+    profiles.theme.font = {
       packages = mkOption {
         type = types.listOf types.package;
         default = [];

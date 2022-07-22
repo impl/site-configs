@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  theme.font.packages = with pkgs; [
+  profiles.theme.font.packages = with pkgs; [
     fira-mono
     fira-code
   ];

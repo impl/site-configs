@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, libX, machineConfig, ... }: with lib; mkIf (machineConfig.networking.hostName == "palmier") {
-  theme = {
+  profiles.theme = {
     wallpaper = {
       file = ../wallpapers/don-stouder-beABEWthrpk-unsplash.jpg;
     };

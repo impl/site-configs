@@ -20,8 +20,7 @@ in
       hardware.opengl.enable = true;
       hardware.opengl.driSupport = true;
       hardware.opengl.driSupport32Bit = true;
-      hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime amdvlk ];
-      hardware.opengl.extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+      hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
     }
     (mkIf config.profiles.gui.enable {
       services.xserver = {

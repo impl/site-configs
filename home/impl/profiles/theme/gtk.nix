@@ -4,11 +4,11 @@
 
 { config, lib, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.gtk;
+  cfg = config.profiles.theme.gtk;
 in
 {
   options = {
-    theme.gtk = {
+    profiles.theme.gtk = {
       packages = mkOption {
         type = types.listOf types.package;
         default = [];

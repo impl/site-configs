@@ -4,11 +4,11 @@
 
 { config, lib, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.icons;
+  cfg = config.profiles.theme.icons;
 in
 {
   options = {
-    theme.icons = {
+    profiles.theme.icons = {
       packages = mkOption {
         type = types.listOf types.package;
         default = [

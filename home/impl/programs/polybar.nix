@@ -4,7 +4,7 @@
 
 { config, lib, libX, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable (mkMerge [
   {
-    theme.font.packages = with pkgs; [
+    profiles.theme.font.packages = with pkgs; [
       material-design-icons
       material-icons
     ];
@@ -28,7 +28,7 @@
         in nameValuePair "net-${interface}" def) (if machineConfig.networking.wireless.enable then machineConfig.networking.wireless.interfaces else []));
 
         batteryModules = listToAttrs (map (battery: let
-          textColor = with libX.colors; toHex' (scaleAlpha (-45) config.theme.colors.text);
+          textColor = with libX.colors; toHex' (scaleAlpha (-45) config.profiles.theme.colors.text);
           def = {
             type = "internal/battery";
             time.format = "%H:%M";
@@ -46,7 +46,7 @@
 
         machineModules = wirelessModules // batteryModules;
       in {
-        "colors" = with config.theme.colors; with libX.colors; {
+        "colors" = with config.profiles.theme.colors; with libX.colors; {
           "text" = toHex' text;
           "transparent" = toHex' (updateAlpha 0 primary);
           "background" = toHex' (scaleAlpha (-15) primary);
@@ -73,8 +73,8 @@
           fixed.center = true;
 
           font =
-            builtins.map (font: "${font}:size=${builtins.toString config.theme.font.size};2")
-              ([ config.theme.font.generalFont ] ++ config.theme.font.extraFonts)
+            builtins.map (font: "${font}:size=${builtins.toString config.profiles.theme.font.size};2")
+              ([ config.profiles.theme.font.generalFont ] ++ config.profiles.theme.font.extraFonts)
             ++ [
               "Material Design Icons:size=13;3"
               "Material Icons:size=13;4"
@@ -125,7 +125,7 @@
             padding = 0;
           };
 
-          label = with config.theme.colors; with libX.colors; builtins.foldl' recursiveUpdate {} [
+          label = with config.profiles.theme.colors; with libX.colors; builtins.foldl' recursiveUpdate {} [
             (genAttrs [ "active" "urgent" "empty" "occupied" ] (type: {
               text = "%name%";
               padding = 4;

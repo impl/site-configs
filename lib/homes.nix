@@ -22,7 +22,7 @@ in
                 };
                 pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
                 modules = [
-                  inputs.nix-sops.homeModule
+                  inputs.nix-sops.homeModules.default
                   cfg
                   {
                     home = {

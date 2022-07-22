@@ -33,7 +33,7 @@
       icons
       patches
     '';
-    sha256 = "sha256-ZPOJzFUNjYRt3NGgpqcneNavSV36IF1JveA4qM4CPKs=";
+    sha256 = "sha256-CiyLtsgkmgPFCz3ti0z4wbcNWNN0jT+FdzYevbMPDhI=";
   };
 in stdenv.mkDerivation rec {
   pname = "deezer-desktop";

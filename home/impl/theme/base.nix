@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, libX, pkgs, ... }: with lib; {
-  theme = {
+  profiles.theme = {
     colors = with libX.colors; {
       primary = mkDefault (rgb 246 245 244);
       secondary = mkDefault (rgb 91 103 107);

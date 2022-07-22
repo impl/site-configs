@@ -4,11 +4,11 @@
 
 { config, lib, machineConfig, pkgs, ... }: with lib;
 let
-  cfg = config.theme.cursor;
+  cfg = config.profiles.theme.cursor;
 in
 {
   options = {
-    theme.cursor = {
+    profiles.theme.cursor = {
       package = mkOption {
         type = types.nullOr types.package;
         default = null;
