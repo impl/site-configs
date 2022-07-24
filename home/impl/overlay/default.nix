@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 self: super: {
-  mate = super.mate // {
-    mate-power-manager = super.mate.mate-power-manager.overrideAttrs (old: {
+  mate = super.mate.overrideScope' (self': super': {
+    mate-power-manager = super'.mate-power-manager.overrideAttrs (old: {
       patches = (old.patches or []) ++ [
         (self.fetchpatch {
           url = "https://github.com/impl/mate-power-manager/compare/v1.26.0...backlight-logind-fallback-v1.26.diff";
@@ -14,7 +14,7 @@ self: super: {
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
         self.autoreconfHook
-        self.mate.mate-common
+        self'.mate-common
         self.which
         self.yelp-tools
       ];
@@ -31,10 +31,6 @@ self: super: {
 
       configureFlags = (old.configureFlags or []) ++ [ "--with-udev" ];
     });
-
-    extraPackages =
-      (self.lib.remove super.mate.mate-power-manager super.mate.extraPackages)
-      ++ [ self.mate.mate-power-manager ];
-  };
+  });
   makeDesktopItem = args@{ extraConfig ? {}, ... }: super.makeDesktopItem (args // { extraConfig = { "Version" = "1.0"; } // extraConfig; });
 }
