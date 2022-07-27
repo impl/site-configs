@@ -15,9 +15,7 @@
 
   programs.git = {
     enable = true;
-    package = pkgs.git.override {
-      sendEmailSupport = true;
-    };
+    package = pkgs.gitFull;
     userEmail = "noah@noahfontes.com";
     userName = "Noah Fontes";
     signing = {
