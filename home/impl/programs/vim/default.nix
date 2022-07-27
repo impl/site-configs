@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -49,5 +49,9 @@
       tabstop = 4;
     };
     extraConfig = builtins.readFile ./vimrc;
+  };
+
+  home.sessionVariables = {
+    EDITOR = "${config.programs.vim.package}/bin/vim";
   };
 }

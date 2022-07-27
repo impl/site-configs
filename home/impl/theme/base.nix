@@ -19,6 +19,8 @@
 
     font = {
       packages = with pkgs; [
+        fira-mono
+        fira-code
         open-sans
         roboto
         roboto-mono
@@ -29,6 +31,7 @@
 
       generalFont = "Noto Sans";
       monospaceFont = "Noto Mono";
+      codeFont = "Fira Code";
       extraFonts = [
         "Noto Sans Symbols"
         "Noto Sans Symbols2"

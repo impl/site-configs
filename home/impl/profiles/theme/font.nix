@@ -40,6 +40,14 @@ in
         '';
       };
 
+      codeFont = mkOption {
+        type = types.str;
+        default = cfg.monospaceFont;
+        description = ''
+          The font to use for editing code.
+        '';
+      };
+
       extraFonts = mkOption {
         type = types.listOf types.str;
         default = [];

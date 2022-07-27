@@ -4,10 +4,14 @@
 
 { pkgs, lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   home.packages = with pkgs; [
+    acpi
     file
     htop
     lsof
+    pciutils
+    psmisc
     reuse
     sops
+    usbutils
   ];
 }

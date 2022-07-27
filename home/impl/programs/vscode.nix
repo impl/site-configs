@@ -2,12 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  profiles.theme.font.packages = with pkgs; [
-    fira-mono
-    fira-code
-  ];
-
+{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.overrideAttrs (old: {
@@ -74,7 +69,7 @@
 
       "docker.showStartPage" = false;
 
-      "editor.fontFamily" = "'Fira Code'";
+      "editor.fontFamily" = builtins.toJSON config.profiles.theme.font.codeFont;
       "editor.fontLigatures" = true;
       "editor.fontSize" = 14;
       "editor.minimap.enabled" = true;

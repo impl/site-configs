@@ -14,6 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.fwupd.enable = true;
     services.pcscd.enable = true;
     services.udev.packages = [
       pkgs.libu2f-host
