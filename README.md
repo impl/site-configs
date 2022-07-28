@@ -109,7 +109,7 @@ WARNING!
 ========
 This will overwrite data on /dev/nvme0n1p2 irrevocably.
 
-Are you sure? (Type 'yes in capital letters): YES
+Are you sure? (Type 'yes' in capital letters): YES
 Enter passphrase for /dev/nvme0n1p2:
 Verify passphrase:
 

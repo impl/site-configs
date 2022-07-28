@@ -80,6 +80,10 @@
       "hinting" = "slight";
     };
 
+    "org/mate/desktop/lockdown" = {
+      "disable-user-switching" = true;
+    };
+
     "org/mate/desktop/sound" = {
       "theme-name" = "__no_sounds";
       "event-sounds" = false;
@@ -101,6 +105,21 @@
       "popup-location" = "bottom_right";
       "theme" = "coco";
     };
+
+    "org/mate/screensaver" = mkMerge [
+      {
+        "idle-activation-enabled" = true;
+        "lock-enabled" = true;
+        "user-switch-enabled" = false;
+        "mode" = mkDefault "blank-only";
+      }
+      (mkIf (themeCfg.screensaver.name != null) {
+        "mode" = "single";
+        "themes" = [
+          themeCfg.screensaver.name
+        ];
+      })
+    ];
   };
 
   home.file.".xsession" = {

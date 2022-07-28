@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, libX, pkgs, ... }: with lib; {
+{ lib, libX, pkgs, pkgsX, ... }: with lib; {
   profiles.theme = {
     colors = with libX.colors; {
       primary = mkDefault (rgb 246 245 244);
@@ -41,6 +41,14 @@
       size = 10;
     };
 
+    gtk = {
+      packages = with pkgs; mkDefault [
+        gnome.adwaita-icon-theme
+      ];
+
+      themeName = mkDefault "Adwaita";
+    };
+
     icons = {
       packages = with pkgs; mkDefault [
         papirus-icon-theme
@@ -49,12 +57,11 @@
       name = mkDefault "Papirus-Light";
     };
 
-    gtk = {
-      packages = with pkgs; mkDefault [
-        gnome.adwaita-icon-theme
+    screensaver = {
+      packages = mkDefault [
+        pkgsX.xscreensaverDesktopItems
       ];
-
-      themeName = mkDefault "Adwaita";
+      name = mkDefault "screensavers-xscreensaver-flyingtoasters";
     };
 
     wallpaper = {
