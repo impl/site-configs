@@ -5,13 +5,6 @@
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.bat = {
     enable = true;
-    config = {
-      pager = "less -RF";
-    };
-  };
-
-  home.sessionVariables = {
-    "PAGER" = "${pkgs.bat}/bin/bat";
   };
 
   home.shellAliases = {
