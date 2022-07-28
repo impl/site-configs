@@ -58,11 +58,6 @@
     themeCfg = config.profiles.theme;
   in
   {
-    "org/mate/desktop/session/required-components" = {
-      "panel" = "";
-      "windowmanager" = "mate-xsession-hm";
-    };
-
     "org/mate/desktop/peripherals/mouse" = {
       "cursor-theme" = themeCfg.gtk.themeName;
     };
@@ -82,6 +77,15 @@
 
     "org/mate/desktop/lockdown" = {
       "disable-user-switching" = true;
+    };
+
+    "org/mate/desktop/session" = {
+      "idle-delay" = themeCfg.screensaver.idleDelayMinutes;
+    };
+
+    "org/mate/desktop/session/required-components" = {
+      "panel" = "";
+      "windowmanager" = "mate-xsession-hm";
     };
 
     "org/mate/desktop/sound" = {
@@ -105,6 +109,28 @@
       "popup-location" = "bottom_right";
       "theme" = "coco";
     };
+
+    "org/mate/power-manager" = mkMerge [
+      {
+        "sleep-computer-ac" = 0;
+        "button-lid-ac" = "suspend";
+        "sleep-display-ac" = 1800;
+        "brightness-ac" = themeCfg.power.brightnessOnAdapter;
+        "idle-dim-ac" = false;
+
+        "button-power" = "interactive";
+        "button-suspend" = "suspend";
+      }
+      (mkIf (machineConfig.profiles.hardware.power.batteries != []) {
+        "sleep-computer-battery" = 1800;
+        "button-lid-battery" = "suspend";
+        "action-critical-battery" = "suspend";
+        "sleep-display-battery" = 600;
+        "backlight-battery-reduce" = true;
+        "idle-dim-battery" = false;
+        "kbd-backlight-battery-reduce" = true;
+      })
+    ];
 
     "org/mate/screensaver" = mkMerge [
       {

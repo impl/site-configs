@@ -9,6 +9,7 @@
     ./theme/font.nix
     ./theme/gtk.nix
     ./theme/icons.nix
+    ./theme/power.nix
     ./theme/screensaver.nix
     ./theme/wallpaper.nix
     ./gui.nix

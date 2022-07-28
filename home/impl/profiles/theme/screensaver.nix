@@ -30,6 +30,15 @@ in
           The screensaver to show, or null for a blank screen.
         '';
       };
+
+      idleDelayMinutes = mkOption {
+        type = types.int;
+        default = 5;
+        description = ''
+          The number of minutes until the session should be considered idle and
+          the screensaver activates.
+        '';
+      };
     };
   };
 

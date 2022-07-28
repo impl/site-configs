@@ -62,6 +62,7 @@
         pkgsX.xscreensaverDesktopItems
       ];
       name = mkDefault "screensavers-xscreensaver-flyingtoasters";
+      idleDelayMinutes = mkDefault 1;
     };
 
     wallpaper = {
