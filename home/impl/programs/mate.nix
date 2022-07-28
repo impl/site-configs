@@ -41,15 +41,14 @@
     };
   };
 
-  # Delegate to Home Manager X Session when starting MATE.
   xdg.desktopEntries = {
-    "mate-xsession-hm" = {
+    "mate-xmonad" = {
       type = "Application";
-      name = "X Session (Home Manager)";
-      exec = "${config.home.homeDirectory}/${config.xsession.scriptPath}";
+      name = "Xmonad";
+      exec = "${config.home.homeDirectory}/${config.home.file.".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}".target}";
       settings = {
         "NoDisplay" = "true";
-        "X-MATE-WMName" = "X Session";
+        "X-MATE-WMName" = "Xmonad";
       };
     };
   };
@@ -85,7 +84,7 @@
 
     "org/mate/desktop/session/required-components" = {
       "panel" = "";
-      "windowmanager" = "mate-xsession-hm";
+      "windowmanager" = "mate-xmonad";
     };
 
     "org/mate/desktop/sound" = {
@@ -148,18 +147,9 @@
     ];
   };
 
-  home.file.".xsession" = {
-    executable = true;
-    text = ''
-      if [ -z "$HM_XPROFILE_SOURCED" ]; then
-        . "${config.home.homeDirectory}/${config.xsession.profilePath}"
-      fi
-      unset HM_XPROFILE_SOURCED
-
-      export XDG_CURRENT_DESKTOP=MATE
-      export XDG_SESSION_DESKTOP=MATE
-
-      exec ${pkgs.mate.mate-session-manager}/bin/mate-session
+  xsession = {
+    windowManager.command = mkForce ''
+      XDG_CURRENT_DESKTOP=MATE XDG_SESSION_DESKTOP=mate ${pkgs.mate.mate-session-manager}/bin/mate-session
     '';
   };
 }

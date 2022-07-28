@@ -27,7 +27,6 @@ in {
     # Set up X Session (window manager program will configure).
     xsession = {
       enable = true;
-      scriptPath = ".xsession-hm";
     };
 
     # Some services require the window manager to support EWMH and check for this
