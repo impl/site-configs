@@ -112,7 +112,6 @@ in lib.mkMerge [
     extraConfig = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-      shell = pkgs.zsh;
     };
   })
 ]

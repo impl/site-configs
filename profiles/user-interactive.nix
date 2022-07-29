@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib;
+{ config, lib, pkgs, pkgsX, ... }: with lib;
 let
   cfg = config.profiles.userInteractive;
 in
@@ -24,5 +24,8 @@ in
       enable = true;
       enableCompletion = true;
     };
+
+    users.defaultUserShell = pkgsX.choysh;
+    environment.etc."choysh".source = "${pkgs.bashInteractive}${pkgs.bashInteractive.shellPath}";
   };
 }

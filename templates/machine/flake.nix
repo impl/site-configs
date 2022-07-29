@@ -14,11 +14,7 @@
     };
   };
 
-  outputs = inputs@{ site, ... }: {
-    nixosConfigurations = site.lib.mkNixosConfigurations {
-      extraModules = [
-        ./configuration.nix
-      ];
-    };
+  outputs = { site, ... }: {
+    nixosConfigurations = site.lib.overrideNixosConfigurations { modules = [ ./configuration.nix ]; } site.nixosConfigurations;
   };
 }

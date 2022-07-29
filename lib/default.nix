@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ homeDir ? ../home
-, inputs
+{ inputs
 , lib
-, machinesDir ? ../machines
+, pkgsDir ? ../pkgs
 , profilesDir ? ../profiles
 , ...
 }:
@@ -15,12 +14,12 @@ let
       importLib = { file, attrs ? {} }: import file ({ inherit self inputs lib; } // attrs);
     in
     {
-      homes = importLib { file = ./homes.nix; attrs = { inherit homeDir; }; };
-      machines = importLib { file = ./machines.nix; attrs = { inherit machinesDir profilesDir; }; };
+      homes = importLib { file = ./homes.nix; };
+      machines = importLib { file = ./machines.nix; attrs = { inherit pkgsDir profilesDir; }; };
       mods = importLib { file = ./mods.nix; };
 
       inherit (self.homes) mkHomeConfigurations;
-      inherit (self.machines) mkNixosConfiguration mkNixosConfigurations;
+      inherit (self.machines) mkNixosConfiguration mkNixosConfigurations overrideNixosConfigurations;
       inherit (self.mods) importDir;
     };
 in lib.makeExtensible mkLib

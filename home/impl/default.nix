@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
+{ config, lib, machineConfig, pkgs, ... }: {
   _module.args = {
     libX = import ./lib { inherit lib; };
     pkgsX = pkgs.callPackage ./pkgs {};
@@ -12,7 +12,7 @@ args@{ config, inputs, lib, machineConfig, pkgs, ... }: {
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
   nixpkgs.overlays = [
-    inputs.nur.overlay
+    (builtins.getFlake "github:nix-community/NUR/2e20efb3d185d01eb7b6219014f3ae63ae9f4173").overlay
     (import ./overlay)
   ];
 

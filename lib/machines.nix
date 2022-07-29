@@ -2,34 +2,42 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, inputs, lib, machinesDir, profilesDir, ... }:
-let
-  machines = self.mods.importDir machinesDir;
-in
+{ self, inputs, lib, pkgsDir, profilesDir, ... }:
 {
-  mkNixosConfiguration = cfg: lib.nixosSystem (cfg // {
-    modules =
-      [
-        inputs.nix-sops.nixosModules.default
-        profilesDir
-      ]
-      ++ cfg.modules;
-  });
-
-  mkNixosConfigurations = { extraModules ? [] }:
+  mkNixosConfiguration = cfg:
     let
-      cfgWithHostName = hostName: cfg: (cfg // {
+      compile = { modules ? [] }: lib.nixosSystem (cfg // {
         modules =
-          cfg.modules
-          ++ extraModules
-          ++ [
-            {
-              networking = {
-                inherit hostName;
+          [
+            inputs.nix-sops.nixosModules.default
+            profilesDir
+            ({ pkgs, ... }: {
+              _module.args = {
+                pkgsX = pkgs.callPackage pkgsDir {};
               };
-            }
-          ];
+            })
+          ]
+          ++ (cfg.modules or [])
+          ++ modules;
       });
-    in
-      builtins.mapAttrs (hostName: cfg: self.machines.mkNixosConfiguration (cfgWithHostName hostName cfg)) machines;
+    in lib.makeOverridable compile {};
+
+  mkNixosConfigurations = machines:
+    let
+      hostNameModule = hostName: {
+        networking = {
+          inherit hostName;
+        };
+      };
+
+      compile = hostName: cfg: self.machines.mkNixosConfiguration (cfg // {
+        modules = lib.flatten [
+          (cfg.modules or [])
+          (hostNameModule hostName)
+        ];
+      });
+    in builtins.mapAttrs compile machines;
+
+  overrideNixosConfigurations = override: nixosConfigurations:
+    builtins.mapAttrs (_: compiled: compiled.override override) nixosConfigurations;
 }

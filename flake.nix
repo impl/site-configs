@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -18,10 +18,6 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
-
-    nur = {
-      url = "github:nix-community/NUR";
-    };
   };
 
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:
@@ -31,13 +27,11 @@
         lib = nixpkgs.lib;
       };
 
-      # Default NixOS configurations. Usually extended using custom
-      # `lib.mkNixosConfigurations`.
-      nixosConfigurations = lib.mkNixosConfigurations {};
+      machines = lib.importDir ./machines;
+      homes = lib.importDir ./home;
 
-      # Default Home Manager configurations. Generally fine as-is because
-      # Home Manager doesn't need to know about host hardware.
-      homeConfigurations = lib.mkHomeConfigurations nixosConfigurations;
+      nixosConfigurations = lib.mkNixosConfigurations machines;
+      homeConfigurations = lib.mkHomeConfigurations homes nixosConfigurations;
     in
     {
       inherit lib nixosConfigurations homeConfigurations;
@@ -53,11 +47,9 @@
         installer = installerConfiguration.config.system.build.isoImage;
       }) nixosConfigurations;
 
-      # These templates should be used when building a new machine to reference
-      # the repo.
       templates = rec {
         machine = {
-          description = "A machine declared in the machines directory of this repository";
+          description = "A machine to use with the profiles in this repository";
           path = ./templates/machine;
         };
         default = machine;

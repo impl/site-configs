@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, inputs, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
+{ config, nixpkgs, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.direnv = {
     enable = true;
     nix-direnv = {
@@ -14,8 +14,8 @@
     pkg = pkgs.runCommand "direnv-support" {
       nativeBuildInputs = [ pkgs.nix ];
 
-      NIXPKGS_OUT_PATH = inputs.nixpkgs.sourceInfo.outPath;
-      NIXPKGS_NAR_HASH = inputs.nixpkgs.sourceInfo.narHash;
+      NIXPKGS_OUT_PATH = nixpkgs.sourceInfo.outPath;
+      NIXPKGS_NAR_HASH = nixpkgs.sourceInfo.narHash;
     } ''
       export NIX_STORE_DIR="$TMPDIR/nix/store"
       export NIX_STATE_DIR="$TMPDIR/nix/var"

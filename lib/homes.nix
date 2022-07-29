@@ -1,13 +1,10 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, homeDir, inputs, lib, ... }:
-let
-  homes = self.mods.importDir homeDir;
-in
+{ self, inputs, lib, ... }:
 {
-  mkHomeConfigurations = nixosConfigurations:
+  mkHomeConfigurations = homes: nixosConfigurations:
     let
       mkHomeConfigurationsForNixosConfiguration = hostName: nixosConfiguration:
         let
@@ -18,7 +15,8 @@ in
             let
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration {
                 extraSpecialArgs = {
-                  inherit inputs machineConfig;
+                  inherit (inputs) nixpkgs;
+                  inherit machineConfig;
                 };
                 pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
                 modules = [
