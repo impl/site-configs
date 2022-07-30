@@ -14,8 +14,8 @@
 , stdenv
 , udev
 }: let
-  version = "5.30.220";
-  aunetxVersion = "v${version}-2";
+  version = "5.30.280";
+  aunetxVersion = "v5.30.220-2";
 
   electron = electron_13.overrideAttrs (old: {
     meta = old.meta // {
@@ -41,7 +41,7 @@ in stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-YOJmpLtEgdRn4yjK9dsCTVaW1Oc6ZgaJ9tU5y9vQP8c=";
+    sha256 = "sha256-ujM+mgZ3zIUlZz2R5E4G9vmlZ+txSz4XqPsJYm0Sz4U=";
   };
 
   meta = with lib; {
