@@ -29,4 +29,13 @@ in
       };
     };
   };
+
+  config = mkMerge [
+    {
+      services.power-profiles-daemon.enable = false;
+    }
+    (mkIf (cfg.batteries != []) {
+      services.tlp.enable = true;
+    })
+  ];
 }
