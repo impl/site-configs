@@ -15,8 +15,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-sops_2205 = {
+      url = "github:impl/nix-sops";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs_2205";
+    };
+
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+
+    nixpkgs_2205 = {
+      url = "github:nixos/nixpkgs/nixos-22.05";
     };
   };
 

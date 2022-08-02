@@ -10,6 +10,16 @@ in
   options = {
     profiles.hardware.gpu.intel = {
       enable = mkEnableOption "the Intel GPU profile";
+
+      busID = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "PCI:0:2:0";
+        description = ''
+          The PCI bus ID of the Intel VGA controller for use with PRIME
+          offloading.
+        '';
+      };
     };
   };
 
@@ -20,11 +30,13 @@ in
       hardware.opengl.driSupport32Bit = true;
       hardware.opengl.extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
     }
-    (mkIf config.profiles.gui.enable {
-      services.xserver.videoDrivers = [ "intel" ];
-      services.xserver.deviceSection = ''
-        Option "TearFree" "true"
-      '';
+    (mkIf (config.profiles.gui.enable && !config.hardware.nvidia.prime.offload.enable) {
+      services.xserver = {
+        videoDrivers = [ "intel" ];
+        deviceSection = ''
+          Option "TearFree" "true"
+        '';
+      };
     })
   ]);
 }
