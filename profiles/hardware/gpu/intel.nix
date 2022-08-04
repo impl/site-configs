@@ -30,7 +30,7 @@ in
       hardware.opengl.driSupport32Bit = true;
       hardware.opengl.extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
     }
-    (mkIf (config.profiles.gui.enable && !config.hardware.nvidia.prime.offload.enable) {
+    (mkIf config.profiles.gui.enable {
       services.xserver = {
         videoDrivers = [ "intel" ];
         deviceSection = ''

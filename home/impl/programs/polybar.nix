@@ -152,9 +152,8 @@
     # provided.
     systemd.user.services.polybar = {
       Unit = {
-        Wants = [ "ewmh.service" ];
-        After = [ "ewmh.service" ];
-        PartOf = [ "ewmh.service" ];
+        Requires = [ "xmonad.service" ];
+        After = [ "xmonad.service" ];
       };
     };
   }

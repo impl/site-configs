@@ -24,4 +24,7 @@
 
   # Do not allow mutable users, not now, not ever.
   users.mutableUsers = false;
+
+  # For packages that expose debugging information, include it in the path.
+  environment.enableDebugInfo = true;
 }

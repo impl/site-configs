@@ -27,18 +27,42 @@ import XMonad.Layout.TrackFloating
 import XMonad.Layout.WindowNavigation
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.WindowState as WS
+import qualified XMonad.Util.ExtensibleState as XS
+import qualified DBus as D
+import qualified DBus.Client as D
 
-main :: IO()
+main :: IO ()
 main = xmonad . docks . ewmhFullscreen . ewmh $ def
   { handleEventHook = myEventHook <> handleEventHook def
   , keys = myKeys <> keys mateConfig
   , layoutHook = myLayoutHook $ layoutHook def
-  , logHook = myLogHook <+> logHook def
+  , logHook = myLogHook <> logHook def
   , manageHook = myManageHook <> manageHook def
   , modMask = mod4Mask
-  , startupHook = mateRegister >> startupHook def
+  , startupHook = myStartupHook <> startupHook def
   , terminal = "@kitty@"
   }
+
+myStartupHook = mconcat
+  [ dbusConnect
+  , mateRegister
+  ]
+
+data DBusStorage = DBusStorage (Maybe D.Client)
+instance ExtensionClass DBusStorage where
+  initialValue = DBusStorage (Nothing)
+
+dbusConnect :: X ()
+dbusConnect = do
+  conn <- io $ do
+    conn <- D.connectSession
+    D.requestName conn (D.busName_ "com.noahfontes.site.wm.Log")
+      [ D.nameAllowReplacement
+      , D.nameReplaceExisting
+      , D.nameDoNotQueue
+      ]
+    return conn
+  XS.put $ DBusStorage (Just conn)
 
 myEventHook = mconcat
   [ refocusLastWhen (return True)

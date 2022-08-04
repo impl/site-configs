@@ -16,6 +16,14 @@ in
           The path to the wallpaper to use.
         '';
       };
+
+      mode = mkOption {
+        type = types.enum [ "fit" "tile" ];
+        default = "fit";
+        description = ''
+          How to attach the wallpaper to the desktop.
+        '';
+      };
     };
   };
 }

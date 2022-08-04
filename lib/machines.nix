@@ -6,6 +6,7 @@
 {
   mkNixosConfiguration = eval: (eval inputs).extendModules {
     modules = [
+      inputs.dwarffs.nixosModules.dwarffs
       profilesDir
       ({ pkgs, ... }: {
         _module.args = {

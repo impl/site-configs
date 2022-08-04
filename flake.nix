@@ -4,6 +4,10 @@
 
 {
   inputs = {
+    dwarffs = {
+      url = "github:edolstra/dwarffs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

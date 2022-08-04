@@ -7,6 +7,7 @@
     xmonad = {
       enable = true;
       enableContribAndExtras = true;
+      extraPackages = haskellPkgs: with haskellPkgs; [ dbus ];
       config = with config.profiles.theme; with libX.colors; pkgs.substituteAll {
         src = ./config.hs;
         kitty = "${pkgs.kitty}/bin/kitty";
@@ -28,4 +29,25 @@
   };
 
   home.file.".xmonad/xmonad-${pkgs.hostPlatform.system}".force = true;
+
+  systemd.user.services.xmonad = {
+    Unit = {
+      Description = "Xmonad";
+      PartOf = [ "hm-graphical-session.target" ];
+    };
+
+    Install = {
+      WantedBy = [ "hm-graphical-session.target" ];
+    };
+
+    Service = let
+      target = "${config.home.homeDirectory}/${config.home.file.".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}".target}";
+    in {
+      Type = "dbus";
+      BusName = "com.noahfontes.site.wm.Log";
+      ExecStart = target;
+      ExecReload = "${target} --restart";
+      Restart = "on-failure";
+    };
+  };
 }

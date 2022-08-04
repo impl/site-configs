@@ -17,6 +17,7 @@
   ];
 
   imports = [
+    ./locations/home
     ./profiles
     ./programs/direnv
     ./programs/firefox
@@ -25,6 +26,7 @@
     ./programs/vim
     ./programs/xmonad
     ./programs/zsh
+    ./programs/autorandr.nix
     ./programs/bat.nix
     ./programs/deezer.nix
     ./programs/dropbox.nix

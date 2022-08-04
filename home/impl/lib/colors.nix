@@ -4,24 +4,6 @@
 
 { self, lib, ... }: with lib;
 let
-  hex = [ "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "A" "B" "C" "D" "E" "F" ];
-  hexLength = length hex;
-  hexToIntTable = builtins.listToAttrs (imap0 (flip nameValuePair) hex);
-
-  hexToInt = hex:
-    foldl (acc: ch: acc * hexLength + hexToIntTable.${toUpper(ch)}) 0 (stringToCharacters hex);
-  intToHex = int:
-    let
-      rem = mod int hexLength;
-      ch = builtins.head (drop rem hex);
-    in
-      if int == rem then ch
-      else (intToHex (int / hexLength)) + ch;
-  intToFixedWidthHex = width: int: fixedWidthString width "0" (intToHex int);
-
-  floatToHex = f: if isFloat f then intToHex (self.math.round f) else intToHex f;
-  floatToFixedWidthHex = width: f: fixedWidthString width "0" (floatToHex f);
-
   maxComponent = 255;
 
   clamp = max: v: if v < 0 then 0 else if v > max then max else v;
@@ -71,7 +53,7 @@ in
       s' = removePrefix "#" s;
       l = builtins.stringLength s';
 
-      parse = n: hexToInt (substring (n * 2) 2 s');
+      parse = n: self.encoding.hexToInt (builtins.substring (n * 2) 2 s');
       get = n:
         if l == 8 then parse n
         else if n == 0 then self.colors.opaque
@@ -87,8 +69,8 @@ in
       s' = removePrefix "#" s;
       l = builtins.stringLength s';
 
-      parseDup = n: let int = hexToInt (substring n 1 s'); in int * 16 + int;
-      parseFull = n: hexToInt (substring (n * 2) 2 s');
+      parseDup = n: let int = self.encoding.hexToInt (builtins.substring n 1 s'); in int * 16 + int;
+      parseFull = n: self.encoding.hexToInt (builtins.substring (n * 2) 2 s');
       parse = if l == 3 || l == 4 then parseDup else parseFull;
 
       get = n:
@@ -208,7 +190,7 @@ in
   # Convert an RGBA attrset to hex.
   toHex = rgba:
     let
-      fmt = floatToFixedWidthHex 2;
+      fmt = self.encoding.floatToFixedWidthHex 2;
     in
       (if self.colors.hasAlpha rgba then fmt rgba.alpha else "")
       + (fmt rgba.red)
@@ -217,7 +199,7 @@ in
 
   # Convert an RGBA attrset to hex, always including the alpha channel.
   toHexAlpha = rgba:
-    (floatToFixedWidthHex 2 rgba.alpha)
+    (self.encoding.floatToFixedWidthHex 2 rgba.alpha)
     + (self.colors.toHex (self.colors.updateAlpha maxComponent rgba));
 
   # Convert an RGBA attrset to hex, prefixed with a hash.
@@ -238,7 +220,7 @@ in
   # Return an HTML/CSS-compatible color code for the RGBA attrset.
   toColorCode = rgba:
     let
-      fmt = floatToFixedWidthHex 2;
+      fmt = self.encoding.floatToFixedWidthHex 2;
     in
       "#"
       + (fmt rgba.red)

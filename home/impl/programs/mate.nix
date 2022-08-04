@@ -45,7 +45,7 @@
     "mate-xmonad" = {
       type = "Application";
       name = "Xmonad";
-      exec = "${config.home.homeDirectory}/${config.home.file.".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}".target}";
+      exec = "${pkgs.systemd}/bin/systemctl --user start --wait xmonad.service";
       settings = {
         "NoDisplay" = "true";
         "X-MATE-WMName" = "Xmonad";
@@ -99,7 +99,10 @@
       }
       (mkIf (themeCfg.wallpaper.file != null) {
         "picture-filename" = "${themeCfg.wallpaper.file}";
-        "picture-options" = "zoom";
+        "picture-options" =
+          if themeCfg.wallpaper.mode == "fit" then "zoom"
+          else if themeCfg.wallpaper.mode == "tile" then "wallpaper"
+          else themeCfg.wallpaper.mode;
       })
     ];
 

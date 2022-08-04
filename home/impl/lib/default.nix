@@ -10,6 +10,8 @@ let
     in
     {
       colors = importLib ./colors.nix;
+      edid = importLib ./edid.nix;
+      encoding = importLib ./encoding.nix;
       math = importLib ./math.nix;
     };
 in lib.makeExtensible mkLib
