@@ -50,4 +50,8 @@
       Restart = "on-failure";
     };
   };
+
+  # When Xmonad is supervised by systemd, it needs to know about $PATH because
+  # e.g. Rofi transitively depends on it.
+  xsession.importedVariables = [ "PATH" ];
 }
