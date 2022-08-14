@@ -30,5 +30,46 @@ in
     services.gnome.gnome-keyring.enable = true;
 
     services.upower.enable = config.powerManagement.enable;
+
+    # Propagate udev monitor hotplug events to systemd.
+    systemd.targets."drm-hotplug" = {
+      description = "DRM hotplug events";
+      unitConfig = {
+        RefuseManualStart = true;
+        StopWhenUnneeded = true;
+      };
+    };
+    systemd.targets."drm-hotplug@" = {
+      description = "DRM hotplug events for /%I";
+      wants = [ "drm-hotplug.target" ];
+      before = [ "drm-hotplug.target" ];
+      unitConfig = {
+        RefuseManualStart = true;
+        StopWhenUnneeded = true;
+        ReloadPropagatedFrom = [ "%i.device" ];
+        PropagatesReloadTo = [ "drm-hotplug.target" ];
+      };
+    };
+    systemd.user.targets."drm-hotplug" = {
+      description = "DRM hotplug events";
+      unitConfig = {
+        RefuseManualStart = true;
+        StopWhenUnneeded = true;
+      };
+    };
+    systemd.user.targets."drm-hotplug@" = {
+      description = "DRM hotplug events for /%I";
+      wants = [ "drm-hotplug.target" ];
+      before = [ "drm-hotplug.target" ];
+      unitConfig = {
+        RefuseManualStart = true;
+        StopWhenUnneeded = true;
+        ReloadPropagatedFrom = [ "%i.device" ];
+        PropagatesReloadTo = [ "drm-hotplug.target" ];
+      };
+    };
+    services.udev.extraRules = ''
+      SUBSYSTEM=="drm", KERNEL=="card*", ENV{DEVTYPE}=="drm_minor", TAG+="systemd", ENV{SYSTEMD_WANTS}+="drm-hotplug@.target", ENV{SYSTEMD_USER_WANTS}+="drm-hotplug@.target"
+    '';
   };
 }

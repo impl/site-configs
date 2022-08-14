@@ -2,19 +2,37 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, inputs, lib, pkgsDir, profilesDir, ... }:
+{ self, inputs, lib, overlaysDir, pkgsDir, profilesDir, ... }:
 {
-  mkNixosConfiguration = eval: (eval inputs).extendModules {
-    modules = [
-      inputs.dwarffs.nixosModules.dwarffs
-      profilesDir
-      ({ pkgs, ... }: {
-        _module.args = {
-          pkgsX = pkgs.callPackage pkgsDir {};
-        };
-      })
-    ];
-  };
+  mkNixosConfiguration = eval:
+    let
+      mkBuilder = name: nixpkgs: cfg: (nixpkgs.lib.nixosSystem cfg).extendModules {
+        modules = [
+          {
+            nixpkgs.overlays = [
+              (import "${overlaysDir}/${name}")
+            ];
+            nix.registry.nixpkgs.flake = nixpkgs;
+          }
+        ];
+      };
+      builders = builtins.mapAttrs mkBuilder {
+        "unstable" = inputs.nixpkgs;
+        "22.05" = inputs.nixpkgs_2205;
+      };
+      build = v: builders.${v};
+    in (eval build).extendModules {
+      modules = [
+        inputs.dwarffs.nixosModules.dwarffs
+        inputs.nix-sops.nixosModules.default
+        profilesDir
+        ({ pkgs, ... }: {
+          _module.args = {
+            pkgsX = pkgs.callPackage pkgsDir {};
+          };
+        })
+      ];
+    };
 
   mkNixosConfigurations = machines:
     let

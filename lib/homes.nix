@@ -15,7 +15,6 @@
             let
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration {
                 extraSpecialArgs = {
-                  inherit (inputs) nixpkgs;
                   inherit machineConfig;
                 };
                 pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
@@ -23,6 +22,7 @@
                   inputs.nix-sops.homeModules.default
                   cfg
                   {
+                    nix.registry.nixpkgs.flake = builtins.removeAttrs inputs.nixpkgs [ "lastModifiedDate" "lastModified" ];
                     home = {
                       username = userName;
                       homeDirectory = machineConfig.users.users.${userName}.home;

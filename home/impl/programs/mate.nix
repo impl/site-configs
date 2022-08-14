@@ -148,6 +148,10 @@
         ];
       })
     ];
+
+    "org/mate/settings-daemon/plugins/xrandr" = {
+      "active" = false;
+    };
   };
 
   xsession = {

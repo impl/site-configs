@@ -15,14 +15,6 @@
 
     nix-sops = {
       url = "github:impl/nix-sops";
-      inputs.home-manager.follows = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-sops_2205 = {
-      url = "github:impl/nix-sops";
-      inputs.home-manager.follows = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs_2205";
     };
 
     nixpkgs = {
@@ -53,10 +45,12 @@
       # Create installer packages for each system type we define.
       packages = with nixpkgs.lib; mapAttrs' (_: nixosConfiguration: let
         system = nixosConfiguration.config.nixpkgs.system;
-        installerConfiguration = lib.mkNixosConfiguration {
+        installerConfiguration = lib.mkNixosConfiguration (build: build "22.05" {
           inherit system;
-          modules = [ ./installer ];
-        };
+          modules = [
+            ./installer
+          ];
+        });
       in nameValuePair system {
         installer = installerConfiguration.config.system.build.isoImage;
       }) nixosConfigurations;

@@ -4,6 +4,7 @@
 
 { inputs
 , lib
+, overlaysDir ? ../overlays
 , pkgsDir ? ../pkgs
 , profilesDir ? ../profiles
 , ...
@@ -15,7 +16,7 @@ let
     in
     {
       homes = importLib { file = ./homes.nix; };
-      machines = importLib { file = ./machines.nix; attrs = { inherit pkgsDir profilesDir; }; };
+      machines = importLib { file = ./machines.nix; attrs = { inherit overlaysDir pkgsDir profilesDir; }; };
       mods = importLib { file = ./mods.nix; };
 
       inherit (self.homes) mkHomeConfigurations;

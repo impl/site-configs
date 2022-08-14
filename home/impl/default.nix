@@ -35,6 +35,7 @@
     ./programs/kitty.nix
     ./programs/mate.nix
     ./programs/nix-index.nix
+    ./programs/nix.nix
     ./programs/picom.nix
     ./programs/polybar.nix
     ./programs/rofi.nix

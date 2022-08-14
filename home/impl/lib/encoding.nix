@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 { self, lib, ... }: with lib;
 let
   hex = [ "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "A" "B" "C" "D" "E" "F" ];
