@@ -11,6 +11,7 @@
     ./hardware/power.nix
     ./locations/home
     ./locations/vpn
+    ./quirks
     ./base.nix
     ./desktop.nix
     ./development.nix

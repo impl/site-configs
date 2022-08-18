@@ -6,6 +6,7 @@
 {
   networking.useNetworkd = true;
   networking.useDHCP = mkOverride 500 false;
+  services.resolved.enable = true;
 
   # Internationalization.
   i18n.defaultLocale = "en_US.UTF-8";

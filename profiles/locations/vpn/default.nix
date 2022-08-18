@@ -15,7 +15,10 @@ in
 
   config = mkIf cfg.enable {
     services.tailscale.enable = true;
-    services.openssh.openFirewall = mkDefault false;
+    services.openssh = {
+      startWhenNeeded = true;
+      openFirewall = mkDefault false;
+    };
 
     networking.firewall = {
       trustedInterfaces = [ config.services.tailscale.interfaceName ];
