@@ -18,7 +18,7 @@ in
     services.openssh.openFirewall = mkDefault false;
 
     networking.firewall = {
-      trustedInterfaces = [ "tailscale0" ];
+      trustedInterfaces = [ config.services.tailscale.interfaceName ];
       checkReversePath = "loose";
     };
   };

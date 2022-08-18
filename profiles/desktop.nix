@@ -29,6 +29,9 @@ in
     # We want to automatically unlock a user's default keyring if possible.
     services.gnome.gnome-keyring.enable = true;
 
+    # Don't worry about which interface gives us network access.
+    systemd.network.wait-online.anyInterface = true;
+
     services.upower.enable = config.powerManagement.enable;
 
     # Propagate udev monitor hotplug events to systemd.
