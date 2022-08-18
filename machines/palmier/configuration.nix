@@ -51,6 +51,7 @@ in lib.mkMerge [
       sources = [ { file = ./keyfile.root.sops; } ];
     };
     boot.initrd.luks.devices."root" = {
+      device = lib.mkDefault "/dev/loop0";
       preLVM = true;
       keyFile = "/keyfile.root";
     };
@@ -58,6 +59,7 @@ in lib.mkMerge [
     boot.plymouth.enable = true;
 
     fileSystems = lib.genAttrs [ "/" "/home" "/nix" "/snapshots" ] (fileSystem: {
+      device = lib.mkDefault "/dev/loop0";
       options = [ "compress=zstd" ];
     });
 
