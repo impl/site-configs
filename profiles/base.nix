@@ -20,9 +20,9 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       allowed-users = [ "@wheel" ];
-      trusted-users = [ "@wheel" ];
-      extra-substituters = map (cache: cache.uri) libX.cachix.repoCacheMetadata;
-      extra-trusted-public-keys = concatMap (cache: cache.publicSigningKeys) libX.cachix.repoCacheMetadata;
+      trusted-users = [ "root" "@wheel" ];
+      substituters = map (cache: cache.uri) libX.cachix.repoCacheMetadata;
+      trusted-public-keys = concatMap (cache: cache.publicSigningKeys) libX.cachix.repoCacheMetadata;
     };
   };
 
