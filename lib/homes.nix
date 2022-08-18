@@ -16,6 +16,7 @@
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration {
                 extraSpecialArgs = {
                   inherit machineConfig;
+                  libX = self;
                 };
                 pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
                 modules = [

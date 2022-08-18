@@ -4,7 +4,6 @@
 
 { config, lib, machineConfig, pkgs, ... }: {
   _module.args = {
-    libX = import ./lib { inherit lib; };
     pkgsX = pkgs.callPackage ./pkgs {};
   };
 
@@ -19,6 +18,7 @@
   imports = [
     ./locations/home
     ./profiles
+    ./programs/cachix
     ./programs/direnv
     ./programs/firefox
     ./programs/git

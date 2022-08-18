@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, pkgs, ... }: with lib;
+{ lib, libX, pkgs, ... }: with lib;
 {
   networking.useNetworkd = true;
   networking.useDHCP = mkOverride 500 false;
@@ -17,9 +17,13 @@
   # Nix (for Flakes support, required).
   nix = {
     package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      allowed-users = [ "@wheel" ];
+      trusted-users = [ "@wheel" ];
+      extra-substituters = map (cache: cache.uri) libX.cachix.repoCacheMetadata;
+      extra-trusted-public-keys = concatMap (cache: cache.publicSigningKeys) libX.cachix.repoCacheMetadata;
+    };
   };
 
   # Do not allow mutable users, not now, not ever.
@@ -27,4 +31,7 @@
 
   # For packages that expose debugging information, include it in the path.
   environment.enableDebugInfo = true;
+
+  # Must configure firewall for each machine.
+  networking.firewall.enable = true;
 }

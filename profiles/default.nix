@@ -10,6 +10,7 @@
     ./hardware/display.nix
     ./hardware/power.nix
     ./locations/home
+    ./locations/vpn
     ./base.nix
     ./desktop.nix
     ./development.nix

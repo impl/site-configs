@@ -78,7 +78,10 @@ in lib.mkMerge [
         adapter = "AC";
         batteries = [ "BAT0" ];
       };
-      locations.home.enable = true;
+      locations = {
+        home.enable = true;
+        vpn.enable = true;
+      };
       desktop.enable = true;
       development.enable = true;
       wireless = {
@@ -92,14 +95,6 @@ in lib.mkMerge [
     services.openssh.extraConfig = ''
       StreamLocalBindUnlink yes
     '';
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    networking.firewall.enable = false;
-
-    nix.settings.allowed-users = [ "@wheel" ];
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

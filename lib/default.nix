@@ -15,8 +15,13 @@ let
       importLib = { file, attrs ? {} }: import file ({ inherit self inputs lib; } // attrs);
     in
     {
+      cachix = importLib { file = ./cachix.nix; };
+      colors = importLib { file = ./colors.nix; };
+      edid = importLib { file = ./edid.nix; };
+      encoding = importLib { file = ./encoding.nix; };
       homes = importLib { file = ./homes.nix; };
       machines = importLib { file = ./machines.nix; attrs = { inherit overlaysDir pkgsDir profilesDir; }; };
+      math = importLib { file = ./math.nix; };
       mods = importLib { file = ./mods.nix; };
 
       inherit (self.homes) mkHomeConfigurations;

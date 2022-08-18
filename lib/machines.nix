@@ -28,6 +28,7 @@
         profilesDir
         ({ pkgs, ... }: {
           _module.args = {
+            libX = self;
             pkgsX = pkgs.callPackage pkgsDir {};
           };
         })
