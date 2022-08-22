@@ -24,6 +24,10 @@
     nixpkgs_2205 = {
       url = "github:nixos/nixpkgs/nixos-22.05";
     };
+
+    systemd-user-sleep = {
+      url = "github:impl/systemd-user-sleep";
+    };
   };
 
   outputs = inputs@{ self, home-manager, nixpkgs, ... }:

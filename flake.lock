@@ -82,6 +82,21 @@
         "type": "github"
       }
     },
+    "mozilla": {
+      "locked": {
+        "lastModified": 1657214286,
+        "narHash": "sha256-rO/4oymKXU09wG2bcTt4uthPCp1XsBZjxuCJo3yVXNs=",
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "rev": "0508a66e28a5792fdfb126bbf4dec1029c2509e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
@@ -200,13 +215,47 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1659606041,
+        "narHash": "sha256-W4/u2ssr3fS4XOtltrsDD9w2kF4jYYZr6JyPGUW2jdI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5f9b871b72b24f066b1a1e189efd0669f2888c49",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
         "dwarffs": "dwarffs",
         "home-manager": "home-manager",
         "nix-sops": "nix-sops",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs_2205": "nixpkgs_2205"
+        "nixpkgs_2205": "nixpkgs_2205",
+        "systemd-user-sleep": "systemd-user-sleep"
+      }
+    },
+    "systemd-user-sleep": {
+      "inputs": {
+        "mozilla": "mozilla",
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1661203337,
+        "narHash": "sha256-TfqUR291KRdIEgIRqehC0kQLrBw7ZGInzUAHpsqZF9M=",
+        "owner": "impl",
+        "repo": "systemd-user-sleep",
+        "rev": "666cf29871b1eb50859caad23188d9867c255c7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "impl",
+        "repo": "systemd-user-sleep",
+        "type": "github"
       }
     },
     "utils": {

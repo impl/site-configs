@@ -75,6 +75,11 @@ in lib.mkMerge [
     profiles = {
       hardware.cpu.amd.enable = true;
       hardware.disk.ssd.enable = true;
+      hardware.display.internal.edid =
+        "00ffffffffffff0006af9aa400000000141f0104a51e1378030025a855499f25" +
+        "0e505400000001010101010101010101010101010101fa3c80b870b024401010" +
+        "3e002dbc10000018a72880b870b0244010103e002dbc10000018000000000000" +
+        "00000000000000000000000000000002000c2dff103cc80a081bc8202020009b";
       hardware.gpu.amd.enable = true;
       hardware.power = {
         adapter = "AC";

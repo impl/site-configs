@@ -25,6 +25,7 @@
       modules = [
         inputs.dwarffs.nixosModules.dwarffs
         inputs.nix-sops.nixosModules.default
+        inputs.systemd-user-sleep.nixosModules.systemd-user-sleep
         profilesDir
         ({ pkgs, ... }: {
           _module.args = {

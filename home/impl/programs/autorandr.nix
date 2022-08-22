@@ -39,6 +39,7 @@ in mkIf (machineConfig.profiles.gui.enable && internal.edid != null) {
       Restart = "on-failure";
     };
   };
+
   systemd.user.services."autorandr-drm-hotplug" = {
     Unit = {
       Description = "autorandr (DRM hotplug)";
@@ -55,6 +56,25 @@ in mkIf (machineConfig.profiles.gui.enable && internal.edid != null) {
       RemainAfterExit = true;
       ExecStart = "${pkgs.autorandr}/bin/autorandr --match-edid --change --default default";
       ExecReload = "${pkgs.autorandr}/bin/autorandr --match-edid --change --default default";
+      Restart = "on-failure";
+    };
+  };
+
+  systemd.user.services."autorandr-sleep" = {
+    Unit = {
+      Description = "autorandr (sleep)";
+      Before = [ "sleep.target" ];
+      StopWhenUnneeded = true;
+    };
+
+    Install = {
+      WantedBy = [ "sleep.target" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "${pkgs.autorandr}/bin/autorandr --match-edid --change --default default";
       Restart = "on-failure";
     };
   };
