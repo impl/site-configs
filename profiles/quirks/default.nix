@@ -4,7 +4,7 @@
 
 {
   imports = [
-    ./iwlwifi.nix
+    ./iwlwifi
     ./qemu-hyperv.nix
   ];
 }

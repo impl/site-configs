@@ -4,8 +4,9 @@
 
 {
   # https://bugzilla.kernel.org/show_bug.cgi?id=203709
-  boot.extraModprobeConfig = ''
-    options iwlmvm power_scheme=1
-    options iwlwifi power_save=0
-  '';
+  boot.kernelPatches = [
+    {
+      patch = ./iwlwifi-missed-beacons-timeout.patch;
+    }
+  ];
 }
