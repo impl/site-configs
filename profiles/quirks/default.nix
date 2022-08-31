@@ -6,5 +6,6 @@
   imports = [
     ./iwlwifi
     ./qemu-hyperv.nix
+    ./usbhid.nix
   ];
 }
