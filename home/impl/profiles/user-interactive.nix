@@ -5,6 +5,8 @@
 { pkgs, lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   home.packages = with pkgs; [
     acpi
+    bintools
+    dig
     file
     htop
     inetutils
@@ -13,6 +15,7 @@
     psmisc
     reuse
     sops
+    unzip
     usbutils
   ];
 }

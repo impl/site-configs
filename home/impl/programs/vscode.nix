@@ -34,19 +34,20 @@
           editorconfig.editorconfig
           golang.go
           matklad.rust-analyzer
+          stkb.rewrap
           vadimcn.vscode-lldb
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            publisher = "GitHub";
+            name = "copilot";
+            version = "1.43.6621";
+            sha256 = "sha256-JrD0t8wSvz8Z1j6n0wfkG6pfIjt2DNZmfAbaLdj8olQ=";
+          }
           {
             publisher = "mrded";
             name = "railscasts";
             version = "0.0.4";
             sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
-          }
-          {
-            publisher = "stkb";
-            name = "rewrap";
-            version = "1.14.0";
-            sha256 = "sha256-qRwKX36a1aLzE1tqaOkH7JfE//pvKdPZ07zasPF3Dl4=";
           }
         ]
       );
@@ -74,6 +75,7 @@
       "editor.fontSize" = 14;
       "editor.minimap.enabled" = true;
       "editor.suggestSelection" = "first";
+      "editor.inlineSuggest.enabled" = true;
 
       "extensions.autoUpdate" = false;
       "extensions.ignoreRecommendations" = true;
