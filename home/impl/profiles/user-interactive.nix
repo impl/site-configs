@@ -11,6 +11,7 @@
     htop
     inetutils
     lsof
+    moreutils
     pciutils
     psmisc
     reuse

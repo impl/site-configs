@@ -30,9 +30,9 @@
         }
       ] ++ map (loadAfter [ "mkhl.direnv" ]) (
         with pkgs.vscode-extensions; [
-          bbenoist.nix
           editorconfig.editorconfig
           golang.go
+          jnoortheen.nix-ide
           matklad.rust-analyzer
           stkb.rewrap
           vadimcn.vscode-lldb
@@ -86,17 +86,20 @@
 
       "files.autoSave" = "off";
 
-      "update.mode" = "none";
+      "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
+
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
 
       "telemetry.enableTelemetry" = false;
+
+      "update.mode" = "none";
 
       "window.titleBarStyle" = "native";
       "window.zoomLevel" = 0;
 
       "workbench.colorTheme" = "RailsCasts";
       "workbench.editor.untitled.hint" = "hidden";
-
-      "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
     };
   };
 }
