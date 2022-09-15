@@ -62,6 +62,7 @@
   # Enable profiles for this configuration.
   profiles = {
     locations.vpn.enable = true;
+    servers.cloudflare.encryptedTunnelConfig = ./cloudflare/config.sops.yaml;
     userInteractive.enable = true;
   };
 

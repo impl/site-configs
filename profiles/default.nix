@@ -12,6 +12,7 @@
     ./locations/home
     ./locations/vpn
     ./quirks
+    ./servers/cloudflare.nix
     ./base.nix
     ./desktop.nix
     ./development.nix
