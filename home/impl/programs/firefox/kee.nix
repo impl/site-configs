@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, pkgs }: pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon rec {
+{ lib, nur }: nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon rec {
   pname = "kee-password-manager";
   version = "3.9.5";
   addonId = "keefox@chris.tomlinson";

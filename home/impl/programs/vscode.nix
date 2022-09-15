@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+{ config, lib, machineConfig, pkgs, pkgsX, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.overrideAttrs (old: {
@@ -30,6 +30,7 @@
         }
       ] ++ map (loadAfter [ "mkhl.direnv" ]) (
         with pkgs.vscode-extensions; [
+          _4ops.terraform
           editorconfig.editorconfig
           golang.go
           jnoortheen.nix-ide
@@ -42,6 +43,12 @@
             name = "copilot";
             version = "1.43.6621";
             sha256 = "sha256-JrD0t8wSvz8Z1j6n0wfkG6pfIjt2DNZmfAbaLdj8olQ=";
+          }
+          {
+            publisher = "SteefH";
+            name = "external-formatters";
+            version = "0.2.0";
+            sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
           }
           {
             publisher = "mrded";
@@ -68,6 +75,18 @@
         "editor.formatOnSave" = true;
       };
 
+      "[terragrunt]" = {
+        "editor.formatOnSave" = true;
+      };
+
+      "[tf]" = {
+        "editor.formatOnSave" = true;
+      };
+
+      "[tfvars]" = {
+        "editor.formatOnSave" = true;
+      };
+
       "docker.showStartPage" = false;
 
       "editor.fontFamily" = builtins.toJSON config.profiles.theme.font.codeFont;
@@ -83,6 +102,15 @@
 
       "explorer.autoReveal" = true;
       "explorer.confirmDragAndDrop" = false;
+
+      "externalFormatters.languages" = {
+        "terragrunt" = {
+          "command" = "${pkgsX.hclfmt}/bin/hclfmt";
+        };
+      } // (genAttrs [ "tf" "tfvars"] (_language: {
+        "command" = "${pkgs.terraform}/bin/terraform";
+        "arguments" = [ "fmt" "-" ];
+      }));
 
       "files.autoSave" = "off";
 
