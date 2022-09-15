@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 { config, lib, pkgs, ... }: with lib; let
   cfg = config.profiles.servers.cloudflare;
 in
