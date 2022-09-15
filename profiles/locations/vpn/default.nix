@@ -13,16 +13,32 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.tailscale.enable = true;
-    services.openssh = {
-      startWhenNeeded = true;
-      openFirewall = mkDefault false;
-    };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.tailscale.enable = true;
+      services.openssh = {
+        startWhenNeeded = true;
+        openFirewall = mkDefault false;
+      };
 
-    networking.firewall = {
-      trustedInterfaces = [ config.services.tailscale.interfaceName ];
-      checkReversePath = "loose";
-    };
-  };
+      networking.firewall = {
+        trustedInterfaces = [ config.services.tailscale.interfaceName ];
+        checkReversePath = "loose";
+      };
+    }
+    (mkIf (versionOlder config.system.nixos.release "22.11") {
+      # Fixed in 22.11 by https://github.com/NixOS/nixpkgs/pull/178483
+      networking.dhcpcd.denyInterfaces = [ config.services.tailscale.interfaceName ];
+
+      systemd.network.networks."50-tailscale" = {
+        matchConfig = {
+          Name = config.services.tailscale.interfaceName;
+        };
+        linkConfig = {
+          Unmanaged = true;
+          ActivationPolicy = "manual";
+        };
+      };
+    })
+  ]);
 }
