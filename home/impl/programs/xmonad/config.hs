@@ -48,9 +48,9 @@ myStartupHook = mconcat
   , mateRegister
   ]
 
-data DBusStorage = DBusStorage (Maybe D.Client)
+newtype DBusStorage = DBusStorage (Maybe D.Client)
 instance ExtensionClass DBusStorage where
-  initialValue = DBusStorage (Nothing)
+  initialValue = DBusStorage Nothing
 
 dbusConnect :: X ()
 dbusConnect = do
@@ -84,7 +84,7 @@ myKeys conf@(XConfig {modMask = mod}) = M.fromList $
 
 myLayoutHook =
   avoidStruts .
-  (NB.lessBorders NB.OnlyScreenFloat) .
+  NB.lessBorders NB.OnlyScreenFloat .
   NB.noBorders .
   refocusLastLayoutHook .
   trackFloating .
@@ -148,7 +148,7 @@ myMigrateManageHook :: Query Bool -> ManageHook
 myMigrateManageHook query = do
   newWindow <- ask
   focusedWindow <- liftX $ gets (W.peek . windowset)
-  let focusedQuery = fromMaybe (return False) $ flip local query <$> const <$> focusedWindow
+  let focusedQuery = maybe (return False) (flip local query <$> const) focusedWindow
 
   query <&&> focusedQuery --> do
     liftX $ WS.runStateQuery (WS.put $ MigrateWindowState <$> focusedWindow) newWindow

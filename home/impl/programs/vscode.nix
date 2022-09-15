@@ -6,21 +6,25 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.overrideAttrs (old: {
-      buildInputs = old.buildInputs or [] ++ [ pkgs.makeWrapper ];
-      postInstall = old.postInstall or [] ++ [ ''
-        wrapProgram $out/bin/code --add-flags '--force-disable-user-env'
-      '' ];
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+
+      postInstall = (old.postInstall or "") + ''
+        wrapProgram $out/bin/code \
+          --add-flags --force-disable-user-env
+      '';
     });
-    extensions = let
-      loadAfter = deps: pkg: pkg.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.jq pkgs.moreutils ];
-        preInstall = (old.preInstall or "") + ''
-          jq '.extensionDependencies |= . + $deps' \
-            --argjson deps ${escapeShellArg (builtins.toJSON deps)} \
-            package.json | sponge package.json
-        '';
-      });
-    in
+    mutableExtensionsDir = false;
+    extensions =
+      let
+        loadAfter = deps: pkg: pkg.overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pkgs.jq pkgs.moreutils ];
+          preInstall = (old.preInstall or "") + ''
+            jq '.extensionDependencies |= . + $deps' \
+              --argjson deps ${escapeShellArg (builtins.toJSON deps)} \
+              package.json | sponge package.json
+          '';
+        });
+      in
       pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           publisher = "mkhl";
@@ -33,7 +37,9 @@
           _4ops.terraform
           editorconfig.editorconfig
           golang.go
+          haskell.haskell
           jnoortheen.nix-ide
+          justusadam.language-haskell
           matklad.rust-analyzer
           stkb.rewrap
           vadimcn.vscode-lldb
@@ -113,6 +119,8 @@
       }));
 
       "files.autoSave" = "off";
+
+      "haskell.manageHLS" = "PATH";
 
       "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
 
