@@ -6,6 +6,6 @@
   'use strict';
 
   window.setInterval(() => {
-    document.getElementById('app').dispatchEvent(new Event('mousemove'));
+    document.body.dispatchEvent(new Event('scroll'));
   }, 60000);
 })();
