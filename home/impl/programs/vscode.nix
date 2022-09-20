@@ -35,7 +35,9 @@
       ] ++ map (loadAfter [ "mkhl.direnv" ]) (
         with pkgs.vscode-extensions; [
           _4ops.terraform
+          dbaeumer.vscode-eslint
           editorconfig.editorconfig
+          esbenp.prettier-vscode
           golang.go
           haskell.haskell
           jnoortheen.nix-ide
@@ -62,9 +64,19 @@
             version = "0.0.4";
             sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
           }
+          {
+            publisher = "stylelint";
+            name = "vscode-stylelint";
+            version = "1.2.3";
+            sha256 = "sha256-zs7tVrevvWNCpOrLyGIHeIpjRweVj9GG0KpV9j5NN0w=";
+          }
         ]
       );
     userSettings = {
+      "[css]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
       "[go]" = {
         "editor.snippetSuggestions" = "none";
         "editor.formatOnSave" = true;
@@ -73,8 +85,20 @@
         };
       };
 
+      "[javascript]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
+      "[javascriptreact]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
       "[nix]" = {
         "editor.tabSize" = 2;
+      };
+
+      "[postcss]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
 
       "[rust]" = {
@@ -92,6 +116,16 @@
       "[tfvars]" = {
         "editor.formatOnSave" = true;
       };
+
+      "[typescript]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
+      "[typescriptreact]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
+      "css.validate" = false;
 
       "docker.showStartPage" = false;
 
@@ -126,6 +160,8 @@
 
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+
+      "stylelint.validate" = ["css" "postcss"];
 
       "telemetry.enableTelemetry" = false;
 
