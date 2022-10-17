@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, ... }: with lib;
+{ config, lib, pkgs, ... }: with lib;
 let
   cfg = config.profiles.printing;
 in
@@ -14,6 +14,18 @@ in
   };
 
   config = mkIf cfg.enable {
+    hardware.sane = {
+      enable = true;
+      extraBackends = with pkgs; [ sane-airscan ];
+    };
+
+    users.groups = genAttrs [ "lp" "scanner" ]
+      (_: {
+        members = mapAttrsToList
+          (n: u: u.name)
+          (filterAttrs (n: u: u.isNormalUser) config.users.users);
+      });
+
     services.printing.enable = true;
   };
 }
