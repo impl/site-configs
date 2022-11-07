@@ -41,6 +41,8 @@
       ".envrc"
 
       # Editors
+      ".calva/"
+      ".lsp/"
       ".vscode/"
     ];
     includes = [

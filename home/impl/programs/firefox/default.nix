@@ -220,6 +220,7 @@
           makeOverridable bubblewrappedFirefox { };
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           multi-account-containers
+          react-devtools
           ublock-origin
           (pkgs.callPackage ./kee.nix { })
           userScriptsExtension

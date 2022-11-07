@@ -49,14 +49,26 @@
           {
             publisher = "GitHub";
             name = "copilot";
-            version = "1.43.6621";
-            sha256 = "sha256-JrD0t8wSvz8Z1j6n0wfkG6pfIjt2DNZmfAbaLdj8olQ=";
+            version = "1.55.7117";
+            sha256 = "sha256-06uTcRfT1QPI1eJyJSq0bbg8bIgaAtsmApjSMGtstYY=";
           }
           {
             publisher = "SteefH";
             name = "external-formatters";
             version = "0.2.0";
             sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
+          }
+          {
+            publisher = "betterthantomorrow";
+            name = "calva";
+            version = "2.0.313";
+            sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
+          }
+          {
+            publisher = "flowtype";
+            name = "flow-for-vscode";
+            version = "2.2.0";
+            sha256 = "sha256-NwQvbhls0deA8hwa/dqfNW1cjDsAJb5N5PAQhQwE4VY=";
           }
           {
             publisher = "mrded";
@@ -125,6 +137,9 @@
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
 
+      "calva.clojureLspPath" = "${pkgs.clojure-lsp}/bin/clojure-lsp";
+      "calva.showCalvaSaysOnStart" = false;
+
       "css.validate" = false;
 
       "docker.showStartPage" = false;
@@ -147,23 +162,31 @@
         "terragrunt" = {
           "command" = "${pkgsX.hclfmt}/bin/hclfmt";
         };
-      } // (genAttrs [ "tf" "tfvars"] (_language: {
+      } // (genAttrs [ "tf" "tfvars" ] (_language: {
         "command" = "${pkgs.terraform}/bin/terraform";
         "arguments" = [ "fmt" "-" ];
       }));
 
       "files.autoSave" = "off";
 
+      "flow.pathToFlow" = "${pkgs.flow}/bin/flow";
+      "flow.useBundledFlow" = false;
+      "flow.useNPMPackagedFlow" = false;
+
       "haskell.manageHLS" = "PATH";
+
+      "javascript.suggest.autoImports" = false;
 
       "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
 
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
 
-      "stylelint.validate" = ["css" "postcss"];
+      "stylelint.validate" = [ "css" "postcss" ];
 
       "telemetry.enableTelemetry" = false;
+
+      "typescript.suggest.autoImports" = false;
 
       "update.mode" = "none";
 
