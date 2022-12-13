@@ -21,8 +21,8 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixpkgs_2205 = {
-      url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs_2211 = {
+      url = "github:nixos/nixpkgs/nixos-22.11";
     };
 
     systemd-user-sleep = {
