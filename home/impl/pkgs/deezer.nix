@@ -13,14 +13,15 @@
 , p7zip
 , stdenv
 , udev
-}: let
-  version = "5.30.350";
-  aunetxVersion = "v5.30.220-2";
+}:
+let
+  version = "5.30.391";
+  aunetxVersion = "v5.30.350-1";
 
   electron = electron_13.overrideAttrs (old: {
     meta = old.meta // {
       # Ignore EOL for old Electron versions.
-      knownVulnerabilities = [];
+      knownVulnerabilities = [ ];
     };
   });
 
@@ -28,20 +29,21 @@
     owner = "aunetx";
     repo = "deezer-linux";
     rev = aunetxVersion;
-    sparseCheckout = ''
-      extra
-      icons
-      patches
-    '';
-    sha256 = "sha256-CiyLtsgkmgPFCz3ti0z4wbcNWNN0jT+FdzYevbMPDhI=";
+    sparseCheckout = [
+      "extra"
+      "icons"
+      "patches"
+    ];
+    sha256 = "sha256-J471ZN6lnmifKwGqDuD26rATWeCD2SEPhnUquhiE2dU=";
   };
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "deezer-desktop";
   inherit version;
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-KOHZKsgc/+5NSbEeeprOsI963sk7UT9M6mdQUaVweks=";
+    sha256 = "sha256-ivdt22rmDSkkChWp3YrmCuOtGbLWIEPcbq1dem1W1yI=";
   };
 
   meta = with lib; {

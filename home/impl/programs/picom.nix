@@ -13,7 +13,6 @@
     }
     {
       # Some minor adjustments to try to prevent tearing/flickering.
-      experimentalBackends = true;
       backend = "xrender";
       settings = {
         unredir-if-possible = false;
