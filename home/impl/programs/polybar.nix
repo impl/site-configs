@@ -76,7 +76,7 @@
             builtins.map (font: "${font}:size=${builtins.toString config.profiles.theme.font.size};2")
               ([ config.profiles.theme.font.generalFont ] ++ config.profiles.theme.font.extraFonts)
             ++ [
-              "Material Design Icons:size=13;3"
+              "Material Design Icons:size=13;4"
               "Material Icons:size=13;4"
             ];
 
@@ -121,17 +121,18 @@
         "module/workspaces" = {
           type = "internal/xworkspaces";
           format = {
-            text = "<label-state>";
+            text = "<label-monitor><label-state>";
             padding = 0;
           };
 
           label = with config.profiles.theme.colors; with libX.colors; builtins.foldl' recursiveUpdate {} [
-            (genAttrs [ "active" "urgent" "empty" "occupied" ] (type: {
+            (genAttrs [ "monitor" "active" "urgent" "empty" "occupied" ] (type: {
               text = "%name%";
               padding = 4;
               background = "\${colors.background}";
             }))
             {
+              monitor.text = "󰍹";
               active.background = toHex' (scaleAlpha (-45) primary);
               urgent.background = "\${colors.urgent}";
               empty.foreground = toHex' (scaleAlpha (-45) text);
