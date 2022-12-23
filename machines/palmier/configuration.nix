@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, ... }:
 let
-  mkUser = { name, extraConfig ? {} }: {
+  mkUser = { name, extraConfig ? { } }: {
     sops.secrets."users/users/${name}/hashedPassword" = {
       sources = [
         {
@@ -18,7 +18,8 @@ let
       passwordFile = config.sops.secrets."users/users/${name}/hashedPassword".target;
     };
   };
-in lib.mkMerge [
+in
+lib.mkMerge [
   {
     sops.ageKeySecretSource = {
       file = ./config.sops.yaml;
@@ -48,7 +49,7 @@ in lib.mkMerge [
     };
 
     sops.bootSecrets."/keyfile.root" = {
-      sources = [ { file = ./keyfile.root.sops; } ];
+      sources = [{ file = ./keyfile.root.sops; }];
     };
     boot.initrd.luks.devices."root" = {
       device = lib.mkDefault "/dev/loop0";
@@ -118,7 +119,7 @@ in lib.mkMerge [
     name = "impl";
     extraConfig = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "dialout" "wheel" ];
     };
   })
 ]
