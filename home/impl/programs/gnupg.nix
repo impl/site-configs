@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -30,14 +30,16 @@
     };
   };
 
-  home.activation."gnupgInit" = let
-    keyFiles = filesystem.listFilesRecursive ../../../keys;
-  in hm.dag.entryBetween [ "sopsInit" ] [ "writeBoundary" ] ''
-    mkdir -p ${config.programs.gpg.homedir}
-    chmod 0700 ${config.programs.gpg.homedir}
-    ${concatStringsSep "\n" (map (keyFile: ''
-      ${config.programs.gpg.package}/bin/gpg --import ${escapeShellArg keyFile}
-    '') keyFiles)}
-    ${config.programs.gpg.package}/bin/gpg --update-trustdb
-  '';
+  home.activation."gnupgInit" =
+    let
+      keyFiles = filesystem.listFilesRecursive ../../../keys;
+    in
+    hm.dag.entryBetween [ "sopsInit" ] [ "writeBoundary" ] ''
+      mkdir -p ${config.programs.gpg.homedir}
+      chmod 0700 ${config.programs.gpg.homedir}
+      ${concatStringsSep "\n" (map (keyFile: ''
+        ${config.programs.gpg.package}/bin/gpg --import ${escapeShellArg keyFile}
+      '') keyFiles)}
+      ${config.programs.gpg.package}/bin/gpg --update-trustdb
+    '';
 }

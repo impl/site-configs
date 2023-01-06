@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -42,6 +42,7 @@
 
       # Editors
       ".calva/"
+      ".clj-kondo/"
       ".lsp/"
       ".vscode/"
     ];

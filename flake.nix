@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -49,7 +49,7 @@
       # Create installer packages for each system type we define.
       packages = with nixpkgs.lib; mapAttrs' (_: nixosConfiguration: let
         system = nixosConfiguration.config.nixpkgs.system;
-        installerConfiguration = lib.mkNixosConfiguration (build: build "22.05" {
+        installerConfiguration = lib.mkNixosConfiguration (build: build "22.11" {
           inherit system;
           modules = [
             ./installer
