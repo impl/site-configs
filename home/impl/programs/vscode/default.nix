@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -24,66 +24,67 @@
               package.json | sponge package.json
           '';
         });
+        extensions' = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            publisher = "mkhl";
+            name = "direnv";
+            version = "0.6.1";
+            sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
+          }
+        ] ++ map (loadAfter [ "mkhl.direnv" ]) (
+          with pkgs.vscode-extensions; [
+            _4ops.terraform
+            dbaeumer.vscode-eslint
+            editorconfig.editorconfig
+            esbenp.prettier-vscode
+            golang.go
+            haskell.haskell
+            jnoortheen.nix-ide
+            justusadam.language-haskell
+            matklad.rust-analyzer
+            stkb.rewrap
+            vadimcn.vscode-lldb
+          ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+            {
+              publisher = "GitHub";
+              name = "copilot";
+              version = "1.55.7117";
+              sha256 = "sha256-06uTcRfT1QPI1eJyJSq0bbg8bIgaAtsmApjSMGtstYY=";
+            }
+            {
+              publisher = "SteefH";
+              name = "external-formatters";
+              version = "0.2.0";
+              sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
+            }
+            {
+              publisher = "betterthantomorrow";
+              name = "calva";
+              version = "2.0.313";
+              sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
+            }
+            {
+              publisher = "flowtype";
+              name = "flow-for-vscode";
+              version = "2.2.0";
+              sha256 = "sha256-NwQvbhls0deA8hwa/dqfNW1cjDsAJb5N5PAQhQwE4VY=";
+            }
+            {
+              publisher = "mrded";
+              name = "railscasts";
+              version = "0.0.4";
+              sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
+            }
+            {
+              publisher = "stylelint";
+              name = "vscode-stylelint";
+              version = "1.2.3";
+              sha256 = "sha256-zs7tVrevvWNCpOrLyGIHeIpjRweVj9GG0KpV9j5NN0w=";
+            }
+          ]
+        );
       in
-      pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          publisher = "mkhl";
-          name = "direnv";
-          version = "0.6.1";
-          sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
-        }
-      ] ++ map (loadAfter [ "mkhl.direnv" ]) (
-        with pkgs.vscode-extensions; [
-          _4ops.terraform
-          dbaeumer.vscode-eslint
-          editorconfig.editorconfig
-          esbenp.prettier-vscode
-          golang.go
-          haskell.haskell
-          jnoortheen.nix-ide
-          justusadam.language-haskell
-          matklad.rust-analyzer
-          stkb.rewrap
-          vadimcn.vscode-lldb
-        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            publisher = "GitHub";
-            name = "copilot";
-            version = "1.55.7117";
-            sha256 = "sha256-06uTcRfT1QPI1eJyJSq0bbg8bIgaAtsmApjSMGtstYY=";
-          }
-          {
-            publisher = "SteefH";
-            name = "external-formatters";
-            version = "0.2.0";
-            sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
-          }
-          {
-            publisher = "betterthantomorrow";
-            name = "calva";
-            version = "2.0.313";
-            sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
-          }
-          {
-            publisher = "flowtype";
-            name = "flow-for-vscode";
-            version = "2.2.0";
-            sha256 = "sha256-NwQvbhls0deA8hwa/dqfNW1cjDsAJb5N5PAQhQwE4VY=";
-          }
-          {
-            publisher = "mrded";
-            name = "railscasts";
-            version = "0.0.4";
-            sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
-          }
-          {
-            publisher = "stylelint";
-            name = "vscode-stylelint";
-            version = "1.2.3";
-            sha256 = "sha256-zs7tVrevvWNCpOrLyGIHeIpjRweVj9GG0KpV9j5NN0w=";
-          }
-        ]
-      );
+      extensions' ++ [ (pkgs.callPackage ./extensions-json.nix { drvs = extensions'; }) ];
     userSettings = {
       "[css]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
