@@ -47,7 +47,17 @@
       ".vscode/"
     ];
     includes = [
-      { path = "${config.home.homeDirectory}/${config.home.file.".config/git/config-send-email".target}"; }
+      {
+        path = "${config.home.homeDirectory}/${config.home.file.".config/git/config-send-email".target}";
+      }
+      {
+        condition = "gitdir:~/";
+        contents = {
+          url = {
+            "git@github.com:" = { insteadOf = "https://github.com/"; };
+          };
+        };
+      }
     ];
     extraConfig = {
       init = {
@@ -63,9 +73,6 @@
       };
       rerere = {
         enabled = true;
-      };
-      url = {
-        "git@github.com:" = { insteadOf = "https://github.com/"; };
       };
       sendemail = {
         confirm = "always";
