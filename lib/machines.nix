@@ -30,6 +30,7 @@
         ({ pkgs, ... }: {
           _module.args = {
             libX = self;
+            pkgsUnstable = inputs.nixpkgs.legacyPackages.${pkgs.system};
             pkgsX = pkgs.callPackage pkgsDir {};
           };
         })
