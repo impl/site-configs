@@ -34,6 +34,7 @@
         ] ++ map (loadAfter [ "mkhl.direnv" ]) (
           with pkgs.vscode-extensions; [
             _4ops.terraform
+            bierner.markdown-mermaid
             dbaeumer.vscode-eslint
             editorconfig.editorconfig
             esbenp.prettier-vscode
@@ -42,13 +43,16 @@
             jnoortheen.nix-ide
             justusadam.language-haskell
             matklad.rust-analyzer
+            ms-python.python
+            ms-python.vscode-pylance
             stkb.rewrap
             vadimcn.vscode-lldb
+            yzhang.markdown-all-in-one
           ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
               publisher = "GitHub";
               name = "copilot";
-              version = "1.55.7117";
+              version = "1.71.8269";
               sha256 = "sha256-06uTcRfT1QPI1eJyJSq0bbg8bIgaAtsmApjSMGtstYY=";
             }
             {
@@ -56,6 +60,12 @@
               name = "external-formatters";
               version = "0.2.0";
               sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
+            }
+            {
+              publisher = "bierner";
+              name = "markdown-footnotes";
+              version = "0.1.1";
+              sha256 = "sha256-h/Iyk8CKFr0M5ULXbEbjFsqplnlN7F+ZvnUTy1An5t4=";
             }
             {
               publisher = "betterthantomorrow";
@@ -74,6 +84,18 @@
               name = "railscasts";
               version = "0.0.4";
               sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
+            }
+            {
+              publisher = "ms-python";
+              name = "black-formatter";
+              version = "2022.7.13271013";
+              sha256 = "sha256-wXAIPrk52L9xZNY3bitMUaUNl5q0iCNmRKK+Z/ZHmsU=";
+            }
+            {
+              publisher = "ms-python";
+              name = "isort";
+              version = "2023.9.10341117";
+              sha256 = "sha256-fsng4p2JqqlXv0P74EWIOmU6C6yAECWYQjKpveHLQVY=";
             }
             {
               publisher = "stylelint";
@@ -112,6 +134,14 @@
 
       "[postcss]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
+      "[python]" = {
+        "editor.defaultFormatter" = "ms-python.black-formatter";
+        "editor.formatOnSave" = true;
+        "editor.codeActionsOnSave" = {
+          "source.organizeImports" = true;
+        };
       };
 
       "[rust]" = {
@@ -176,12 +206,16 @@
 
       "haskell.manageHLS" = "PATH";
 
+      "isort.args" = [ "--profile" "black" ];
+
       "javascript.suggest.autoImports" = false;
 
       "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
 
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+
+      "python.formatting.provider" = "none";
 
       "stylelint.validate" = [ "css" "postcss" ];
 
