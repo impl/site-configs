@@ -24,7 +24,6 @@
     ./programs/git
     ./programs/keepass
     ./programs/vim
-    ./programs/vscode
     ./programs/xmonad
     ./programs/zsh
     ./programs/autorandr.nix
@@ -41,6 +40,7 @@
     ./programs/polybar.nix
     ./programs/rofi.nix
     ./programs/steam.nix
+    ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
     ./theme
   ];

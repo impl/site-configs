@@ -218,14 +218,14 @@
               };
           in
           makeOverridable bubblewrappedFirefox { };
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          multi-account-containers
-          react-devtools
-          ublock-origin
-          (pkgs.callPackage ./kee.nix { })
-          userScriptsExtension
-        ];
         profiles."impl" = {
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            multi-account-containers
+            react-devtools
+            ublock-origin
+            (pkgs.callPackage ./kee.nix { })
+            userScriptsExtension
+          ];
           settings = {
             "browser.aboutConfig.showWarning" = false;
             "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
