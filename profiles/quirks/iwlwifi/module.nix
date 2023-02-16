@@ -2,18 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ bc
-, bison
-, buildPackages
-, elfutils
-, flex
-, kernel
-, lib
-, openssl
-, python3Minimal
-, stdenv
-, zlib
-}:
+{ buildPackages, kernel, lib, stdenv }:
 stdenv.mkDerivation rec {
   pname = "iwlwifi";
   inherit (kernel) version;
@@ -26,27 +15,22 @@ stdenv.mkDerivation rec {
   };
 
   postUnpack = ''
-    chmod -R u+w kernel
-    tar -C kernel/source \
-      -xf ${kernel.src} \
-      --strip-components=1 \
-      --wildcards \
-      '*/drivers/net/wireless/intel/'
+    tar -C kernel/source -xf ${kernel.src} --strip-components=1 --wildcards '*/drivers/net/wireless/intel/'
   '';
 
-  sourceRoot = "kernel/source";
-
+  patchFlags = [ "-p1" "-d" "source" ];
   patches = [
     ./iwlwifi-missed-beacons-timeout.patch
   ];
 
   postPatch = ''
-    substituteInPlace drivers/net/wireless/intel/iwlwifi/Makefile \
+    substituteInPlace source/drivers/net/wireless/intel/iwlwifi/Makefile \
       --replace '$(src)' '$(srctree)/$(src)'
   '';
 
+  makefile = "source/Makefile";
   makeFlags = [
-    "O=../build"
+    "O=build"
     "M=drivers/net/wireless/intel/iwlwifi"
     "CC=${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc"
     "HOSTCC=${buildPackages.stdenv.cc}/bin/${buildPackages.stdenv.cc.targetPrefix}cc"
