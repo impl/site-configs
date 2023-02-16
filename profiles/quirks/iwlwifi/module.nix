@@ -16,46 +16,49 @@
 }:
 stdenv.mkDerivation rec {
   pname = "iwlwifi";
-  inherit (kernel) version src;
+  inherit (kernel) version;
 
   hardeningDisable = [ "pic" "format" ];
 
-  nativeBuildInputs = [ bc bison elfutils flex openssl python3Minimal zlib ];
+  src = builtins.path {
+    name = "kernel";
+    path = "${kernel.dev}/lib/modules/${kernel.modDirVersion}";
+  };
+
+  postUnpack = ''
+    chmod -R u+w kernel
+    tar -C kernel/source \
+      -xf ${kernel.src} \
+      --strip-components=1 \
+      --wildcards \
+      '*/drivers/net/wireless/intel/'
+  '';
+
+  sourceRoot = "kernel/source";
 
   patches = [
     ./iwlwifi-missed-beacons-timeout.patch
   ];
 
   postPatch = ''
-    patchShebangs scripts
-  '';
-
-  postConfigure = ''
-    cp ${kernel.configfile} .config
+    substituteInPlace drivers/net/wireless/intel/iwlwifi/Makefile \
+      --replace '$(src)' '$(srctree)/$(src)'
   '';
 
   makeFlags = [
+    "O=../build"
+    "M=drivers/net/wireless/intel/iwlwifi"
     "CC=${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc"
     "HOSTCC=${buildPackages.stdenv.cc}/bin/${buildPackages.stdenv.cc.targetPrefix}cc"
     "HOSTLD=${buildPackages.stdenv.cc.bintools}/bin/${buildPackages.stdenv.cc.targetPrefix}ld"
     "ARCH=${stdenv.hostPlatform.linuxArch}"
-    "INSTALL_MOD_PATH=$(out)"
+    "INSTALL_MOD_PATH=${builtins.placeholder "out"}"
   ] ++ lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
     "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
   ];
 
-  buildPhase = ''
-    runHook preBuild
-    make $makeFlags modules_prepare
-    make $makeFlags M=drivers/net/wireless/intel/iwlwifi modules
-    runHook postBuild
-  '';
-
-  installPhase = ''
-    runHook preInstall
-    make $makeFlags M=drivers/net/wireless/intel/iwlwifi modules_install
-    runHook postInstall
-  '';
+  buildFlags = [ "modules" ];
+  installTargets = [ "modules_install" ];
 
   meta = {
     description = "Intel Wireless WiFi Next Gen AGN - Wireless-N/Advanced-N/Ultimate-N (iwlwifi)";
