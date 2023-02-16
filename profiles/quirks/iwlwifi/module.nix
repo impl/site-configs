@@ -9,6 +9,7 @@
 , flex
 , kernel
 , lib
+, openssl
 , python3Minimal
 , stdenv
 , zlib
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "pic" "format" ];
 
-  nativeBuildInputs = [ bc bison elfutils flex python3Minimal zlib ];
+  nativeBuildInputs = [ bc bison elfutils flex openssl python3Minimal zlib ];
 
   patches = [
     ./iwlwifi-missed-beacons-timeout.patch
