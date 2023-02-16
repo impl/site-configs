@@ -4,9 +4,7 @@
 
 { config, lib, ... }: with lib; {
   # https://bugzilla.kernel.org/show_bug.cgi?id=203709
-  boot.kernelPatches = mkIf config.profiles.wireless.enable [
-    {
-      patch = ./iwlwifi-missed-beacons-timeout.patch;
-    }
+  boot.extraModulePackages = mkIf config.profiles.wireless.enable [
+    (config.boot.kernelPackages.callPackage ./module.nix { })
   ];
 }
