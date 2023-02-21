@@ -26,12 +26,7 @@ lib.mkMerge [
       key = ''["config"]["sops"]["ageKey"]'';
     };
 
-    boot.kernelPackages = pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor (pkgs.linux_latest.override {
-      structuredExtraConfig = with lib.kernel; {
-        # https://bugzilla.kernel.org/show_bug.cgi?id=216345
-        PINCTRL_AMD = yes;
-      };
-    }));
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     boot.supportedFilesystems = [ "btrfs" ];
 

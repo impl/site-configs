@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ buildPackages, kernel, lib, stdenv }:
+{ buildPackages, fetchpatch, kernel, lib, stdenv }:
 stdenv.mkDerivation rec {
   pname = "iwlwifi";
   inherit (kernel) version;
@@ -21,6 +21,11 @@ stdenv.mkDerivation rec {
   patchFlags = [ "-p1" "-d" "source" ];
   patches = [
     ./iwlwifi-missed-beacons-timeout.patch
+    (fetchpatch {
+      url = "https://lore.kernel.org/all/iwlwifi.20211017113927.fc896bc5cdaa.I1d11da71b8a5cbe921a37058d5f578f1b14a2023@changeid/raw";
+      sha256 = "sha256-CCEysSEw32q6a3equ9YE9C6QFqj8JGEgE/LSanSG9io=";
+      revert = true;
+    })
   ];
 
   postPatch = ''
