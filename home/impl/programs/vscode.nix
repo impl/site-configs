@@ -49,6 +49,7 @@
           stkb.rewrap
           vadimcn.vscode-lldb
           yzhang.markdown-all-in-one
+          zxh404.vscode-proto3
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             publisher = "GitHub";
@@ -63,16 +64,22 @@
             sha256 = "sha256-zqqW5/QgVvD2EF/b/vx/kc8rD/YV38l5b4YXSFKE61M=";
           }
           {
+            publisher = "betterthantomorrow";
+            name = "calva";
+            version = "2.0.313";
+            sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
+          }
+          {
             publisher = "bierner";
             name = "markdown-footnotes";
             version = "0.1.1";
             sha256 = "sha256-h/Iyk8CKFr0M5ULXbEbjFsqplnlN7F+ZvnUTy1An5t4=";
           }
           {
-            publisher = "betterthantomorrow";
-            name = "calva";
-            version = "2.0.313";
-            sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
+            publisher = "bufbuild";
+            name = "vscode-buf";
+            version = "0.5.1";
+            sha256 = "sha256-73+VblPnfozEyqdqUJsUjGY6FKYS70keXIpEXS8EvxA=";
           }
           {
             publisher = "flowtype";
@@ -135,6 +142,10 @@
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
 
+      "[proto3]" = {
+        "editor.defaultFormatter" = "bufbuild.vscode-buf";
+      };
+
       "[python]" = {
         "editor.defaultFormatter" = "ms-python.black-formatter";
         "editor.formatOnSave" = true;
@@ -166,6 +177,8 @@
       "[typescriptreact]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
+
+      "buf.binaryPath" = "${pkgs.buf}/bin/buf";
 
       "calva.clojureLspPath" = "${pkgs.clojure-lsp}/bin/clojure-lsp";
       "calva.showCalvaSaysOnStart" = false;
@@ -213,6 +226,11 @@
 
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+
+      "protoc.options" = [
+        "-I${config.xdg.cacheHome}/buf/v1/module/buf.build"
+      ];
+      "protoc.path" = "${pkgs.protobuf}/bin/protoc";
 
       "python.formatting.provider" = "none";
 
