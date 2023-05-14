@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, libsForQt5, newScope }: lib.makeScope newScope (pkgs: {
+{ lib, newScope }: lib.makeScope newScope (pkgs: {
   buildBubblewrap = pkgs.callPackage ./build-bubblewrap.nix { };
   buildFirefoxUserScriptsExtension = pkgs.callPackage ./build-firefox-userscripts-extension { };
   deezer = pkgs.callPackage ./deezer.nix { };
