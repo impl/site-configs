@@ -18,7 +18,7 @@
       };
       builders = builtins.mapAttrs mkBuilder {
         "unstable" = inputs.nixpkgs;
-        "22.11" = inputs.nixpkgs_2211;
+        "23.05" = inputs.nixpkgs_2305;
       };
       build = v: builders.${v};
     in (eval build).extendModules {

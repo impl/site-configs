@@ -12,7 +12,6 @@
 
   boot.loader.grub = {
     enable = true;
-    version = 2;
     forcei686 = true;
     device = "/dev/sda";
   };

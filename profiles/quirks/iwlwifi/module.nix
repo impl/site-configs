@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ buildPackages, fetchpatch, kernel, lib, stdenv }:
+{ buildPackages, fetchpatch, kernel, lib, pahole, stdenv }:
 stdenv.mkDerivation rec {
   pname = "iwlwifi";
   inherit (kernel) version;
@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
     name = "kernel";
     path = "${kernel.dev}/lib/modules/${kernel.modDirVersion}";
   };
+
+  nativeBuildInputs = [ pahole ];
 
   postUnpack = ''
     tar -C kernel/source -xf ${kernel.src} --strip-components=1 --wildcards '*/drivers/net/wireless/intel/'

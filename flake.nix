@@ -21,8 +21,8 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixpkgs_2211 = {
-      url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs_2305 = {
+      url = "github:nixos/nixpkgs/nixos-23.05";
     };
 
     systemd-user-sleep = {
@@ -49,7 +49,7 @@
       # Create installer packages for each system type we define.
       packages = with nixpkgs.lib; mapAttrs' (_: nixosConfiguration: let
         system = nixosConfiguration.config.nixpkgs.system;
-        installerConfiguration = lib.mkNixosConfiguration (build: build "22.11" {
+        installerConfiguration = lib.mkNixosConfiguration (build: build "23.05" {
           inherit system;
           modules = [
             ./installer
