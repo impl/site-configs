@@ -18,5 +18,10 @@ creation_rules:
     age1mzk5dgdc03aatjv707dv4m6ekmxkwr8s2hz4f93j2nnt5kf6m4qqmu5qp5,
     age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu,
     age1dd2u2uykmzha8mnf3qtrt800p8lpn6wuq9537u7ct3f70gh0w59s0tdzyw
+- path_regex: ^profiles/locations/away/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+  age: >-
+    age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu,
+    age1dd2u2uykmzha8mnf3qtrt800p8lpn6wuq9537u7ct3f70gh0w59s0tdzyw
 - path_regex: ^home/impl/
   pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA

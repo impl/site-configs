@@ -82,6 +82,7 @@ lib.mkMerge [
         batteries = [ "BAT0" ];
       };
       locations = {
+        away.enable = true;
         home.enable = true;
         vpn.enable = true;
       };

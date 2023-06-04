@@ -9,6 +9,7 @@
     ./hardware/gpu
     ./hardware/display.nix
     ./hardware/power.nix
+    ./locations/away
     ./locations/home
     ./locations/vpn
     ./quirks
