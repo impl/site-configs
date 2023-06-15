@@ -79,4 +79,8 @@
       };
     };
   };
+
+  home.packages = [
+    pkgs.git-repo
+  ];
 }

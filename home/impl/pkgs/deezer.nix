@@ -15,8 +15,8 @@
 , udev
 }:
 let
-  version = "5.30.391";
-  aunetxVersion = "v5.30.350-1";
+  version = "5.30.560";
+  aunetxVersion = "v5.30.520-1";
 
   electron = electron_13.overrideAttrs (old: {
     meta = old.meta // {
@@ -34,7 +34,7 @@ let
       "icons"
       "patches"
     ];
-    sha256 = "sha256-J471ZN6lnmifKwGqDuD26rATWeCD2SEPhnUquhiE2dU=";
+    sha256 = "sha256-PIaJvspQt9vGb3YJ9obGT+L/ZwKqESAO6yM5hm7W6zU=";
   };
 in
 stdenv.mkDerivation rec {
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-ivdt22rmDSkkChWp3YrmCuOtGbLWIEPcbq1dem1W1yI=";
+    sha256 = "sha256-bc3bfWNCLQO1jNtW+2GczN97Jxx7R4oFAxFCegIABKs=";
   };
 
   meta = with lib; {

@@ -21,6 +21,7 @@
 , libXcomposite
 , libXrender
 , libXtst
+, libxcrypt-legacy
 , makeWrapper
 , openjdk17
 , oracle-instantclient
@@ -71,6 +72,7 @@ stdenvNoCC.mkDerivation rec {
     libXcomposite
     libXrender
     libXtst
+    libxcrypt-legacy
     oracle-instantclient
     pango
     sqlite

@@ -31,5 +31,8 @@ in
           u.isNormalUser
           && builtins.elem u.name config.users.groups."wheel".members)
         config.users.users);
+
+    # Support for running containers.
+    virtualisation.podman.enable = true;
   };
 }

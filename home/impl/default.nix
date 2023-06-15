@@ -39,6 +39,7 @@
     ./programs/picom.nix
     ./programs/polybar.nix
     ./programs/rofi.nix
+    ./programs/ssh.nix
     ./programs/steam.nix
     ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
