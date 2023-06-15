@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -31,7 +31,7 @@ in
       hardware.opengl.extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
     }
     (mkIf config.profiles.gui.enable {
-      services.xserver = {
+      services.xserver = mkIf (!config.profiles.hardware.gpu.nvidia.enable) {
         videoDrivers = [ "intel" ];
         deviceSection = ''
           Option "TearFree" "true"

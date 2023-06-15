@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -10,6 +10,16 @@ in
   options = {
     profiles.hardware.gpu.amd = {
       enable = mkEnableOption "the AMD GPU profile";
+
+      busID = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "PCI:99:0:0";
+        description = ''
+          The PCI bus ID of the AMD VGA controller for use with PRIME
+          offloading.
+        '';
+      };
     };
   };
 
@@ -23,9 +33,11 @@ in
       hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
     }
     (mkIf config.profiles.gui.enable {
-      services.xserver = {
+      services.xserver = mkIf (!config.profiles.hardware.gpu.nvidia.enable) {
         videoDrivers = [ "amdgpu" ];
-        deviceSection = ''Option "TearFree" "true"'';
+        deviceSection = ''
+          Option "TearFree" "true"'
+        '';
       };
     })
   ]);

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -10,24 +10,48 @@ in
   options = {
     profiles.hardware.gpu.nvidia = {
       enable = mkEnableOption "the Nvidia GPU profile";
+
+      busID = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "PCI:1:0:0";
+        description = ''
+          The PCI bus ID of the Nvidia VGA controller.
+        '';
+      };
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
+      hardware.nvidia.modesetting.enable = true;
+
       hardware.opengl.enable = true;
       hardware.opengl.driSupport = true;
       hardware.opengl.driSupport32Bit = true;
       hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
     }
-    (mkIf config.profiles.gui.enable {
-      services.xserver = {
-        videoDrivers = [ "nouveau" ];
-        displayManager.setupCommands = mkIf config.profiles.hardware.gpu.intel.enable ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource nouveau Intel
-          ${pkgs.xorg.xrandr}/bin/xrandr --auto
-        '';
-      };
-    })
+    (mkIf config.profiles.gui.enable (mkMerge [
+      {
+        services.xserver = {
+          videoDrivers = [ "nvidia" ];
+        };
+      }
+      (mkIf (config.profiles.hardware.gpu.amd.enable || config.profiles.hardware.gpu.intel.enable) {
+        hardware.nvidia.prime = {
+          reverseSync = {
+            enable = true;
+          };
+          offload = {
+            enable = true;
+            enableOffloadCmd = true;
+          };
+
+          nvidiaBusId = mkIf (cfg.busID != null) cfg.busID;
+          intelBusId = mkIf (config.profiles.hardware.gpu.intel.busID != null) config.profiles.hardware.gpu.intel.busID;
+          amdgpuBusId = mkIf (config.profiles.hardware.gpu.amd.busID != null) config.profiles.hardware.gpu.amd.busID;
+        };
+      })
+    ]))
   ]);
 }
