@@ -49,8 +49,8 @@
         {
           publisher = "GitHub";
           name = "copilot";
-          version = "1.71.8269";
-          sha256 = "sha256-06uTcRfT1QPI1eJyJSq0bbg8bIgaAtsmApjSMGtstYY=";
+          version = "1.89.156";
+          sha256 = "sha256-BJnYd9D3bWrZI8UETnAua8ngVjZJ7EXB1UrZAjVnx1E=";
         }
         {
           publisher = "SteefH";
