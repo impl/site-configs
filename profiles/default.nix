@@ -7,6 +7,7 @@
     ./hardware/cpu
     ./hardware/disk
     ./hardware/gpu
+    ./hardware/peripherals
     ./hardware/display.nix
     ./hardware/power.nix
     ./locations/away
@@ -14,6 +15,8 @@
     ./locations/vpn
     ./quirks
     ./servers/cloudflare.nix
+    ./servers/postgresql.nix
+    ./servers/quassel.nix
     ./base.nix
     ./desktop.nix
     ./development.nix

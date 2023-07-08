@@ -61,7 +61,29 @@
   # Enable profiles for this configuration.
   profiles = {
     locations.vpn.enable = true;
-    servers.cloudflare.encryptedTunnelConfig = ./cloudflare/config.sops.yaml;
+    servers.cloudflare = {
+      encryptedTunnelConfig = ./cloudflare/config.sops.yaml;
+    };
+    servers.postgresql = {
+      enable = true;
+      settings = {
+        max_connections = 20;
+        shared_buffers = "64MB";
+        effective_cache_size = "192MB";
+        maintenance_work_mem = "16MB";
+        checkpoint_completion_target = 0.9;
+        wal_buffers = "1966kB";
+        default_statistics_target = 100;
+        random_page_cost = 4;
+        effective_io_concurrency = 2;
+        work_mem = "1638kB";
+        min_wal_size = "2GB";
+        max_wal_size = "8GB";
+      };
+    };
+    servers.quassel = {
+      enable = true;
+    };
     userInteractive.enable = true;
   };
 
