@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -11,6 +11,6 @@
   in getAttrs [ "uri" "publicSigningKeys" ] data;
 
   repoCacheMetadata = [
-    (self.cachix.cacheMetadata { name = "impl"; sha256 = "1qd58arr286zv56dvk4pajbbjz92cjw19wpizfc78674iydv91zb"; })
+    (self.cachix.cacheMetadata { name = "impl"; sha256 = "0zzk86fn0kf6sx63z6gw2ing8yix14f8gyff1ygxnbv2h9539qg9"; })
   ];
 }
