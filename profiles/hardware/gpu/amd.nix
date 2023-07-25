@@ -36,7 +36,7 @@ in
       services.xserver = mkIf (!config.profiles.hardware.gpu.nvidia.enable) {
         videoDrivers = [ "amdgpu" ];
         deviceSection = ''
-          Option "TearFree" "true"'
+          Option "TearFree" "true"
         '';
       };
     })
