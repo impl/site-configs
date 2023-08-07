@@ -24,6 +24,11 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
+      profiles.base.allowUnfreePackages = with pkgs; [
+        config.hardware.nvidia.package
+        config.hardware.nvidia.package.settings
+      ];
+
       hardware.nvidia.modesetting.enable = true;
 
       hardware.opengl.enable = true;
