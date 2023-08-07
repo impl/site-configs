@@ -55,5 +55,6 @@ in
 
     # Must configure firewall for each machine.
     networking.firewall.enable = true;
+    networking.nftables.enable = true;
   };
 }
