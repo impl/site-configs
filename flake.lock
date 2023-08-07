@@ -121,11 +121,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1659385741,
-        "narHash": "sha256-dPwqoHyxIec58HiawArKTtI+NBKcBDAEwjOANHBU13Y=",
+        "lastModified": 1691374489,
+        "narHash": "sha256-lxmruAF2+pgJ7t8IfkibI+y+SR2d8C/1znZAijnUG3M=",
         "owner": "impl",
         "repo": "nix-sops",
-        "rev": "7dfd3755b03f8db882c389d4b62323fbb7d84787",
+        "rev": "4c00d5cc08d23ac74e85b9b7c443d407c9cbe82b",
         "type": "github"
       },
       "original": {
