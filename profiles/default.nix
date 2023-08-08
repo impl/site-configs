@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -8,12 +8,14 @@
     ./hardware/disk
     ./hardware/gpu
     ./hardware/peripherals
+    ./hardware/virtual
     ./hardware/display.nix
     ./hardware/power.nix
     ./locations/away
     ./locations/home
     ./locations/vpn
     ./quirks
+    ./servers/authoritative-dns.nix
     ./servers/cloudflare.nix
     ./servers/postgresql.nix
     ./servers/quassel.nix

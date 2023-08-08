@@ -4,6 +4,11 @@
 
 {
   inputs = {
+    dns = {
+      url = "github:kirelagin/dns.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dwarffs = {
       url = "github:edolstra/dwarffs";
     };
@@ -47,17 +52,21 @@
       inherit lib nixosConfigurations homeConfigurations;
 
       # Create installer packages for each system type we define.
-      packages = with nixpkgs.lib; mapAttrs' (_: nixosConfiguration: let
-        system = nixosConfiguration.config.nixpkgs.system;
-        installerConfiguration = lib.mkNixosConfiguration (build: build "23.05" {
-          inherit system;
-          modules = [
-            ./installer
-          ];
-        });
-      in nameValuePair system {
-        installer = installerConfiguration.config.system.build.isoImage;
-      }) nixosConfigurations;
+      packages = with nixpkgs.lib; mapAttrs'
+        (_: nixosConfiguration:
+          let
+            system = nixosConfiguration.config.nixpkgs.system;
+            installerConfiguration = lib.mkNixosConfiguration (build: build "23.05" {
+              inherit system;
+              modules = [
+                ./installer
+              ];
+            });
+          in
+          nameValuePair system {
+            installer = installerConfiguration.config.system.build.isoImage;
+          })
+        nixosConfigurations;
 
       templates = rec {
         machine = {

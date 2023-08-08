@@ -31,6 +31,7 @@
           _module.args = {
             libX = self;
             libSops = inputs.nix-sops.lib;
+            libDNS = inputs.dns.lib;
             pkgsUnstable = inputs.nixpkgs.legacyPackages.${pkgs.system};
             pkgsX = pkgs.callPackage pkgsDir {};
           };
