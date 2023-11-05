@@ -11,6 +11,6 @@
   in getAttrs [ "uri" "publicSigningKeys" ] data;
 
   repoCacheMetadata = [
-    (self.cachix.cacheMetadata { name = "impl"; sha256 = "0zzk86fn0kf6sx63z6gw2ing8yix14f8gyff1ygxnbv2h9539qg9"; })
+    (self.cachix.cacheMetadata { name = "impl"; sha256 = "sha256-6eE0SoJiL9ufD875hxwJPXr0bBT8mT9M18ZNYJ1B838="; })
   ];
 }
