@@ -161,6 +161,42 @@
               extraPrefs = ''
                 lockPref('extensions.autoDisableScopes', 0);
                 lockPref('xpinstall.signatures.required', false);
+                lockPref('browser.uiCustomization.state', '${builtins.toJSON ({
+                  "placements" = {
+                    "widget-overflow-fixed-list" = [ ];
+                    "nav-bar" = [
+                      "back-button"
+                      "forward-button"
+                      "stop-reload-button"
+                      "home-button"
+                      "urlbar-container"
+                      "search-container"
+                      "downloads-button"
+                      "ublock0-button"
+                      "containers-panelmenu"
+                      "ublock0_raymondhill_net-browser-action"
+                      "keefox_chris_tomlinson-browser-action"
+                      "screenshots_mozilla_org-browser-action"
+                      "_testpilot-containers-browser-action"
+                    ];
+                    "toolbar-menu" = [
+                      "menubar-items"
+                    ];
+                    "TabsToolbar" = [
+                      "tabbrowser-tabs"
+                      "new-tab-button"
+                      "alltabs-button"
+                    ];
+                    "PersonalToolbar" = [
+                      "personal-bookmarks"
+                      "managed-bookmarks"
+                    ];
+                  };
+                  "seen" = [ ];
+                  "dirtyAreaCache" = [ ];
+                  "currentVersion" = 19;
+                  "newElementCount" = 4;
+                })}');
               '';
               extraPolicies = {
                 DisableFirefoxAccounts = true;
@@ -233,42 +269,6 @@
             "browser.newtabpage.activity-stream.showSearch" = false;
             "browser.newtabpage.enhanced" = false;
             "browser.toolbars.bookmarks.visibility" = "never";
-            "browser.uiCustomization.state" = builtins.toJSON ({
-              "placements" = {
-                "widget-overflow-fixed-list" = [ ];
-                "nav-bar" = [
-                  "back-button"
-                  "forward-button"
-                  "stop-reload-button"
-                  "home-button"
-                  "urlbar-container"
-                  "search-container"
-                  "downloads-button"
-                  "ublock0-button"
-                  "containers-panelmenu"
-                  "ublock0_raymondhill_net-browser-action"
-                  "keefox_chris_tomlinson-browser-action"
-                  "screenshots_mozilla_org-browser-action"
-                  "_testpilot-containers-browser-action"
-                ];
-                "toolbar-menu" = [
-                  "menubar-items"
-                ];
-                "TabsToolbar" = [
-                  "tabbrowser-tabs"
-                  "new-tab-button"
-                  "alltabs-button"
-                ];
-                "PersonalToolbar" = [
-                  "personal-bookmarks"
-                  "managed-bookmarks"
-                ];
-              };
-              "seen" = [ ];
-              "dirtyAreaCache" = [ ];
-              "currentVersion" = 17;
-              "newElementCount" = 4;
-            });
           };
         };
       };
