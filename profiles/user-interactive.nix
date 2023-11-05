@@ -27,5 +27,8 @@ in
 
     users.defaultUserShell = pkgsX.choysh;
     environment.etc."choysh".source = "${pkgs.bashInteractive}${pkgs.bashInteractive.shellPath}";
+
+    # Allow users to use firejail.
+    programs.firejail.enable = true;
   };
 }
