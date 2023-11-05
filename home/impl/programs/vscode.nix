@@ -52,8 +52,14 @@
         {
           publisher = "GitHub";
           name = "copilot";
-          version = "1.89.156";
-          sha256 = "sha256-BJnYd9D3bWrZI8UETnAua8ngVjZJ7EXB1UrZAjVnx1E=";
+          version = "1.133.531";
+          sha256 = "sha256-zuQKCoAUH87KqTx4KPs5v2MDP2F1Ab0Xa7LMZKcpBHE=";
+        }
+        {
+          publisher = "GitHub";
+          name = "copilot-chat";
+          version = "0.11.2023110301";
+          sha256 = "sha256-tV5zMCxG5polCA8pAiJIY5HitqluRKl0QDWw7ncYiYY=";
         }
         {
           publisher = "SteefH";
@@ -64,8 +70,8 @@
         {
           publisher = "betterthantomorrow";
           name = "calva";
-          version = "2.0.313";
-          sha256 = "sha256-UJ0aAgrW5DBV7mNZj8AFjol2hum5IdkKkp8Qtu2Kk4o=";
+          version = "2.0.392";
+          sha256 = "sha256-OoXm8Jw2St6bpZ1lQr/hox/mdyOc8coK/0xu3NUl+Bo=";
         }
         {
           publisher = "bierner";
@@ -76,14 +82,14 @@
         {
           publisher = "bufbuild";
           name = "vscode-buf";
-          version = "0.5.1";
-          sha256 = "sha256-73+VblPnfozEyqdqUJsUjGY6FKYS70keXIpEXS8EvxA=";
+          version = "0.5.2";
+          sha256 = "sha256-fhGDMGhA/ag4jKo733gGGz6+UoDKKISzXjcnsx5eooI=";
         }
         {
           publisher = "flowtype";
           name = "flow-for-vscode";
-          version = "2.2.0";
-          sha256 = "sha256-NwQvbhls0deA8hwa/dqfNW1cjDsAJb5N5PAQhQwE4VY=";
+          version = "2.2.1";
+          sha256 = "sha256-zTxx7aUaoQhkqviB8Oi0JC1JVqFg5rEudtXuMa4yPc0=";
         }
         {
           publisher = "mrded";
@@ -94,20 +100,20 @@
         {
           publisher = "ms-python";
           name = "black-formatter";
-          version = "2022.7.13271013";
-          sha256 = "sha256-wXAIPrk52L9xZNY3bitMUaUNl5q0iCNmRKK+Z/ZHmsU=";
+          version = "2023.7.13071012";
+          sha256 = "sha256-bZs/xpDUWyEZcfPRNztFZQcVNdFJ14pa8lkgZp+iG/U=";
         }
         {
           publisher = "ms-python";
           name = "isort";
-          version = "2023.9.10341117";
-          sha256 = "sha256-fsng4p2JqqlXv0P74EWIOmU6C6yAECWYQjKpveHLQVY=";
+          version = "2023.11.13071012";
+          sha256 = "sha256-jvsrZZud4tCDJDwkItk8vUp80BtDtr5SQWTnDsJWsXM=";
         }
         {
           publisher = "stylelint";
           name = "vscode-stylelint";
-          version = "1.2.3";
-          sha256 = "sha256-zs7tVrevvWNCpOrLyGIHeIpjRweVj9GG0KpV9j5NN0w=";
+          version = "1.3.0";
+          sha256 = "sha256-JoCa2d0ayBEuCcQi3Z/90GJ4AIECVz8NCpd+i+9uMeA=";
         }
       ];
       extensions =
