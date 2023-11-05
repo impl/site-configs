@@ -31,8 +31,10 @@
       direnvSensitiveExtensions = with pkgs.vscode-extensions; [
         _4ops.terraform
         bierner.markdown-mermaid
+        bradlc.vscode-tailwindcss
         dbaeumer.vscode-eslint
         editorconfig.editorconfig
+        elixir-lsp.vscode-elixir-ls
         esbenp.prettier-vscode
         golang.go
         haskell.haskell
@@ -41,6 +43,7 @@
         matklad.rust-analyzer
         ms-python.python
         ms-python.vscode-pylance
+        phoenixframework.phoenix
         stkb.rewrap
         vadimcn.vscode-lldb
         yzhang.markdown-all-in-one
@@ -207,6 +210,10 @@
         "editor.suggestSelection" = "first";
         "editor.inlineSuggest.enabled" = true;
 
+        "emmet.includeLanguages" = {
+          "phoenix-heex" = "html";
+        };
+
         "extensions.autoUpdate" = false;
         "extensions.ignoreRecommendations" = true;
         "extensions.showRecommendationsOnlyOnDemand" = true;
@@ -248,6 +255,11 @@
         "python.formatting.provider" = "none";
 
         "stylelint.validate" = [ "css" "postcss" ];
+
+        "tailwindCSS.includeLanguages" = {
+          "elixir" = "html";
+          "phoenix-heex" = "html";
+        };
 
         "telemetry.enableTelemetry" = false;
 

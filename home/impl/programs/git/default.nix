@@ -43,6 +43,7 @@
       # Editors
       ".calva/"
       ".clj-kondo/"
+      ".elixir_ls/"
       ".lsp/"
       ".vscode/"
     ];
