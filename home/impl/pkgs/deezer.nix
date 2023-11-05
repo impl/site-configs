@@ -15,8 +15,8 @@
 , udev
 }:
 let
-  version = "5.30.560";
-  aunetxVersion = "v5.30.520-1";
+  version = "5.30.670";
+  aunetxVersion = "v5.30.660-1";
 
   electron = electron_13.overrideAttrs (old: {
     meta = old.meta // {
@@ -34,7 +34,7 @@ let
       "icons"
       "patches"
     ];
-    sha256 = "sha256-PIaJvspQt9vGb3YJ9obGT+L/ZwKqESAO6yM5hm7W6zU=";
+    sha256 = "sha256-I6v4dXh/ikq0B92WC7Y2zCcS5sxvPdo2WymHCGKIvlc=";
   };
 in
 stdenv.mkDerivation rec {
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-bc3bfWNCLQO1jNtW+2GczN97Jxx7R4oFAxFCegIABKs=";
+    sha256 = "sha256-llSG2w1y0lYy8ipwPjMH7lbno42Xrl6wGwtQPqo6tao=";
   };
 
   meta = with lib; {
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     asar extract app.asar app
   '';
 
-  prePatch = "prettier --write 'build/*.js'";
+  prePatch = "prettier --trailing-comma es5 --write 'build/*.js'";
 
   patches = lib.filesystem.listFilesRecursive "${aunetxAddl}/patches";
 
@@ -90,12 +90,12 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/lib $out/bin
-    cp -r ${electron}/lib/electron $out/lib/deezer-desktop
-    chmod -R +w $out/lib/deezer-desktop
+    mkdir -p $out/libexec $out/bin
+    cp -r ${electron}/libexec/electron $out/libexec/deezer-desktop
+    chmod -R +w $out/libexec/deezer-desktop
 
-    cp -r . $out/lib/deezer-desktop/resources/app
-    cp -r ${aunetxAddl}/extra/. $out/lib/deezer-desktop/resources
+    cp -r . $out/libexec/deezer-desktop/resources/app
+    cp -r ${aunetxAddl}/extra/. $out/libexec/deezer-desktop/resources
 
     for icon in ${aunetxAddl}/icons/*.png; do
       mkdir -p "$out/share/icons/hicolor/$(basename "$icon" .png)/apps"
@@ -106,7 +106,7 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup = ''
-    declare -a wrapperCmd="( $(strings -dw "$out/lib/deezer-desktop/electron" | sed -n -e "s,${electron}/lib/electron,$out/lib/deezer-desktop,g" -e '/^makeCWrapper/,/^$/ p' ) )"
+    declare -a wrapperCmd="( $(strings -dw "$out/libexec/deezer-desktop/electron" | sed -n -e "s,${electron}/libexec/electron,$out/libexec/deezer-desktop,g" -e '/^makeCWrapper/,/^$/ p' ) )"
     test ''${#wrapperCmd[@]} -gt 1
     makeWrapper "''${wrapperCmd[1]}" \
       $out/bin/deezer-desktop \

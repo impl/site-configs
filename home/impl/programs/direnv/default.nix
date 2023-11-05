@@ -24,7 +24,10 @@
       export NIX_STATE_DIR="$TMPDIR/nix/var"
 
       mkdir -p "$NIX_CONF_DIR"
-      echo "flake-registry = $registryConf" >>"$NIX_CONF_DIR/nix.conf"
+      cat >>"$NIX_CONF_DIR/nix.conf" <<EOT
+      experimental-features = nix-command flakes
+      flake-registry = $registryConf
+      EOT
 
       for flake in ${./support}/*.nix; do
         mkdir -p "$out/$(basename "$flake" .nix)"
