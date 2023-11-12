@@ -4,12 +4,10 @@
 
 { config, lib, machineConfig, pkgs, ... }: {
   _module.args = {
-    pkgsX = pkgs.callPackage ./pkgs {};
+    pkgsHome = pkgs.callPackage ./pkgs {};
   };
 
-  # https://github.com/nix-community/home-manager/issues/2942
-  # nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (_: true);
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (builtins.getFlake "github:nix-community/NUR/2e20efb3d185d01eb7b6219014f3ae63ae9f4173").overlay
     (import ./overlay)
@@ -20,6 +18,7 @@
     ./profiles
     ./programs/cachix
     ./programs/direnv
+    ./programs/dropbox
     ./programs/firefox
     ./programs/git
     ./programs/keepass
@@ -29,7 +28,6 @@
     ./programs/autorandr.nix
     ./programs/bat.nix
     ./programs/deezer.nix
-    ./programs/dropbox.nix
     ./programs/gnupg.nix
     ./programs/jq.nix
     ./programs/kitty.nix

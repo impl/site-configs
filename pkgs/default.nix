@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, newScope }: lib.makeScope newScope (pkgs: {
+  configobj-merge = pkgs.callPackage ./configobj-merge { };
   choysh = pkgs.callPackage ./choysh.nix { };
   gpg-hardcopy = pkgs.callPackage ./gpg-hardcopy.nix { };
 })

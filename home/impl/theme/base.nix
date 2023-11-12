@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, libX, pkgs, pkgsX, ... }: with lib; {
+{ lib, libX, pkgs, pkgsHome, ... }: with lib; {
   profiles.theme = {
     colors = with libX.colors; {
       primary = mkDefault (rgb 246 245 244);
@@ -59,7 +59,7 @@
 
     screensaver = {
       packages = mkDefault [
-        pkgsX.xscreensaverDesktopItems
+        pkgsHome.xscreensaverDesktopItems
       ];
       name = mkDefault "screensavers-xscreensaver-flyingtoasters";
       idleDelayMinutes = mkDefault 1;

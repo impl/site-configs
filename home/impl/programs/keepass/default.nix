@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, pkgsX, machineConfig, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+{ config, lib, pkgs, pkgsHome, machineConfig, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
   sops.secrets."programs/keepass/KeePass.config.enforced.xml" = {
     sources = [
       { file = ./KeePass.config.enforced.sops.xml; }
@@ -18,6 +18,6 @@
     });
   in [
     keepass
-    (pkgsX.karp.override { pinentryFlavor = config.services.gpg-agent.pinentryFlavor; })
+    (pkgsHome.karp.override { pinentryFlavor = config.services.gpg-agent.pinentryFlavor; })
   ];
 }

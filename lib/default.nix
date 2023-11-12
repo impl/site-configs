@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -12,14 +12,14 @@
 let
   mkLib = self:
     let
-      importLib = { file, attrs ? {} }: import file ({ inherit self inputs lib; } // attrs);
+      importLib = { file, attrs ? { } }: import file ({ inherit self inputs lib; } // attrs);
     in
     {
       cachix = importLib { file = ./cachix.nix; };
       colors = importLib { file = ./colors.nix; };
       edid = importLib { file = ./edid.nix; };
       encoding = importLib { file = ./encoding.nix; };
-      homes = importLib { file = ./homes.nix; };
+      homes = importLib { file = ./homes.nix; attrs = { inherit pkgsDir; }; };
       machines = importLib { file = ./machines.nix; attrs = { inherit overlaysDir pkgsDir profilesDir; }; };
       math = importLib { file = ./math.nix; };
       mods = importLib { file = ./mods.nix; };
@@ -28,4 +28,5 @@ let
       inherit (self.machines) mkNixosConfiguration mkNixosConfigurations overrideNixosConfigurations;
       inherit (self.mods) importDir;
     };
-in lib.makeExtensible mkLib
+in
+lib.makeExtensible mkLib

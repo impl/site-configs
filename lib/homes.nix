@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, inputs, lib, ... }:
+{ self, inputs, lib, pkgsDir, ... }:
 {
   mkHomeConfigurations = homes: nixosConfigurations:
     let
@@ -13,14 +13,15 @@
 
           mkHomeConfiguration = userName: cfg:
             let
-              homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration {
+              homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration rec {
+                pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
                 extraSpecialArgs = {
                   inherit machineConfig;
                   libX = self;
                   libSops = inputs.nix-sops.lib;
                   libDNS = inputs.dns.lib;
+                  pkgsX = pkgs.callPackage pkgsDir {};
                 };
-                pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
                 modules = [
                   inputs.nix-sops.homeModules.default
                   cfg

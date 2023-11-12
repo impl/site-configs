@@ -14,7 +14,7 @@ in
         default = [];
         example = literalExpression ''
           [
-            pkgsX.xscreensaverDesktopItems
+            pkgsHome.xscreensaverDesktopItems
           ]
         '';
         description = ''

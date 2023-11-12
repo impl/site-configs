@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, pkgsX, ... }: with lib; {
+{ config, lib, machineConfig, pkgs, pkgsHome, ... }: with lib; {
   options = {
     programs.vscode = {
       direnvSensitiveExtensions = mkOption {
@@ -229,7 +229,7 @@
 
         "externalFormatters.languages" = {
           "terragrunt" = {
-            "command" = "${pkgsX.hclfmt}/bin/hclfmt";
+            "command" = "${pkgsHome.hclfmt}/bin/hclfmt";
           };
         } // (genAttrs [ "tf" "tfvars" ] (_language: {
           "command" = "${pkgs.terraform}/bin/terraform";

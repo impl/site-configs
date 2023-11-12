@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, libX, machineConfig, pkgs, pkgsX, ... }: with lib; {
+{ config, lib, libX, machineConfig, pkgs, pkgsHome, ... }: with lib; {
   options =
     let
       multiUserContainerIdentity = types.submodule {
@@ -100,7 +100,7 @@
   config = mkIf machineConfig.profiles.gui.enable {
     programs.firefox =
       let
-        userScriptsExtension = pkgsX.buildFirefoxUserScriptsExtension config.programs.firefox.userScripts;
+        userScriptsExtension = pkgsHome.buildFirefoxUserScriptsExtension config.programs.firefox.userScripts;
       in
       {
         enable = true;
@@ -229,7 +229,7 @@
               let
                 finalFirefox = firefox.override extraArgs;
               in
-              pkgsX.buildBubblewrap {
+              pkgsHome.buildBubblewrap {
                 name = "firefox";
                 inherit (finalFirefox) meta passthru;
                 bwrapArgs =
