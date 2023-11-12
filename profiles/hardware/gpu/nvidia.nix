@@ -47,13 +47,7 @@ in
     }
     (mkIf (config.profiles.hardware.gpu.amd.enable || config.profiles.hardware.gpu.intel.enable) {
       hardware.nvidia.prime = {
-        reverseSync = {
-          enable = true;
-        };
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
+        sync.enable = true;
 
         nvidiaBusId = mkIf (cfg.busID != null) cfg.busID;
         intelBusId = mkIf (config.profiles.hardware.gpu.intel.busID != null) config.profiles.hardware.gpu.intel.busID;
