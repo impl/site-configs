@@ -277,7 +277,7 @@
         "window.zoomLevel" = 0;
 
         "workbench.colorTheme" = "RailsCasts";
-        "workbench.editor.untitled.hint" = "hidden";
+        "workbench.editor.empty.hint" = "hidden";
       };
     };
   };
