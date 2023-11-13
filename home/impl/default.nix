@@ -36,6 +36,7 @@
     ./programs/nix.nix
     ./programs/picom.nix
     ./programs/polybar.nix
+    ./programs/ripgrep.nix
     ./programs/rofi.nix
     ./programs/ssh.nix
     ./programs/steam.nix
