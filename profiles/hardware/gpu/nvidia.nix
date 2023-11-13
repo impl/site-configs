@@ -40,6 +40,21 @@ in
       # set.
       services.xserver.videoDrivers = [ "nvidia" ];
 
+      # These drivers "correctly" detect DPI based on the total resolution of a
+      # screen compared to the total physical size of a screen, but this never
+      # makes sense unless all the physical screens are exactly the same size in a
+      # Xinerama configuration. Just force the DPI to 96 like every other
+      # (wrong) X video driver.
+      services.xserver.extraConfig = ''
+        Section "OutputClass"
+          Identifier "Force 96 DPI"
+          MatchDriver "nvidia-drm"
+          Driver "nvidia"
+          Option "UseEdidDpi" "false"
+          Option "DPI" "96 x 96"
+        EndSection
+      '';
+
       hardware.opengl.enable = true;
       hardware.opengl.driSupport = true;
       hardware.opengl.driSupport32Bit = true;
