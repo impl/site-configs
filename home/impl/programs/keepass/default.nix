@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -10,7 +10,11 @@
   };
 
   home.packages = let
-    keepass' = pkgs.keepass.override { plugins = [ pkgs.keepass-keepassrpc ]; };
+    pkgsKeepass = import (builtins.getFlake "github:impl/nixpkgs?rev=0edeb84346e26048f2182ca0c4d962eb2325e9a5") {
+      inherit (pkgs) system;
+    };
+
+    keepass' = pkgs.keepass.override { plugins = [ pkgsKeepass.keepass-keepassrpc ]; };
     keepass = keepass'.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
         ln -s ${config.sops.secrets."programs/keepass/KeePass.config.enforced.xml".target} $out/lib/dotnet/keepass/KeePass.config.enforced.xml

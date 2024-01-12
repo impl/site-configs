@@ -1,9 +1,9 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { makeWrapper, stdenv, pinentry, pinentryFlavor ? null }: let
-  base = (builtins.getFlake "github:impl/karp/816e55effc066b96c4aabd110a3ee404e3c227e2").outputs.packages.${stdenv.hostPlatform.system}.karp;
+  base = (builtins.getFlake "github:impl/karp/55d5163aba456502a2a2ac2430e6bf13de2f2a9a").outputs.packages.${stdenv.hostPlatform.system}.karp;
 in
   if pinentryFlavor != null
   then
