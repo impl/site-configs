@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 self: super: {
-  mate = super.mate.overrideScope' (self': super': {
+  mate = super.mate.overrideScope (self': super': {
     mate-power-manager = super'.mate-power-manager.overrideAttrs (old: {
       patches = (old.patches or []) ++ [
         (self.fetchpatch {

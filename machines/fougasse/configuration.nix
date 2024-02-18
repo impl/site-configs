@@ -102,7 +102,7 @@
     ];
   };
 
-  users.users.root.passwordFile = config.sops.secrets."users/users/root/hashedPassword".target;
+  users.users.root.hashedPasswordFile = config.sops.secrets."users/users/root/hashedPassword".target;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

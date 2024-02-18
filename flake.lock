@@ -33,15 +33,14 @@
       "locked": {
         "lastModified": 1692722907,
         "narHash": "sha256-CgPVVqALgqxOoZOgBZ0PD6qAuGpr9+YgwRPSMVfxoOM=",
-        "owner": "edolstra",
-        "repo": "dwarffs",
         "rev": "1ca3b9298931fc26a5e7d471d5ffee69b90f9ea1",
-        "type": "github"
+        "revCount": 72,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/edolstra/dwarffs/1.0.1/018b48ac-d28a-74f3-95db-a2284ff59401/source.tar.gz"
       },
       "original": {
-        "owner": "edolstra",
-        "repo": "dwarffs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://flakehub.com/f/edolstra/dwarffs/1.0.1.tar.gz"
       }
     },
     "flake-utils": {
@@ -66,11 +65,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1699025595,
-        "narHash": "sha256-e+o4PoSu2Z6Ww8y/AVUmMU200rNZoRK+p2opQ7Db8Rg=",
+        "lastModified": 1708031129,
+        "narHash": "sha256-EH20hJfNnc1/ODdDVat9B7aKm0B95L3YtkIRwKLvQG8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "8765d4e38aa0be53cdeee26f7386173e6c65618d",
+        "rev": "3d6791b3897b526c82920a2ab5f61d71985b3cf8",
         "type": "github"
       },
       "original": {
@@ -218,29 +217,29 @@
         "type": "github"
       }
     },
-    "nixpkgs_2305": {
+    "nixpkgs_2311": {
       "locked": {
-        "lastModified": 1699110214,
-        "narHash": "sha256-L2TU4RgtiqF69W8Gacg2jEkEYJrW+Kp0Mp4plwQh5b8=",
+        "lastModified": 1708161998,
+        "narHash": "sha256-6KnemmUorCvlcAvGziFosAVkrlWZGIc6UNT9GUYr0jQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "78f3a4ae19f0e99d5323dd2e3853916b8ee4afee",
+        "rev": "84d981bae8b5e783b3b548de505b22880559515f",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-23.05",
+        "ref": "nixos-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1699126377,
-        "narHash": "sha256-LtDx5VgD/F+5SSRqt8BRSiZi5EwMjWLI1XGjWizcnMI=",
+        "lastModified": 1708186123,
+        "narHash": "sha256-2JCcMncoes/Fu9tgoS/C1kfzJwcdFF66ajWjZIWO318=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e583a3b08f2b59488deb2ace2528df37c931509f",
+        "rev": "52e1f314725b09b354336d17c7b8bd2442b7b8e4",
         "type": "github"
       },
       "original": {
@@ -271,7 +270,7 @@
         "home-manager": "home-manager",
         "nix-sops": "nix-sops",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs_2305": "nixpkgs_2305",
+        "nixpkgs_2311": "nixpkgs_2311",
         "systemd-user-sleep": "systemd-user-sleep"
       }
     },

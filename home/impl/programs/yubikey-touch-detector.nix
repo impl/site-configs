@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2019-2021 Jörg Thalheim
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: MIT
 #
@@ -19,7 +19,7 @@
       sha256 = "sha256-G0W5rBfNT4paBCVufO+50A7grhrasdnJLfBXYmN28hw=";
     };
 
-    vendorSha256 = "sha256-HQriDSaOQ9+E7zU8OGUjobpMECE3cnonSxOvjVVfP0g=";
+    vendorHash = "sha256-HQriDSaOQ9+E7zU8OGUjobpMECE3cnonSxOvjVVfP0g=";
 
     meta = with lib; {
       description = " A tool to detect when your YubiKey is waiting for a touch (to send notification or display a visual indicator on the screen)";

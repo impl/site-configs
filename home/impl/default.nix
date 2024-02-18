@@ -40,6 +40,7 @@
     ./programs/rofi.nix
     ./programs/ssh.nix
     ./programs/steam.nix
+    ./programs/valgrind.nix
     ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
     ./theme

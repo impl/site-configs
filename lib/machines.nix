@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -18,7 +18,7 @@
       };
       builders = builtins.mapAttrs mkBuilder {
         "unstable" = inputs.nixpkgs;
-        "23.05" = inputs.nixpkgs_2305;
+        "23.11" = inputs.nixpkgs_2311;
       };
       build = v: builders.${v};
     in (eval build).extendModules {

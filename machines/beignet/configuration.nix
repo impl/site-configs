@@ -15,7 +15,7 @@ let
     };
 
     users.users.${name} = extraConfig // {
-      passwordFile = config.sops.secrets."users/users/${name}/hashedPassword".target;
+      hashedPasswordFile = config.sops.secrets."users/users/${name}/hashedPassword".target;
     };
   };
 in lib.mkMerge [

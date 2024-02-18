@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -51,6 +51,18 @@
         "X-MATE-WMName" = "Xmonad";
       };
     };
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-xapp
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    configPackages = [
+      pkgs.mate.mate-desktop
+    ];
   };
 
   dconf.settings = let

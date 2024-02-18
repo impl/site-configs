@@ -15,8 +15,8 @@
 , udev
 }:
 let
-  version = "5.30.670";
-  aunetxVersion = "v5.30.660-1";
+  version = "6.0.60";
+  aunetxVersion = "v6.0.60-1";
 
   electron = electron_13.overrideAttrs (old: {
     meta = old.meta // {
@@ -34,7 +34,7 @@ let
       "icons"
       "patches"
     ];
-    sha256 = "sha256-I6v4dXh/ikq0B92WC7Y2zCcS5sxvPdo2WymHCGKIvlc=";
+    sha256 = "sha256-EJ6bzKeHdCEogSS8y/RNxrv75aTElbtnunT/mBmbhn8=";
   };
 in
 stdenv.mkDerivation rec {
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-llSG2w1y0lYy8ipwPjMH7lbno42Xrl6wGwtQPqo6tao=";
+    sha256 = "sha256-RjUIxCWi56A3IaGxo2vsfQ4h8JCht1RhHw/jDdd6JW8=";
   };
 
   meta = with lib; {
@@ -83,7 +83,12 @@ stdenv.mkDerivation rec {
 
   prePatch = "prettier --trailing-comma es5 --write 'build/*.js'";
 
-  patches = lib.filesystem.listFilesRecursive "${aunetxAddl}/patches";
+  patches = [
+    "${aunetxAddl}/patches/remove-kernel-version-from-user-agent.patch"
+    "${aunetxAddl}/patches/avoid-change-default-texthtml-mime-type.patch"
+    "${aunetxAddl}/patches/start-hidden-in-tray.patch"
+    "${aunetxAddl}/patches/quit.patch"
+  ];
 
   noBuild = true;
 

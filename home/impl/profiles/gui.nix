@@ -33,7 +33,8 @@ in
         (pkg:
           let
             inherit (pkg) drvAttrs;
-            stdenv = if builtins.elem pkg.system systems.doubles.i686 then pkgs.pkgsi686Linux.stdenv else pkgs.stdenv;
+            pkgs' = if builtins.elem pkg.system systems.doubles.i686 then pkgs.pkgsi686Linux else pkgs;
+            stdenv = if drvAttrs.stdenv.cc.isClang then pkgs'.rocmPackages.llvm.rocmClangStdenv else pkgs'.stdenv;
             drvAttrs' = drvAttrs // (builtins.intersectAttrs drvAttrs { inherit stdenv; });
           in
           (builtins.derivation drvAttrs').${pkg.outputName})

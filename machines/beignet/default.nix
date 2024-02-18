@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-build: build "23.05" {
+build: build "23.11" {
   system = "x86_64-linux";
   modules = [
     ./configuration.nix
