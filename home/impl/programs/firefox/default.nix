@@ -230,7 +230,7 @@
                 finalFirefox = firefox.override extraArgs;
               in
               pkgsHome.buildBubblewrap {
-                name = "firefox";
+                name = "firefox-esr";
                 inherit (finalFirefox) meta passthru;
                 bwrapArgs =
                   let
@@ -244,7 +244,7 @@
                     "--die-with-parent"
                     "--new-session"
                   ];
-                runScript = "${finalFirefox}/bin/firefox";
+                runScript = "${finalFirefox}/bin/firefox-esr";
                 extraInstallCommands = ''
                   shopt -s extglob
                   for orig in ${finalFirefox}/!(bin); do

@@ -18,6 +18,7 @@
     enable = true;
     enableSshSupport = true;
     enableExtraSocket = true;
+    pinentryFlavor = if machineConfig.profiles.gui.enable then "gtk2" else "curses";
   };
 
   # Disable the GNOME keyring in GUI environments because it will override
