@@ -52,14 +52,14 @@
         {
           publisher = "GitHub";
           name = "copilot";
-          version = "1.133.531";
-          sha256 = "sha256-zuQKCoAUH87KqTx4KPs5v2MDP2F1Ab0Xa7LMZKcpBHE=";
+          version = "1.162.714";
+          sha256 = "sha256-qPdKzmmX3Tdbq+Qw2uNfPDczHgwb6sL2eFRCTzyoN3c=";
         }
         {
           publisher = "GitHub";
           name = "copilot-chat";
-          version = "0.11.2023110301";
-          sha256 = "sha256-tV5zMCxG5polCA8pAiJIY5HitqluRKl0QDWw7ncYiYY=";
+          version = "0.13.2024021901";
+          sha256 = "sha256-J2maYXHG5HUgmaoJPfA4ezXKpwd9xUXZrT09F6OSQoY=";
         }
         {
           publisher = "SteefH";
@@ -70,8 +70,8 @@
         {
           publisher = "betterthantomorrow";
           name = "calva";
-          version = "2.0.392";
-          sha256 = "sha256-OoXm8Jw2St6bpZ1lQr/hox/mdyOc8coK/0xu3NUl+Bo=";
+          version = "2.0.412";
+          sha256 = "sha256-VWOCQkcFVkj2ua3XOcvNGI011CSuefDlx4hPHmAEswM=";
         }
         {
           publisher = "bierner";
@@ -82,8 +82,8 @@
         {
           publisher = "bufbuild";
           name = "vscode-buf";
-          version = "0.5.2";
-          sha256 = "sha256-fhGDMGhA/ag4jKo733gGGz6+UoDKKISzXjcnsx5eooI=";
+          version = "0.6.2";
+          sha256 = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
         }
         {
           publisher = "flowtype";
@@ -100,14 +100,14 @@
         {
           publisher = "ms-python";
           name = "black-formatter";
-          version = "2023.7.13071012";
-          sha256 = "sha256-bZs/xpDUWyEZcfPRNztFZQcVNdFJ14pa8lkgZp+iG/U=";
+          version = "2024.1.10451008";
+          sha256 = "sha256-56JxCmIad00ZoMzTcZrr2w6OOxbIHFhiMDbY65dLK+k=";
         }
         {
           publisher = "ms-python";
           name = "isort";
-          version = "2023.11.13071012";
-          sha256 = "sha256-jvsrZZud4tCDJDwkItk8vUp80BtDtr5SQWTnDsJWsXM=";
+          version = "2023.13.10231012";
+          sha256 = "sha256-AiTE57F9yYfVoLX7ybrWPNGN+mEnWQJDrL/HhJYAGrE=";
         }
         {
           publisher = "stylelint";
@@ -131,8 +131,8 @@
           {
             publisher = "mkhl";
             name = "direnv";
-            version = "0.6.1";
-            sha256 = "sha256-5/Tqpn/7byl+z2ATflgKV1+rhdqj+XMEZNbGwDmGwLQ=";
+            version = "0.16.0";
+            sha256 = "sha256-u2AFjvhm3zio1ygW9yD9ZwbywLrEssd0O7/0AtfCvMo=";
           }
         ] ++ map (loadAfter [ "mkhl.direnv" ]) config.programs.vscode.direnvSensitiveExtensions;
       userSettings = {
