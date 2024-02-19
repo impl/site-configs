@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 Noah Fontes
+# SPDX-FileCopyrightText: 2023-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -32,21 +32,19 @@ in
   config = mkIf cfg.enable {
     services.knot = {
       enable = true;
-      extraConfig = ''
-        server:
-          listen: ${builtins.toJSON cfg.listenAddresses}
-        log:
-        - target: syslog
-          any: info
-        zone:
-        ${concatStringsSep "\n" (mapAttrsToList (domain: zone: ''
-          - domain: ${domain}
-            file: ${pkgs.writeText "${domain}.zone" (toString zone)}
-            zonefile-sync: -1
-            zonefile-load: difference-no-serial
-            journal-content: all
-        '') cfg.zones)}
-      '';
+      settings = {
+        server.listen = cfg.listenAddresses;
+        log = [{ target = "syslog"; any = "info"; }];
+        zone = mapAttrsToList
+          (domain: zone: {
+            inherit domain;
+            file = pkgs.writeText "${domain}.zone" (toString zone);
+            zonefile-sync = -1;
+            zonefile-load = "difference-no-serial";
+            journal-content = "all";
+          })
+          cfg.zones;
+      };
     };
   };
 }
