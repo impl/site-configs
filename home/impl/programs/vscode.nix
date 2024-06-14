@@ -43,6 +43,7 @@
         matklad.rust-analyzer
         ms-python.python
         ms-python.vscode-pylance
+        ms-toolsai.jupyter
         phoenixframework.phoenix
         stkb.rewrap
         vadimcn.vscode-lldb
@@ -144,7 +145,7 @@
           "editor.snippetSuggestions" = "none";
           "editor.formatOnSave" = true;
           "editor.codeActionsOnSave" = {
-            "source.organizeImports" = true;
+            "source.organizeImports" = "explicit";
           };
         };
 
@@ -172,7 +173,7 @@
           "editor.defaultFormatter" = "ms-python.black-formatter";
           "editor.formatOnSave" = true;
           "editor.codeActionsOnSave" = {
-            "source.organizeImports" = true;
+            "source.organizeImports" = "explicit";
           };
         };
 
