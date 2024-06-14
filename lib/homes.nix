@@ -20,9 +20,14 @@
                   libX = self;
                   libSops = inputs.nix-sops.lib;
                   libDNS = inputs.dns.lib;
+                  pkgsNUR = import inputs.nur {
+                    nurpkgs = pkgs;
+                    inherit pkgs;
+                  };
                   pkgsX = pkgs.callPackage pkgsDir {};
                 };
                 modules = [
+                  inputs.nix-flatpak.homeManagerModules.nix-flatpak
                   inputs.nix-sops.homeModules.default
                   cfg
                   {

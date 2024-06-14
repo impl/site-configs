@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -13,12 +13,13 @@
     };
   };
 
-  programs.zsh.initExtra = ''
-    if test -n "$KITTY_INSTALLATION_DIR"; then
-      export KITTY_SHELL_INTEGRATION="enabled"
-      autoload -Uz -- "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty-integration"
-      kitty-integration
-      unfunction kitty-integration
-    fi
-  '';
+  xdg.configFile."kitty/ssh.conf" = {
+    text = ''
+      remote_kitty no
+    '';
+  } // optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+    onChange = ''
+      ${pkgs.procps}/bin/pkill -USR1 -u $USER kitty || true
+    '';
+  };
 }

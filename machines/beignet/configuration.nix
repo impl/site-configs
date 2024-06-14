@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -93,7 +93,7 @@ in lib.mkMerge [
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "21.05"; # Did you read the comment?
+    system.stateVersion = "22.05"; # Did you read the comment?
   }
   (mkUser {
     name = "root";

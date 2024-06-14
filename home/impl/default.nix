@@ -1,15 +1,19 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: {
+{ pkgs, ... }: {
   _module.args = {
-    pkgsHome = pkgs.callPackage ./pkgs {};
+    pkgsHome = pkgs.callPackage ./pkgs { };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-13.6.9"
+    ];
+  };
   nixpkgs.overlays = [
-    (builtins.getFlake "github:nix-community/NUR/2e20efb3d185d01eb7b6219014f3ae63ae9f4173").overlay
     (import ./overlay)
   ];
 
@@ -28,6 +32,7 @@
     ./programs/autorandr.nix
     ./programs/bat.nix
     ./programs/deezer.nix
+    ./programs/flatpak.nix
     ./programs/gnupg.nix
     ./programs/jq.nix
     ./programs/kitty.nix

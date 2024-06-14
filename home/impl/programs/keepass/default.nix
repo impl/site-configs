@@ -9,19 +9,21 @@
     ];
   };
 
-  home.packages = let
-    pkgsKeepass = import (builtins.getFlake "github:impl/nixpkgs?rev=0edeb84346e26048f2182ca0c4d962eb2325e9a5") {
-      inherit (pkgs) system;
-    };
+  home.packages =
+    let
+      pkgsKeepass = import (builtins.getFlake "github:impl/nixpkgs?rev=0edeb84346e26048f2182ca0c4d962eb2325e9a5") {
+        inherit (pkgs) system;
+      };
 
-    keepass' = pkgs.keepass.override { plugins = [ pkgsKeepass.keepass-keepassrpc ]; };
-    keepass = keepass'.overrideAttrs (old: {
-      postInstall = (old.postInstall or "") + ''
-        ln -s ${config.sops.secrets."programs/keepass/KeePass.config.enforced.xml".target} $out/lib/dotnet/keepass/KeePass.config.enforced.xml
-      '';
-    });
-  in [
-    keepass
-    (pkgsHome.karp.override { pinentryFlavor = config.services.gpg-agent.pinentryFlavor; })
-  ];
+      keepass' = pkgs.keepass.override { plugins = [ pkgsKeepass.keepass-keepassrpc ]; };
+      keepass = keepass'.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          ln -s ${config.sops.secrets."programs/keepass/KeePass.config.enforced.xml".target} $out/lib/dotnet/keepass/KeePass.config.enforced.xml
+        '';
+      });
+    in
+    [
+      keepass
+      (pkgsHome.karp.override { inherit (config.services.gpg-agent) pinentryPackage; })
+    ];
 }

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -251,7 +251,7 @@
         "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
 
         "nix.enableLanguageServer" = true;
-        "nix.serverPath" = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+        "nix.serverPath" = lib.getExe pkgs.nil;
 
         "protoc.options" = [
           "-I${config.xdg.cacheHome}/buf/v1/module/buf.build"

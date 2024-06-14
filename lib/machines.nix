@@ -24,6 +24,7 @@
     in (eval build).extendModules {
       modules = [
         inputs.dwarffs.nixosModules.dwarffs
+        inputs.nix-flatpak.nixosModules.nix-flatpak
         inputs.nix-sops.nixosModules.default
         inputs.systemd-user-sleep.nixosModules.systemd-user-sleep
         profilesDir
@@ -32,6 +33,10 @@
             libX = self;
             libSops = inputs.nix-sops.lib;
             libDNS = inputs.dns.lib;
+            pkgsNUR = import inputs.nur {
+              nurpkgs = pkgs;
+              inherit pkgs;
+            };
             pkgsUnstable = inputs.nixpkgs.legacyPackages.${pkgs.system};
             pkgsX = pkgs.callPackage pkgsDir {};
           };

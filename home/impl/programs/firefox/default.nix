@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, libX, machineConfig, pkgs, pkgsHome, ... }: with lib; {
+{ config, lib, libX, machineConfig, pkgs, pkgsHome, pkgsNUR, ... }: with lib; {
   options =
     let
       multiUserContainerIdentity = types.submodule {
@@ -255,11 +255,11 @@
           in
           makeOverridable bubblewrappedFirefox { };
         profiles."impl" = {
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          extensions = with pkgsNUR.repos.rycee.firefox-addons; [
             multi-account-containers
             react-devtools
             ublock-origin
-            (pkgs.callPackage ./kee.nix { })
+            (pkgs.callPackage ./kee.nix { inherit buildFirefoxXpiAddon; })
             userScriptsExtension
           ];
           settings = {

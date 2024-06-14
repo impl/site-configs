@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
+{ config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.gpg = {
     enable = true;
     settings = {
@@ -18,7 +18,7 @@
     enable = true;
     enableSshSupport = true;
     enableExtraSocket = true;
-    pinentryFlavor = if machineConfig.profiles.gui.enable then "gtk2" else "curses";
+    pinentryPackage = with pkgs; if machineConfig.profiles.gui.enable then pinentry-gtk2 else pinentry-curses;
   };
 
   # Disable the GNOME keyring in GUI environments because it will override

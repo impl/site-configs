@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,8 +7,8 @@ self: super: {
     mate-power-manager = super'.mate-power-manager.overrideAttrs (old: {
       patches = (old.patches or []) ++ [
         (self.fetchpatch {
-          url = "https://github.com/impl/mate-power-manager/compare/v1.26.0...backlight-logind-fallback-v1.26.diff";
-          sha256 = "sha256-KxAI6tc1ngS7bucviaEyPz97dum9wwVZ0vU22cKmolA=";
+          url = "https://github.com/impl/mate-power-manager/compare/v1.28.1...backlight-logind-fallback-v1.28.1.diff";
+          hash = "sha256-YvK944JsojylwlS17FOvquDNCRs7owbsVKTCNMyGdyM=";
         })
       ];
 

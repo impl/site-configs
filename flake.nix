@@ -18,6 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-flatpak = {
+      url = "https://flakehub.com/f/gmodena/nix-flatpak/*.tar.gz";
+    };
+
     nix-sops = {
       url = "github:impl/nix-sops";
     };
@@ -28,6 +32,10 @@
 
     nixpkgs_2311 = {
       url = "github:nixos/nixpkgs/nixos-23.11";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
     };
 
     systemd-user-sleep = {
