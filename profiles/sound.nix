@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, ... }: with lib;
+{ class, config, lib, ... }: with lib;
 let
   cfg = config.profiles.sound;
 in
@@ -13,8 +13,10 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
-  };
+  config = mkIf cfg.enable (mkMerge [
+    (optionalAttrs (class == "nixos") {
+      sound.enable = true;
+      hardware.pulseaudio.enable = true;
+    })
+  ]);
 }

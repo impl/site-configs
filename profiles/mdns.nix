@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, ... }: with lib;
+{ class, config, lib, ... }: with lib;
 let
   cfg = config.profiles.mdns;
 in
@@ -13,10 +13,12 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.avahi = {
-      enable = true;
-      nssmdns = true;
-    };
-  };
+  config = mkIf cfg.enable (mkMerge [
+    (optionalAttrs (class == "nixos") {
+      services.avahi = {
+        enable = true;
+        nssmdns = true;
+      };
+    })
+  ]);
 }

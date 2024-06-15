@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, ...}: with lib; {
+{ class, config, lib, ...}: with lib; optionalAttrs (class == "nixos") {
   # QEMU supports a mode where it exposes itself as Hyper-V, but it doesn't
   # actually map all the corresponding services into the VM unless you ask it
   # to.

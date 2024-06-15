@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib;
+{ class, config, lib, pkgs, ... }: with lib;
 let
   cfg = config.profiles.physical;
 in
@@ -13,12 +13,14 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.fwupd.enable = true;
-    services.pcscd.enable = true;
-    services.udev.packages = [
-      pkgs.libu2f-host
-      pkgs.yubikey-personalization
-    ];
-  };
+  config = mkIf cfg.enable (mkMerge [
+    (optionalAttrs (class == "nixos") {
+      services.fwupd.enable = true;
+      services.pcscd.enable = true;
+      services.udev.packages = [
+        pkgs.libu2f-host
+        pkgs.yubikey-personalization
+      ];
+    })
+  ]);
 }

@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{
-  imports = [
+{ class, lib, ... }: with lib; {
+  imports = optionals (class == "nixos") [
     ./amd.nix
     ./intel.nix
     ./nvidia.nix

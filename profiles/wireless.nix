@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,6 +7,8 @@ let
   cfg = config.profiles.wireless;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.wireless = {
       enable = mkEnableOption "the profile for devices with Wi-Fi interfaces";

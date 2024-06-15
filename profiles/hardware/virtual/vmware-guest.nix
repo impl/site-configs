@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 Noah Fontes
+# SPDX-FileCopyrightText: 2023-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,6 +7,8 @@ let
   cfg = config.profiles.hardware.virtual.vmwareGuest;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.hardware.virtual.vmwareGuest = {
       enable = mkEnableOption "the VMware guest profile";

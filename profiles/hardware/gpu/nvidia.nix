@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,6 +7,8 @@ let
   cfg = config.profiles.hardware.gpu.nvidia;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.hardware.gpu.nvidia = {
       enable = mkEnableOption "the Nvidia GPU profile";
