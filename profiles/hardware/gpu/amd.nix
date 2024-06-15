@@ -7,6 +7,8 @@ let
   cfg = config.profiles.hardware.gpu.amd;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.hardware.gpu.amd = {
       enable = mkEnableOption "the AMD GPU profile";

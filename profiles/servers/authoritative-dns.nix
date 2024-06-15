@@ -7,6 +7,8 @@ let
   cfg = config.profiles.servers.authoritativeDNS;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.servers.authoritativeDNS = {
       enable = mkEnableOption "the authoritative DNS server profile";

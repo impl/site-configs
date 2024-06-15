@@ -9,8 +9,8 @@
       enableContribAndExtras = true;
       extraPackages = haskellPkgs: with haskellPkgs; [ dbus ];
       config = with config.profiles.theme; with libX.colors; pkgs.replaceVars ./config.hs {
-        kitty = "${pkgs.kitty}/bin/kitty";
-        rofi = "${pkgs.rofi}/bin/rofi";
+        alacritty = getExe pkgs.alacritty;
+        rofi = getExe pkgs.rofi;
 
         font = font.generalFont;
         fontSize = font.size;

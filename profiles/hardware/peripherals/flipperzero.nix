@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib; mkIf (config.profiles.desktop.enable) {
-  hardware.flipperzero.enable = true;
-}
+{ class, config, lib, pkgs, ... }: with lib; mkIf (config.profiles.desktop.enable) (mkMerge [
+  (optionalAttrs (class == "nixos") {
+    hardware.flipperzero.enable = true;
+  })
+])

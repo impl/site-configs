@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { config, lib, machineConfig, pkgs, pkgsX, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   home.packages = with pkgs;
     [ maestral ]
-    ++ lib.optionals machineConfig.profiles.gui.enable [ maestral-gui ];
+    ++ lib.optionals (machineConfig.profiles.gui.enable && pkgs.stdenv.hostPlatform.isLinux) [ maestral-gui ];
 
   sops.secrets."programs/dropbox/maestral.ini" = {
     sources = [{ file = ./maestral.sops.ini; }];
@@ -36,10 +36,11 @@
           download = "True";
         };
       };
+      configDir = if pkgs.stdenv.hostPlatform.isDarwin then "Library/Application Support" else config.xdg.configHome;
     in
     hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" config.sops.activationPhases.${config.sops.secrets."programs/dropbox/maestral.ini".activationPhase}.activationScriptsKey ] ''
-      $DRY_RUN_CMD mkdir -m 700 -p ${config.xdg.configHome}/maestral
-      $DRY_RUN_CMD ${pkgsX.configobj-merge}/bin/configobj-merge ${config.xdg.configHome}/maestral/maestral.ini ${configFile} ${config.sops.secrets."programs/dropbox/maestral.ini".target}
+      $DRY_RUN_CMD mkdir -m 700 -p ${escapeShellArg "${configDir}/maestral"}
+      $DRY_RUN_CMD ${pkgsX.configobj-merge}/bin/configobj-merge ${escapeShellArg "${configDir}/maestral/maestral.ini"} ${configFile} ${config.sops.secrets."programs/dropbox/maestral.ini".target}
     '';
 
   systemd.user.services."maestral" = {
@@ -61,6 +62,18 @@
       PrivateTmp = true;
       ProtectSystem = "full";
       Nice = 10;
+    };
+  };
+
+  launchd.agents."maestral" = {
+    enable = true;
+    config = {
+      ProgramArguments = [ "${pkgs.maestral}/bin/maestral" "start" "-f" ];
+      RunAtLoad = true;
+      KeepAlive = {
+        Crashed = true;
+        SuccessfulExit = false;
+      };
     };
   };
 }

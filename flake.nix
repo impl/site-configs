@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin_2511 = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      inputs.nixpkgs.follows = "nixpkgs_2511_darwin";
+    };
+
     nix-flatpak = {
       url = "https://flakehub.com/f/gmodena/nix-flatpak/*.tar.gz";
     };
@@ -26,8 +31,12 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixpkgs_2511 = {
+    nixos_2511 = {
       url = "github:nixos/nixpkgs/nixos-25.11";
+    };
+
+    nixpkgs_2511_darwin = {
+      url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     };
 
     nur = {
@@ -47,20 +56,21 @@
       };
 
       machines = lib.importDir ./machines;
-      homes = lib.importDir ./home;
+      machineConfigurations = lib.mkMachineConfigurations machines;
+      machineOutputs = lib.mkMachineOutputs machineConfigurations;
 
-      nixosConfigurations = lib.mkNixosConfigurations machines;
-      homeConfigurations = lib.mkHomeConfigurations homes nixosConfigurations;
+      homes = lib.importDir ./home;
+      homeConfigurations = lib.mkHomeConfigurations homes machineConfigurations;
     in
     {
-      inherit lib nixosConfigurations homeConfigurations;
+      inherit lib homeConfigurations;
 
       # Create installer packages for each system type we define.
       packages = with nixpkgs.lib; mapAttrs'
         (_: nixosConfiguration:
           let
             system = nixosConfiguration.config.nixpkgs.system;
-            installerConfiguration = lib.mkNixosConfiguration (build: build "25.11" {
+            installerConfiguration = lib.machines.mkMachineConfiguration ({ nixos_2511, ...}: nixos_2511 {
               inherit system;
               modules = [
                 ./installer
@@ -70,7 +80,7 @@
           nameValuePair system {
             installer = installerConfiguration.config.system.build.isoImage;
           })
-        nixosConfigurations;
+        machineOutputs.nixosConfigurations;
 
       templates = rec {
         machine = {
@@ -79,5 +89,5 @@
         };
         default = machine;
       };
-    };
+    } // machineOutputs;
 }

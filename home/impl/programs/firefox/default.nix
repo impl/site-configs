@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -112,7 +112,6 @@
             ])
             (mkOrder 650 [
               { userContextId = 2; name = "Work (Montviridian)"; icon = "briefcase"; color = "yellow"; }
-              { userContextId = 3; name = "Work (MBCoA)"; icon = "briefcase"; color = "red"; }
             ])
             (mkOrder 1250 [
               { userContextId = 4; name = "Temporary"; color = "orange"; }

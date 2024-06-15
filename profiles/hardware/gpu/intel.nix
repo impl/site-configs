@@ -7,6 +7,8 @@ let
   cfg = config.profiles.hardware.gpu.intel;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.hardware.gpu.intel = {
       enable = mkEnableOption "the Intel GPU profile";

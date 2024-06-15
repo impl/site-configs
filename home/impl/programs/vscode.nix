@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -46,21 +46,20 @@
         phoenixframework.phoenix
         rust-lang.rust-analyzer
         stkb.rewrap
-        vadimcn.vscode-lldb
         yzhang.markdown-all-in-one
         zxh404.vscode-proto3
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           publisher = "GitHub";
           name = "copilot";
-          version = "1.162.714";
-          sha256 = "sha256-qPdKzmmX3Tdbq+Qw2uNfPDczHgwb6sL2eFRCTzyoN3c=";
+          version = "1.241.1169";
+          sha256 = "sha256-jJJqes1O/hKUKYGL+5CG5QtK2t/l1UmoJozS2gDAKIc=";
         }
         {
           publisher = "GitHub";
           name = "copilot-chat";
-          version = "0.13.2024021901";
-          sha256 = "sha256-J2maYXHG5HUgmaoJPfA4ezXKpwd9xUXZrT09F6OSQoY=";
+          version = "0.21.2024101501";
+          sha256 = "sha256-UiJhv58jqTSXEY6FG6woOyr0Ok8kV2RWfgdg6ZmKtRw=";
         }
         {
           publisher = "SteefH";

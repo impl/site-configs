@@ -1,4 +1,4 @@
--- SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+-- SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 --
 -- SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -40,7 +40,7 @@ main = xmonad . docks . ewmhFullscreen . ewmh $ def
   , manageHook = myManageHook <> manageHook def
   , modMask = mod4Mask
   , startupHook = myStartupHook <> startupHook def
-  , terminal = "@kitty@"
+  , terminal = "@alacritty@"
   }
 
 myStartupHook = mconcat
@@ -141,7 +141,7 @@ myMigrateLogHook = withWindowSet $ mconcat . map tryMigrate . W.allWindows
 
 myManageHook = mconcat
   [ insertPosition End Newer
-  , myMigrateManageHook $ className =? "kitty"
+  , myMigrateManageHook $ className =? "alacritty"
   ]
 
 myMigrateManageHook :: Query Bool -> ManageHook

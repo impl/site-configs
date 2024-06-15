@@ -1,22 +1,26 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { self, inputs, lib, pkgsDir, ... }:
 {
-  mkHomeConfigurations = homes: nixosConfigurations:
+  mkHomeConfigurations = homes: cfgs:
     let
-      mkHomeConfigurationsForNixosConfiguration = hostName: nixosConfiguration:
+      mkHomeConfigurationsForMachine = hostName: cfg:
         let
-          machineConfig = nixosConfiguration.config;
+          class = cfg.class;
+          machineConfig = cfg.config;
           machineHasUser = userName: cfg: builtins.hasAttr userName machineConfig.users.users;
+          system = if cfg.options.nixpkgs.hostPlatform.isDefined then machineConfig.nixpkgs.hostPlatform.system else machineConfig.nixpkgs.system;
 
           mkHomeConfiguration = userName: cfg:
             let
+              userConfig = machineConfig.users.users.${userName};
+
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration rec {
-                pkgs = inputs.nixpkgs.legacyPackages.${machineConfig.nixpkgs.system};
+                pkgs = inputs.nixpkgs.legacyPackages.${system};
                 extraSpecialArgs = {
-                  inherit machineConfig;
+                  inherit class machineConfig;
                   libX = self;
                   libSops = inputs.nix-sops.lib;
                   libDNS = inputs.dns.lib;
@@ -33,18 +37,18 @@
                   {
                     nix.registry.nixpkgs.flake = builtins.removeAttrs inputs.nixpkgs [ "lastModifiedDate" "lastModified" ];
                     home = {
-                      username = userName;
-                      homeDirectory = machineConfig.users.users.${userName}.home;
+                      username = userConfig.name;
+                      homeDirectory = userConfig.home;
                     };
                   }
                 ];
               };
             in
-              lib.nameValuePair "${userName}@${hostName}" homeConfiguration;
+              lib.nameValuePair "${userConfig.name}@${hostName}" homeConfiguration;
         in
           lib.mapAttrs' mkHomeConfiguration (lib.filterAttrs machineHasUser homes);
 
-      homeConfigurations = builtins.mapAttrs mkHomeConfigurationsForNixosConfiguration nixosConfigurations;
+      homeConfigurations = builtins.mapAttrs mkHomeConfigurationsForMachine cfgs;
     in
       lib.foldAttrs (n: a: n // a) {} (builtins.attrValues homeConfigurations);
 }

@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, pkgsUnstable, ... }: with lib;
+{ class, config, lib, pkgsUnstable, ... }: with lib;
 let
   cfg = config.profiles.locations.vpn;
 in
@@ -13,20 +13,23 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.tailscale = {
-      enable = true;
-      package = pkgsUnstable.tailscale;
-    };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.tailscale = {
+        enable = true;
+        package = pkgsUnstable.tailscale;
+      };
+    }
+    (optionalAttrs (class == "nixos") {
+      services.openssh = {
+        startWhenNeeded = true;
+        openFirewall = mkDefault false;
+      };
 
-    services.openssh = {
-      startWhenNeeded = true;
-      openFirewall = mkDefault false;
-    };
-
-    networking.firewall = {
-      trustedInterfaces = [ config.services.tailscale.interfaceName ];
-      checkReversePath = "loose";
-    };
-  };
+      networking.firewall = {
+        trustedInterfaces = [ config.services.tailscale.interfaceName ];
+        checkReversePath = "loose";
+      };
+    })
+  ]);
 }

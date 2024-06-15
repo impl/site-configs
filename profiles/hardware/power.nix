@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib;
+{ class, config, lib, pkgs, ... }: with lib;
 let
   cfg = config.profiles.hardware.power;
 in
@@ -21,7 +21,7 @@ in
 
       batteries = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         example = [ "BAT0" ];
         description = ''
           The power supply batteries attached to this machine.
@@ -31,11 +31,13 @@ in
   };
 
   config = mkMerge [
-    {
-      services.power-profiles-daemon.enable = false;
-    }
-    (mkIf (cfg.batteries != []) {
-      services.tlp.enable = true;
-    })
+    (optionalAttrs (class == "nixos") (mkMerge [
+      {
+        services.power-profiles-daemon.enable = false;
+      }
+      (mkIf (cfg.batteries != [ ]) {
+        services.tlp.enable = true;
+      })
+    ]))
   ];
 }

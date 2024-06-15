@@ -2,20 +2,10 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ pkgs, ... }: {
+{ class, lib, pkgs, ... }: with lib; {
   _module.args = {
     pkgsHome = pkgs.callPackage ./pkgs { };
   };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "electron-13.6.9"
-    ];
-  };
-  nixpkgs.overlays = [
-    (import ./overlay)
-  ];
 
   imports = [
     ./locations/home
@@ -23,44 +13,40 @@
     ./programs/cachix
     ./programs/direnv
     ./programs/dropbox
-    ./programs/emacs
-    ./programs/firefox
     ./programs/git
-    ./programs/keepass
     ./programs/vim
-    ./programs/xmonad
     ./programs/zsh
-    ./programs/autorandr.nix
-    ./programs/bambu-studio.nix
+    ./programs/amethyst.nix
+    ./programs/alacritty.nix
     ./programs/bat.nix
     ./programs/deezer.nix
-    ./programs/flatpak.nix
     ./programs/gnupg.nix
     ./programs/jq.nix
-    ./programs/kitty.nix
-    ./programs/mate.nix
+    ./programs/karp.nix
     ./programs/nix-index.nix
     ./programs/nix.nix
-    ./programs/picom.nix
-    ./programs/polybar.nix
     ./programs/ripgrep.nix
-    ./programs/rofi.nix
     ./programs/ssh.nix
-    ./programs/steam.nix
     ./programs/valgrind.nix
     ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
     ./theme
+  ] ++ optionals (class == "nixos") [
+    ./programs/emacs
+    ./programs/firefox
+    ./programs/xmonad
+    ./programs/autorandr.nix
+    ./programs/bambu-studio.nix
+    ./programs/flatpak.nix
+    ./programs/keepass
+    ./programs/mate.nix
+    ./programs/picom.nix
+    ./programs/polybar.nix
+    ./programs/rofi.nix
+    ./programs/steam.nix
+  ] ++ optionals (class == "darwin") [
+    ./programs/keepassxc.nix
   ];
-
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = false;
-  };
-
-  systemd.user.startServices = "sd-switch";
-
-  programs.home-manager.enable = true;
 
   home.stateVersion = "22.11";
 }

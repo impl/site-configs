@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -9,7 +9,7 @@
 , pinentryPackage ? null
 }:
 let
-  base = (builtins.getFlake "github:impl/karp/55d5163aba456502a2a2ac2430e6bf13de2f2a9a").outputs.packages.${stdenv.hostPlatform.system}.karp;
+  base = (builtins.getFlake "github:impl/karp/d5051334ea0771350d5e3492e1cbc96bae1e53ed").outputs.packages.${stdenv.hostPlatform.system}.karp;
 in
 if pinentryPackage != null
 then

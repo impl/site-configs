@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-build: build "25.11" {
+{ nixos_2511, ... }: nixos_2511 {
   system = "x86_64-linux";
   modules = [
     ./configuration.nix

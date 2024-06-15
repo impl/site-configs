@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -18,7 +18,10 @@
     enable = true;
     enableSshSupport = true;
     enableExtraSocket = true;
-    pinentry.package = with pkgs; if machineConfig.profiles.gui.enable then pinentry-gtk2 else pinentry-curses;
+    pinentry.package = with pkgs;
+      if machineConfig.profiles.gui.enable
+      then if pkgs.stdenv.hostPlatform.isDarwin then pinentry_mac else pinentry-gtk2
+      else pinentry-curses;
   };
 
   # Disable the GNOME keyring in GUI environments because it will override

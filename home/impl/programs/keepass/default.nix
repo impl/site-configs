@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -22,8 +22,5 @@
     in
     [
       keepass
-      (pkgsHome.karp.override {
-        pinentryPackage = config.services.gpg-agent.pinentry.package;
-      })
     ];
 }

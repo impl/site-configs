@@ -6,6 +6,8 @@
   cfg = config.profiles.servers.quassel;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.servers.quassel = {
       enable = mkEnableOption "the Quassel daemon profile";

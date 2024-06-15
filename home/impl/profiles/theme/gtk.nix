@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: with lib;
+{ class, config, lib, machineConfig, pkgs, ... }: with lib;
 let
   cfg = config.profiles.theme.gtk;
 in
@@ -11,7 +11,7 @@ in
     profiles.theme.gtk = {
       packages = mkOption {
         type = types.listOf types.package;
-        default = [];
+        default = [ ];
         example = literalExpression ''
           [
             pkgs.adwaita-icon-theme
@@ -32,12 +32,16 @@ in
     };
   };
 
-  config = mkIf machineConfig.profiles.gui.enable {
-    home.packages = cfg.packages;
-    home.pointerCursor.gtk.enable = true;
-    gtk = {
-      enable = true;
-      theme.name = cfg.themeName;
-    };
-  };
+  config = mkIf machineConfig.profiles.gui.enable (mkMerge [
+    {
+      home.packages = cfg.packages;
+      gtk = {
+        enable = true;
+        theme.name = cfg.themeName;
+      };
+    }
+    (optionalAttrs (class == "nixos") {
+      home.pointerCursor.gtk.enable = true;
+    })
+  ]);
 }

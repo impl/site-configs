@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, libX, pkgs, ... }: with lib;
+{ class, config, lib, libX, pkgs, ... }: with lib;
 let
   cfg = config.profiles.base;
 in
@@ -19,42 +19,51 @@ in
     };
   };
 
-  config = {
-    networking.useNetworkd = true;
-    networking.useDHCP = mkOverride 500 false;
-    services.resolved.enable = true;
+  config = mkMerge [
+    {
+      # Nix (for Flakes support, required).
+      nix = {
+        package = pkgs.nixVersions.latest;
+        settings = {
+          experimental-features = [ "nix-command" "flakes" ];
+          substituters = map (cache: cache.uri) libX.cachix.repoCacheMetadata;
+          trusted-public-keys = concatMap (cache: cache.publicSigningKeys) libX.cachix.repoCacheMetadata;
+        };
+      };
 
-    # Internationalization.
-    i18n.defaultLocale = "en_US.UTF-8";
-    console = {
-      font = "Lat2-Terminus16";
-      keyMap = "us";
-    };
-
-    # Nix (for Flakes support, required).
-    nix = {
-      package = pkgs.nixVersions.latest;
-      settings = {
-        experimental-features = [ "nix-command" "flakes" ];
+      # Merge unfree packages into a single predicate.
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) (map lib.getName cfg.allowUnfreePackages);
+    }
+    (optionalAttrs (class == "nixos") {
+      nix.settings = {
         allowed-users = [ "@wheel" ];
         trusted-users = [ "root" "@wheel" ];
-        substituters = map (cache: cache.uri) libX.cachix.repoCacheMetadata;
-        trusted-public-keys = concatMap (cache: cache.publicSigningKeys) libX.cachix.repoCacheMetadata;
       };
-    };
 
-    # Merge unfree packages into a single predicate.
-    nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) (map lib.getName cfg.allowUnfreePackages);
+      networking.useNetworkd = true;
+      networking.useDHCP = mkOverride 500 false;
+      services.resolved.enable = true;
 
-    # Do not allow mutable users, not now, not ever.
-    users.mutableUsers = false;
+      # Internationalization.
+      i18n.defaultLocale = "en_US.UTF-8";
+      console = {
+        font = "Lat2-Terminus16";
+        keyMap = "us";
+      };
 
-    # For packages that expose debugging information, include it in the path.
-    environment.enableDebugInfo = true;
+      # Do not allow mutable users, not now, not ever.
+      users.mutableUsers = false;
 
-    # Must configure firewall for each machine.
-    networking.firewall.enable = true;
-    networking.nftables.enable = true;
-  };
+      # For packages that expose debugging information, include it in the path.
+      environment.enableDebugInfo = true;
+
+      # Must configure firewall for each machine.
+      networking.firewall.enable = true;
+      networking.nftables.enable = true;
+    })
+    (optionalAttrs (class == "darwin") {
+      services.nix-daemon.enable = true;
+    })
+  ];
 }

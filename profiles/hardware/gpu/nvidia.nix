@@ -7,6 +7,8 @@ let
   cfg = config.profiles.hardware.gpu.nvidia;
 in
 {
+  _class = "nixos";
+
   options = {
     profiles.hardware.gpu.nvidia = {
       enable = mkEnableOption "the Nvidia GPU profile";

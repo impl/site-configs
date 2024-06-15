@@ -25,7 +25,7 @@ let
       mods = importLib { file = ./mods.nix; };
 
       inherit (self.homes) mkHomeConfigurations;
-      inherit (self.machines) mkNixosConfiguration mkNixosConfigurations overrideNixosConfigurations;
+      inherit (self.machines) mkMachine mkMachineConfigurations mkMachineOutputs;
       inherit (self.mods) importDir;
     };
 in

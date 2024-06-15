@@ -1,10 +1,9 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { pkgs, lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   home.packages = with pkgs; [
-    acpi
     bintools
     dig
     file
@@ -13,10 +12,12 @@
     lsof
     moreutils
     pciutils
-    psmisc
     reuse
     sops
     unzip
+  ] ++ optionals pkgs.stdenv.hostPlatform.isLinux [
+    acpi
+    psmisc
     usbutils
   ];
 }

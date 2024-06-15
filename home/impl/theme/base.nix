@@ -50,7 +50,7 @@
       themeName = mkDefault "Adwaita";
     };
 
-    icons = {
+    icons = optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       packages = with pkgs; mkDefault [
         papirus-icon-theme
       ];
@@ -58,7 +58,7 @@
       name = mkDefault "Papirus-Light";
     };
 
-    screensaver = {
+    screensaver = optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       packages = mkDefault [
         pkgsHome.xscreensaverDesktopItems
       ];

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -12,6 +12,7 @@
     ./theme/power.nix
     ./theme/screensaver.nix
     ./theme/wallpaper.nix
+    ./base.nix
     ./gui.nix
     ./user-interactive.nix
   ];
