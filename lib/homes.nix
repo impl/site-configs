@@ -8,6 +8,7 @@
     let
       mkHomeConfigurationsForMachine = hostName: cfg:
         let
+          class = cfg.class;
           machineConfig = cfg.config;
           machineHasUser = userName: cfg: builtins.hasAttr userName machineConfig.users.users;
           system = if cfg.options.nixpkgs.hostPlatform.isDefined then machineConfig.nixpkgs.hostPlatform.system else machineConfig.nixpkgs.system;
@@ -19,7 +20,7 @@
               homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration rec {
                 pkgs = inputs.nixpkgs.legacyPackages.${system};
                 extraSpecialArgs = {
-                  inherit machineConfig;
+                  inherit class machineConfig;
                   libX = self;
                   libSops = inputs.nix-sops.lib;
                   libDNS = inputs.dns.lib;

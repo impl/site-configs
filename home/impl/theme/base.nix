@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -49,7 +49,7 @@
       themeName = mkDefault "Adwaita";
     };
 
-    icons = {
+    icons = optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       packages = with pkgs; mkDefault [
         papirus-icon-theme
       ];
@@ -57,7 +57,7 @@
       name = mkDefault "Papirus-Light";
     };
 
-    screensaver = {
+    screensaver = optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       packages = mkDefault [
         pkgsHome.xscreensaverDesktopItems
       ];

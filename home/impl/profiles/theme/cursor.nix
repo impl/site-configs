@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, machineConfig, pkgs, ... }: with lib;
+{ class, config, lib, machineConfig, pkgs, ... }: with lib;
 let
   cfg = config.profiles.theme.cursor;
 in
@@ -38,11 +38,15 @@ in
     };
   };
 
-  config = mkIf machineConfig.profiles.gui.enable {
-    home.packages = [ cfg.package ];
-    home.pointerCursor = {
-      inherit (cfg) package name size;
-      x11.enable = true;
-    };
-  };
+  config = mkIf machineConfig.profiles.gui.enable (mkMerge [
+    {
+      home.packages = [ cfg.package ];
+    }
+    (optionalAttrs (class == "nixos") {
+      home.pointerCursor = {
+        inherit (cfg) package name size;
+        x11.enable = true;
+      };
+    })
+  ]);
 }

@@ -23,7 +23,8 @@
       });
     in
     [
-      keepass
       (pkgsHome.karp.override { inherit (config.services.gpg-agent) pinentryPackage; })
+    ] ++ optionals pkgs.stdenv.hostPlatform.isLinux [
+      keepass
     ];
 }

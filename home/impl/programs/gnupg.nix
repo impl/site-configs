@@ -18,7 +18,10 @@
     enable = true;
     enableSshSupport = true;
     enableExtraSocket = true;
-    pinentryPackage = with pkgs; if machineConfig.profiles.gui.enable then pinentry-gtk2 else pinentry-curses;
+    pinentryPackage = with pkgs;
+      if machineConfig.profiles.gui.enable
+      then if pkgs.stdenv.hostPlatform.isDarwin then pinentry_mac else pinentry-gtk2
+      else pinentry-curses;
   };
 
   # Disable the GNOME keyring in GUI environments because it will override

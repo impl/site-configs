@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
-  home.packages = with pkgs; [
+  home.packages = with pkgs; optionals pkg.stdenv.hostPlatform.isLinux [
     (valgrind.overrideAttrs (oldAttrs: {
       patches = (oldAttrs.patches or [ ]) ++ [
         # Support for XLAT

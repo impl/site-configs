@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -11,7 +11,7 @@ in
     profiles.theme.icons = {
       packages = mkOption {
         type = types.listOf types.package;
-        default = [
+        default = with pkgs; [
           hicolor-icon-theme
         ];
         example = literalExpression ''

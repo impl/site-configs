@@ -5,7 +5,7 @@
 { config, lib, machineConfig, pkgs, pkgsX, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   home.packages = with pkgs;
     [ maestral ]
-    ++ lib.optionals machineConfig.profiles.gui.enable [ maestral-gui ];
+    ++ lib.optionals (machineConfig.profiles.gui.enable && pkgs.stdenv.hostPlatform.isLinux) [ maestral-gui ];
 
   sops.secrets."programs/dropbox/maestral.ini" = {
     sources = [{ file = ./maestral.sops.ini; }];
