@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, inputs, lib, overlaysDir, pkgsDir, profilesDir, ... }:
+{ self, inputs, overlaysDir, pkgsDir, profilesDir, ... }:
 {
   mkNixosConfiguration = eval:
     let
@@ -18,7 +18,7 @@
       };
       builders = builtins.mapAttrs mkBuilder {
         "unstable" = inputs.nixpkgs;
-        "23.11" = inputs.nixpkgs_2311;
+        "24.11" = inputs.nixpkgs_2411;
       };
       build = v: builders.${v};
     in (eval build).extendModules {

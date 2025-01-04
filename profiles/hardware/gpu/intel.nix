@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib;
+{ config, lib, pkgsUnstable, ... }: with lib;
 let
   cfg = config.profiles.hardware.gpu.intel;
 in
@@ -25,10 +25,11 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      hardware.opengl.enable = true;
-      hardware.opengl.driSupport = true;
-      hardware.opengl.driSupport32Bit = true;
-      hardware.opengl.extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+        extraPackages = with pkgsUnstable; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
+      };
     }
     (mkIf config.profiles.gui.enable {
       services.xserver = mkIf (!config.profiles.hardware.gpu.nvidia.enable) {

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -21,10 +21,11 @@ in
 
     hardware.steam-hardware.enable = true;
 
+    services.libinput.enable = true;
+
     services.xserver = {
       enable = true;
-      layout = "us";
-      libinput.enable = true;
+      xkb.layout = "us";
       desktopManager = {
         xterm = {
           enable = true;

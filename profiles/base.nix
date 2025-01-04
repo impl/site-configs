@@ -33,7 +33,7 @@ in
 
     # Nix (for Flakes support, required).
     nix = {
-      package = pkgs.nixUnstable;
+      package = pkgs.nixVersions.latest;
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
         allowed-users = [ "@wheel" ];

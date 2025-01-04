@@ -29,7 +29,7 @@
       });
       mutableExtensionsDir = false;
       direnvSensitiveExtensions = with pkgs.vscode-extensions; [
-        _4ops.terraform
+        pkgs.vscode-extensions."4ops".terraform
         bierner.markdown-mermaid
         bradlc.vscode-tailwindcss
         dbaeumer.vscode-eslint
@@ -40,11 +40,11 @@
         haskell.haskell
         jnoortheen.nix-ide
         justusadam.language-haskell
-        matklad.rust-analyzer
         ms-python.python
         ms-python.vscode-pylance
         ms-toolsai.jupyter
         phoenixframework.phoenix
+        rust-lang.rust-analyzer
         stkb.rewrap
         vadimcn.vscode-lldb
         yzhang.markdown-all-in-one

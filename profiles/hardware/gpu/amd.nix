@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -27,10 +27,11 @@ in
     {
       boot.initrd.kernelModules = [ "amdgpu" ];
 
-      hardware.opengl.enable = true;
-      hardware.opengl.driSupport = true;
-      hardware.opengl.driSupport32Bit = true;
-      hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+        extraPackages = with pkgs; [ rocmPackages.clr rocmPackages.clr.icd ];
+      };
     }
     (mkIf config.profiles.gui.enable {
       services.xserver = mkIf (!config.profiles.hardware.gpu.nvidia.enable) {

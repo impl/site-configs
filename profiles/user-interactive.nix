@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -19,7 +19,10 @@ in
       vim
     ];
 
-    programs.bash.enableCompletion = true;
+    programs.bash = {
+      completion.enable = true;
+    };
+
     programs.zsh = {
       enable = true;
       enableCompletion = true;

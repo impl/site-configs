@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ config, lib, pkgs, ... }: with lib;
+{ config, lib, pkgsUnstable, ... }: with lib;
 let
   cfg = config.profiles.hardware.gpu.nvidia;
 in
@@ -24,7 +24,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      profiles.base.allowUnfreePackages = with pkgs; [
+      profiles.base.allowUnfreePackages = [
         config.hardware.nvidia.package
         config.hardware.nvidia.package.persistenced
         config.hardware.nvidia.package.settings
@@ -55,10 +55,11 @@ in
         EndSection
       '';
 
-      hardware.opengl.enable = true;
-      hardware.opengl.driSupport = true;
-      hardware.opengl.driSupport32Bit = true;
-      hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+        extraPackages = with pkgsUnstable; [ vaapiVdpau ];
+      };
     }
     (mkIf (config.profiles.hardware.gpu.amd.enable || config.profiles.hardware.gpu.intel.enable) {
       hardware.nvidia.prime = {

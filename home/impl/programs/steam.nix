@@ -2,18 +2,8 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ lib, machineConfig, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  services.flatpak = {
-    packages = [
-      "com.valvesoftware.Steam"
-    ];
-
-    overrides."com.valvesoftware.Steam" = {
-      Context = {
-        filesystems = [
-          "xdg-data/steam-apps:create"
-        ];
-      };
-    };
-  };
+{ lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
+  home.packages = with pkgs; [
+    steam
+  ];
 }

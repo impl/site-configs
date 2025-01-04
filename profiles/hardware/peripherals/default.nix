@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./flipperzero.nix
     ./ledger.nix
   ];
 }
