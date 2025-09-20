@@ -22,6 +22,8 @@
     in
     [
       keepass
-      (pkgsHome.karp.override { inherit (config.services.gpg-agent) pinentryPackage; })
+      (pkgsHome.karp.override {
+        pinentryPackage = config.services.gpg-agent.pinentry.package;
+      })
     ];
 }

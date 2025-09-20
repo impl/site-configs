@@ -27,7 +27,7 @@
       custom = "${./oh-my-zsh-custom}";
       theme = "impl";
     };
-    initExtra = ''
+    initContent = ''
       HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
       HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
 

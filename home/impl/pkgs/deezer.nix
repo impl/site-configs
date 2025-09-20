@@ -1,10 +1,10 @@
-# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2025 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { callPackage
 , copyDesktopItems
-, electron_33
+, electron_37
 , fetchFromGitHub
 , fetchurl
 , lib
@@ -17,20 +17,20 @@
 , udev
 }:
 let
-  version = "7.0.20";
+  version = "7.0.160";
 
   patchSrc = fetchFromGitHub {
     owner = "SibrenVasse";
     repo = "deezer";
-    rev = "v${version}";
-    hash = "sha256-XMsTUXupQh/57xqFdAfEDae2icwEM6rE/qLTEiywG0U=";
+    rev = version;
+    hash = "sha256-rXuECZUtkiCXfihFxFpIFEIeh1e2hLUnoa8sOJlivhM=";
   };
 
   iconSrc = fetchFromGitHub {
     owner = "aunetx";
     repo = "deezer-linux";
-    rev = "c65da965f23c659984c7a295ffc4ed33d3a3bf13";
-    hash = "sha256-oxio4oiobNtMEso/WtjzWeH6t6GRzHlELjTHVLQDBvI=";
+    rev = "v7.0.150";
+    hash = "sha256-KtPR8tgtT3WX5KgE94LQIburh1ok9lxxKLVZ8P6oa+0=";
   };
 in
 stdenv.mkDerivation rec {
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.deezer.com/desktop/download/artifact-win32-x86-${version}";
-    hash = "sha256-bJ3IvN9cwBn1W37eaHA2sz4Aq/WLNxzSroxQb7KhS7o=";
+    hash = "sha256-sN1Ux07eouYkLDclK4Bx8WSVuaciJJWq1w7dDEslWkw=";
   };
 
   meta = with lib; {
@@ -80,15 +80,23 @@ stdenv.mkDerivation rec {
 
   sourceRoot = "resources/app";
 
-  prePatch = "prettier --write 'build/*.js'";
+  prePatch = "prettier --write 'build/*.{js,html}'";
 
   patches = [
-    "${patchSrc}/remove-kernel-version-from-user-agent.patch"
-    "${patchSrc}/avoid-change-default-texthtml-mime-type.patch"
-    "${patchSrc}/start-hidden-in-tray.patch"
-    "${patchSrc}/systray.patch"
-    "${patchSrc}/systray-buttons-fix.patch"
-    "${patchSrc}/quit.patch"
+    "${patchSrc}/01-start-hidden-in-tray.patch"
+    "${patchSrc}/02-avoid-change-default-texthtml-mime-type.patch"
+    "${patchSrc}/03-quit.patch"
+    "${patchSrc}/04-disable-auto-updater.patch"
+    "${patchSrc}/05-remove-os-information.patch"
+    "${patchSrc}/06-better-management-of-MPRIS.patch"
+    "${patchSrc}/07-log-level-environment-variable.patch"
+    "${patchSrc}/08-additional-metadata.patch"
+    "${patchSrc}/10-improve-responsiveness.patch"
+    "${patchSrc}/11-hide-appoffline-banner.patch"
+    "${patchSrc}/12-disable-animations.patch"
+    "${patchSrc}/13-disable-notifications.patch"
+    "${patchSrc}/14-thumbar-actions.patch"
+    "${patchSrc}/15-systray-icon.patch"
   ];
 
   noBuild = true;
@@ -111,7 +119,7 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup = ''
-    makeWrapper ${lib.getExe electron_33} $out/bin/${meta.mainProgram} \
+    makeWrapper ${lib.getExe electron_37} $out/bin/${meta.mainProgram} \
       --add-flags --disable-systray \
       --add-flags $out/share/deezer-desktop/resources/app.asar \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ udev ]}

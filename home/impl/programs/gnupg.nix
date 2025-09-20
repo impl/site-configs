@@ -18,7 +18,7 @@
     enable = true;
     enableSshSupport = true;
     enableExtraSocket = true;
-    pinentryPackage = with pkgs; if machineConfig.profiles.gui.enable then pinentry-gtk2 else pinentry-curses;
+    pinentry.package = with pkgs; if machineConfig.profiles.gui.enable then pinentry-gtk2 else pinentry-curses;
   };
 
   # Disable the GNOME keyring in GUI environments because it will override

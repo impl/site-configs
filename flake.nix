@@ -10,7 +10,7 @@
     };
 
     dwarffs = {
-      url = "https://flakehub.com/f/edolstra/dwarffs/3.0.0.tar.gz";
+      url = "github:edolstra/dwarffs/master";
     };
 
     home-manager = {
@@ -30,8 +30,8 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixpkgs_2411 = {
-      url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs_2505 = {
+      url = "github:nixos/nixpkgs/nixos-25.05";
     };
 
     nur = {
@@ -64,7 +64,7 @@
         (_: nixosConfiguration:
           let
             system = nixosConfiguration.config.nixpkgs.system;
-            installerConfiguration = lib.mkNixosConfiguration (build: build "24.11" {
+            installerConfiguration = lib.mkNixosConfiguration (build: build "25.05" {
               inherit system;
               modules = [
                 ./installer

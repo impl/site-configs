@@ -5,7 +5,10 @@
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.ssh = {
     enable = true;
-    forwardAgent = true;
-    compression = true;
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      forwardAgent = true;
+      compression = true;
+    };
   };
 }

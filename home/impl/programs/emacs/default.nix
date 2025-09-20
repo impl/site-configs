@@ -50,8 +50,7 @@
   systemd.user.services.emacs.Service.Environment =
     [ "PATH=${config.home.profileDirectory}/bin:${makeBinPath [ pkgs.coreutils pkgs.racket ]}" ];
 
-  home.file.".emacs.el".source = pkgs.substituteAll {
-    src = ./init.el;
+  home.file.".emacs.el".source = pkgs.replaceVars ./init.el {
     userLispDir = ./user-lisp;
     generalFontFamily = config.profiles.theme.font.generalFont;
     codeFontFamily = config.profiles.theme.font.codeFont;

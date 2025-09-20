@@ -8,8 +8,7 @@
       enable = true;
       enableContribAndExtras = true;
       extraPackages = haskellPkgs: with haskellPkgs; [ dbus ];
-      config = with config.profiles.theme; with libX.colors; pkgs.substituteAll {
-        src = ./config.hs;
+      config = with config.profiles.theme; with libX.colors; pkgs.replaceVars ./config.hs {
         kitty = "${pkgs.kitty}/bin/kitty";
         rofi = "${pkgs.rofi}/bin/rofi";
 
