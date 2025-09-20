@@ -16,6 +16,8 @@
         postInstall = (old.postInstall or "") + ''
           ln -s ${config.sops.secrets."programs/keepass/KeePass.config.enforced.xml".target} $out/lib/dotnet/keepass/KeePass.config.enforced.xml
         '';
+
+        dontCheckForBrokenSymlinks = true;
       });
     in
     [

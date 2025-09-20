@@ -21,7 +21,7 @@
     signing = {
       key = null;
       signByDefault = true;
-      gpgPath = "${config.programs.gpg.package}/bin/gpg";
+      format = "openpgp";
     };
     aliases = {
       "ci" = "commit";

@@ -23,6 +23,7 @@
     ./programs/cachix
     ./programs/direnv
     ./programs/dropbox
+    ./programs/emacs
     ./programs/firefox
     ./programs/git
     ./programs/keepass

@@ -255,7 +255,7 @@
           in
           makeOverridable bubblewrappedFirefox { };
         profiles."impl" = {
-          extensions = with pkgsNUR.repos.rycee.firefox-addons; [
+          extensions.packages = with pkgsNUR.repos.rycee.firefox-addons; [
             multi-account-containers
             react-devtools
             ublock-origin

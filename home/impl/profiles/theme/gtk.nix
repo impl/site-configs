@@ -14,7 +14,7 @@ in
         default = [];
         example = literalExpression ''
           [
-            pkgs.gnome.adwaita-icon-theme
+            pkgs.adwaita-icon-theme
           ]
         '';
         description = ''

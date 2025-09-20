@@ -12,7 +12,7 @@ in
       package = mkOption {
         type = types.nullOr types.package;
         default = null;
-        example = literalExpression "pkgs.gnome.adwaita-icon-theme";
+        example = literalExpression "pkgs.adwaita-icon-theme";
         description = ''
           The package that contains the cursor theme.
         '';

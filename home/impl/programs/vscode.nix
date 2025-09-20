@@ -117,168 +117,170 @@
           sha256 = "sha256-JoCa2d0ayBEuCcQi3Z/90GJ4AIECVz8NCpd+i+9uMeA=";
         }
       ];
-      extensions =
-        let
-          loadAfter = deps: pkg: pkg.overrideAttrs (old: {
-            nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pkgs.jq pkgs.moreutils ];
-            preInstall = (old.preInstall or "") + ''
+      profiles.default = {
+        extensions =
+          let
+            loadAfter = deps: pkg: pkg.overrideAttrs (old: {
+              nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pkgs.jq pkgs.moreutils ];
+              preInstall = (old.preInstall or "") + ''
               jq '.extensionDependencies |= . + $deps' \
                 --argjson deps ${escapeShellArg (builtins.toJSON deps)} \
                 package.json | sponge package.json
             '';
-          });
-        in
-        pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            publisher = "mkhl";
-            name = "direnv";
-            version = "0.16.0";
-            sha256 = "sha256-u2AFjvhm3zio1ygW9yD9ZwbywLrEssd0O7/0AtfCvMo=";
-          }
-        ] ++ map (loadAfter [ "mkhl.direnv" ]) config.programs.vscode.direnvSensitiveExtensions;
-      userSettings = {
-        "[css]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "[go]" = {
-          "editor.snippetSuggestions" = "none";
-          "editor.formatOnSave" = true;
-          "editor.codeActionsOnSave" = {
-            "source.organizeImports" = "explicit";
+            });
+          in
+            pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+              {
+                publisher = "mkhl";
+                name = "direnv";
+                version = "0.16.0";
+                sha256 = "sha256-u2AFjvhm3zio1ygW9yD9ZwbywLrEssd0O7/0AtfCvMo=";
+              }
+            ] ++ map (loadAfter [ "mkhl.direnv" ]) config.programs.vscode.direnvSensitiveExtensions;
+        userSettings = {
+          "[css]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
-        };
 
-        "[javascript]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "[javascriptreact]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "[nix]" = {
-          "editor.tabSize" = 2;
-        };
-
-        "[postcss]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "[proto3]" = {
-          "editor.defaultFormatter" = "bufbuild.vscode-buf";
-        };
-
-        "[python]" = {
-          "editor.defaultFormatter" = "ms-python.black-formatter";
-          "editor.formatOnSave" = true;
-          "editor.codeActionsOnSave" = {
-            "source.organizeImports" = "explicit";
+          "[go]" = {
+            "editor.snippetSuggestions" = "none";
+            "editor.formatOnSave" = true;
+            "editor.codeActionsOnSave" = {
+              "source.organizeImports" = "explicit";
+            };
           };
-        };
 
-        "[rust]" = {
-          "editor.formatOnSave" = true;
-        };
-
-        "[terragrunt]" = {
-          "editor.formatOnSave" = true;
-        };
-
-        "[tf]" = {
-          "editor.formatOnSave" = true;
-        };
-
-        "[tfvars]" = {
-          "editor.formatOnSave" = true;
-        };
-
-        "[typescript]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "[typescriptreact]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-
-        "buf.binaryPath" = "${pkgs.buf}/bin/buf";
-
-        "calva.clojureLspPath" = "${pkgs.clojure-lsp}/bin/clojure-lsp";
-        "calva.showCalvaSaysOnStart" = false;
-
-        "css.validate" = false;
-
-        "docker.showStartPage" = false;
-
-        "editor.fontFamily" = builtins.toJSON config.profiles.theme.font.codeFont;
-        "editor.fontLigatures" = true;
-        "editor.fontSize" = 14;
-        "editor.minimap.enabled" = true;
-        "editor.suggestSelection" = "first";
-        "editor.inlineSuggest.enabled" = true;
-
-        "emmet.includeLanguages" = {
-          "phoenix-heex" = "html";
-        };
-
-        "extensions.autoUpdate" = false;
-        "extensions.ignoreRecommendations" = true;
-        "extensions.showRecommendationsOnlyOnDemand" = true;
-
-        "explorer.autoReveal" = true;
-        "explorer.confirmDragAndDrop" = false;
-
-        "externalFormatters.languages" = {
-          "terragrunt" = {
-            "command" = "${pkgsHome.hclfmt}/bin/hclfmt";
+          "[javascript]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
-        } // (genAttrs [ "tf" "tfvars" ] (_language: {
-          "command" = "${pkgs.terraform}/bin/terraform";
-          "arguments" = [ "fmt" "-" ];
-        }));
 
-        "files.autoSave" = "off";
+          "[javascriptreact]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
 
-        "flow.pathToFlow" = "${pkgs.flow}/bin/flow";
-        "flow.useBundledFlow" = false;
-        "flow.useNPMPackagedFlow" = false;
+          "[nix]" = {
+            "editor.tabSize" = 2;
+          };
 
-        "haskell.manageHLS" = "PATH";
+          "[postcss]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
 
-        "isort.args" = [ "--profile" "black" ];
+          "[proto3]" = {
+            "editor.defaultFormatter" = "bufbuild.vscode-buf";
+          };
 
-        "javascript.suggest.autoImports" = false;
+          "[python]" = {
+            "editor.defaultFormatter" = "ms-python.black-formatter";
+            "editor.formatOnSave" = true;
+            "editor.codeActionsOnSave" = {
+              "source.organizeImports" = "explicit";
+            };
+          };
 
-        "lldb.library" = "${pkgs.lldb.lib}/lib/liblldb.so";
+          "[rust]" = {
+            "editor.formatOnSave" = true;
+          };
 
-        "nix.enableLanguageServer" = true;
-        "nix.serverPath" = lib.getExe pkgs.nil;
+          "[terragrunt]" = {
+            "editor.formatOnSave" = true;
+          };
 
-        "protoc.options" = [
-          "-I${config.xdg.cacheHome}/buf/v1/module/buf.build"
-        ];
-        "protoc.path" = "${pkgs.protobuf}/bin/protoc";
+          "[tf]" = {
+            "editor.formatOnSave" = true;
+          };
 
-        "python.formatting.provider" = "none";
+          "[tfvars]" = {
+            "editor.formatOnSave" = true;
+          };
 
-        "stylelint.validate" = [ "css" "postcss" ];
+          "[typescript]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
 
-        "tailwindCSS.includeLanguages" = {
-          "elixir" = "html";
-          "phoenix-heex" = "html";
+          "[typescriptreact]" = {
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          };
+
+          "buf.binaryPath" = "${pkgs.buf}/bin/buf";
+
+          "calva.clojureLspPath" = "${pkgs.clojure-lsp}/bin/clojure-lsp";
+          "calva.showCalvaSaysOnStart" = false;
+
+          "css.validate" = false;
+
+          "docker.showStartPage" = false;
+
+          "editor.fontFamily" = builtins.toJSON config.profiles.theme.font.codeFont;
+          "editor.fontLigatures" = true;
+          "editor.fontSize" = 14;
+          "editor.minimap.enabled" = true;
+          "editor.suggestSelection" = "first";
+          "editor.inlineSuggest.enabled" = true;
+
+          "emmet.includeLanguages" = {
+            "phoenix-heex" = "html";
+          };
+
+          "extensions.autoUpdate" = false;
+          "extensions.ignoreRecommendations" = true;
+          "extensions.showRecommendationsOnlyOnDemand" = true;
+
+          "explorer.autoReveal" = true;
+          "explorer.confirmDragAndDrop" = false;
+
+          "externalFormatters.languages" = {
+            "terragrunt" = {
+              "command" = "${pkgsHome.hclfmt}/bin/hclfmt";
+            };
+          } // (genAttrs [ "tf" "tfvars" ] (_language: {
+            "command" = "${pkgs.terraform}/bin/terraform";
+            "arguments" = [ "fmt" "-" ];
+          }));
+
+          "files.autoSave" = "off";
+
+          "flow.pathToFlow" = "${pkgs.flow}/bin/flow";
+          "flow.useBundledFlow" = false;
+          "flow.useNPMPackagedFlow" = false;
+
+          "haskell.manageHLS" = "PATH";
+
+          "isort.args" = [ "--profile" "black" ];
+
+          "javascript.suggest.autoImports" = false;
+
+          "lldb.library" = "${getLib pkgs.lldb}/lib/liblldb.so";
+
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = lib.getExe pkgs.nil;
+
+          "protoc.options" = [
+            "-I${config.xdg.cacheHome}/buf/v1/module/buf.build"
+          ];
+          "protoc.path" = "${pkgs.protobuf}/bin/protoc";
+
+          "python.formatting.provider" = "none";
+
+          "stylelint.validate" = [ "css" "postcss" ];
+
+          "tailwindCSS.includeLanguages" = {
+            "elixir" = "html";
+            "phoenix-heex" = "html";
+          };
+
+          "telemetry.enableTelemetry" = false;
+
+          "typescript.suggest.autoImports" = false;
+
+          "update.mode" = "none";
+
+          "window.titleBarStyle" = "native";
+          "window.zoomLevel" = 0;
+
+          "workbench.colorTheme" = "RailsCasts";
+          "workbench.editor.empty.hint" = "hidden";
         };
-
-        "telemetry.enableTelemetry" = false;
-
-        "typescript.suggest.autoImports" = false;
-
-        "update.mode" = "none";
-
-        "window.titleBarStyle" = "native";
-        "window.zoomLevel" = 0;
-
-        "workbench.colorTheme" = "RailsCasts";
-        "workbench.editor.empty.hint" = "hidden";
       };
     };
   };

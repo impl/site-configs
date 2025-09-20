@@ -4,6 +4,7 @@
 
 { callPackage
 , copyDesktopItems
+, electron_33
 , fetchFromGitHub
 , fetchurl
 , lib
@@ -16,30 +17,20 @@
 , udev
 }:
 let
-  version = "6.0.60";
-  aunetxVersion = "v6.0.60-1";
+  version = "7.0.20";
 
-  mkElectron = callPackage (import "${path}/pkgs/development/tools/electron/binary/generic.nix") { };
-  electron = mkElectron "13.6.9" {
-    armv7l-linux = "e70cf80ac17850f3291c19a89235c59a7a6e0c791e7965805872ce584479c419";
-    aarch64-linux = "cb570f77e46403a75b99740c41b297154f057dc3b9aa75fd235dccc5619972cf";
-    x86_64-linux = "5e29701394041ba2acd8a9bb042d77967c399b8fe007d7ffbd1d3e6bfdb9eb8a";
-    i686-linux = "7c31b60ee0e1d9966b8cf977528ace91e10ce25bb289a46eabbcf6087bee50e6";
-    x86_64-darwin = "3393f0e87f30be325b76fb2275fe2d5614d995457de77fe00fa6eef2d60f331e";
-    aarch64-darwin = "8471777eafc6fb641148a9c6acff2ea41c02a989d4d0a3a460322672d85169df";
-    headers = "0vvizddmhprprbdf6bklasz6amwc254bpc9j0zlx23d1pgyxpnhc";
+  patchSrc = fetchFromGitHub {
+    owner = "SibrenVasse";
+    repo = "deezer";
+    rev = "v${version}";
+    hash = "sha256-XMsTUXupQh/57xqFdAfEDae2icwEM6rE/qLTEiywG0U=";
   };
 
-  aunetxAddl = fetchFromGitHub {
+  iconSrc = fetchFromGitHub {
     owner = "aunetx";
     repo = "deezer-linux";
-    rev = aunetxVersion;
-    sparseCheckout = [
-      "extra"
-      "icons"
-      "patches"
-    ];
-    sha256 = "sha256-EJ6bzKeHdCEogSS8y/RNxrv75aTElbtnunT/mBmbhn8=";
+    rev = "c65da965f23c659984c7a295ffc4ed33d3a3bf13";
+    hash = "sha256-oxio4oiobNtMEso/WtjzWeH6t6GRzHlELjTHVLQDBvI=";
   };
 in
 stdenv.mkDerivation rec {
@@ -47,12 +38,13 @@ stdenv.mkDerivation rec {
   inherit version;
 
   src = fetchurl {
-    url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256 = "sha256-RjUIxCWi56A3IaGxo2vsfQ4h8JCht1RhHw/jDdd6JW8=";
+    url = "https://www.deezer.com/desktop/download/artifact-win32-x86-${version}";
+    hash = "sha256-bJ3IvN9cwBn1W37eaHA2sz4Aq/WLNxzSroxQb7KhS7o=";
   };
 
   meta = with lib; {
     description = "Online music streaming service";
+    mainProgram = "deezer-desktop";
     license = licenses.unfree;
     homepage = "https://www.deezer.com";
     platforms = platforms.linux;
@@ -60,8 +52,8 @@ stdenv.mkDerivation rec {
 
   desktopItems = lib.singleton (makeDesktopItem {
     name = pname;
-    tryExec = "deezer-desktop";
-    exec = "deezer-desktop %U";
+    tryExec = meta.mainProgram;
+    exec = "${meta.mainProgram} %U";
     desktopName = "Deezer";
     genericName = meta.description;
     icon = pname;
@@ -82,17 +74,21 @@ stdenv.mkDerivation rec {
 
   unpackCmd = ''
     7z e -y -bsp0 -bso0 $curSrc '$PLUGINSDIR/app-32.7z'
-    7z e -y -bsp0 -bso0 app-32.7z resources/app.asar
-    asar extract app.asar app
+    7z x -y -bsp0 -bso0 app-32.7z
+    asar extract resources/app.asar resources/app
   '';
 
-  prePatch = "prettier --trailing-comma es5 --write 'build/*.js'";
+  sourceRoot = "resources/app";
+
+  prePatch = "prettier --write 'build/*.js'";
 
   patches = [
-    "${aunetxAddl}/patches/remove-kernel-version-from-user-agent.patch"
-    "${aunetxAddl}/patches/avoid-change-default-texthtml-mime-type.patch"
-    "${aunetxAddl}/patches/start-hidden-in-tray.patch"
-    "${aunetxAddl}/patches/quit.patch"
+    "${patchSrc}/remove-kernel-version-from-user-agent.patch"
+    "${patchSrc}/avoid-change-default-texthtml-mime-type.patch"
+    "${patchSrc}/start-hidden-in-tray.patch"
+    "${patchSrc}/systray.patch"
+    "${patchSrc}/systray-buttons-fix.patch"
+    "${patchSrc}/quit.patch"
   ];
 
   noBuild = true;
@@ -100,28 +96,24 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/libexec $out/bin
-    cp -r ${electron}/libexec/electron $out/libexec/deezer-desktop
-    chmod -R +w $out/libexec/deezer-desktop
+    mkdir -p $out/share/deezer-desktop/resources
+    asar pack . $out/share/deezer-desktop/resources/app.asar
 
-    cp -r . $out/libexec/deezer-desktop/resources/app
-    cp -r ${aunetxAddl}/extra/. $out/libexec/deezer-desktop/resources
+    mkdir $out/share/deezer-desktop/resources/linux
+    cp $NIX_BUILD_TOP/resources/win/systray.png $out/share/deezer-desktop/resources/linux
 
-    for icon in ${aunetxAddl}/icons/*.png; do
+    for icon in ${iconSrc}/icons/*.png; do
       mkdir -p "$out/share/icons/hicolor/$(basename "$icon" .png)/apps"
-      cp "$icon" "$out/share/icons/hicolor/$(basename "$icon" .png)/apps/deezer-desktop.png"
+      cp "$icon" "$out/share/icons/hicolor/$(basename "$icon" .png)/apps/${meta.mainProgram}.png"
     done
 
     runHook postInstall
   '';
 
   postFixup = ''
-    declare -a wrapperCmd="( $(strings -dw "$out/libexec/deezer-desktop/electron" | sed -n -e "s,${electron}/libexec/electron,$out/libexec/deezer-desktop,g" -e '/^makeCWrapper/,/^$/ p' ) )"
-    test ''${#wrapperCmd[@]} -gt 1
-    makeWrapper "''${wrapperCmd[1]}" \
-      $out/bin/deezer-desktop \
-      "''${wrapperCmd[@]:2}" \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ udev ]} \
-      --add-flags --disable-systray
+    makeWrapper ${lib.getExe electron_33} $out/bin/${meta.mainProgram} \
+      --add-flags --disable-systray \
+      --add-flags $out/share/deezer-desktop/resources/app.asar \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ udev ]}
   '';
 }

@@ -50,8 +50,4 @@
     };
     extraConfig = builtins.readFile ./vimrc;
   };
-
-  home.sessionVariables = {
-    EDITOR = "${config.programs.vim.package}/bin/vim";
-  };
 }

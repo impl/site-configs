@@ -12,13 +12,14 @@
     };
 
     cursor = {
-      package = mkDefault pkgs.gnome.adwaita-icon-theme;
+      package = mkDefault pkgs.adwaita-icon-theme;
       name = mkDefault "Adwaita";
       size = 16;
     };
 
     font = {
       packages = with pkgs; [
+        atkinson-hyperlegible
         fira-mono
         fira-code
         open-sans
@@ -43,7 +44,7 @@
 
     gtk = {
       packages = with pkgs; mkDefault [
-        gnome.adwaita-icon-theme
+        adwaita-icon-theme
       ];
 
       themeName = mkDefault "Adwaita";

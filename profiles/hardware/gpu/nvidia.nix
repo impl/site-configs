@@ -31,6 +31,7 @@ in
       ];
 
       hardware.nvidia = {
+        open = mkDefault true;
         modesetting.enable = true;
         nvidiaSettings = config.profiles.gui.enable;
         nvidiaPersistenced = mkDefault (!config.profiles.gui.enable);
