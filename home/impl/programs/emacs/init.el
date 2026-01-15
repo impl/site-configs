@@ -1,5 +1,9 @@
 ;;; init.el --- Emacs initialization routines  -*- lexical-binding: t; -*-
 
+;; SPDX-FileCopyrightText: 2025-2026 Noah Fontes
+;;
+;; SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 ;;; Commentary:
 
 ;;; Code:
@@ -97,13 +101,16 @@
 
 ;; lsp
 (use-package lsp-mode
-  :hook ((go-ts-mode) . my-lsp-deferred)
+  :hook ((go-ts-mode elixir-ts-mode python-ts-mode) . my-lsp-deferred)
   :init
   (defun my-lsp-deferred ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t)
     (lsp-deferred))
   :commands lsp)
+(use-package lsp-pyright
+  :hook (python-ts-mode . (lambda () (require 'lsp-pyright)))
+  :custom (lsp-pyright-langserver-command "basedpyright"))
 (use-package lsp-ui
   :commands lsp-ui-mode
   :custom
@@ -143,6 +150,11 @@
 ;; pollen-mode
 (use-package pollen-mode)
 
+;; python-ts-mode
+(use-package python-ts-mode
+  :init
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
+
 ;; racket-mode
 (use-package racket-mode
   :hook ((racket-mode racket-hash-lang-mode) . racket-xp-mode)
@@ -168,6 +180,15 @@
 (use-package rainbow-mode
   :diminish
   :hook ((css-mode emacs-lisp-mode pollen-mode) . rainbow-mode))
+
+;; rust-mode
+(use-package rust-mode
+  :init
+  (setq rust-mode-treesitter-derive t))
+
+;; rustic
+(use-package rustic
+  :after (rust-mode))
 
 ;; undo-tree
 (use-package undo-tree

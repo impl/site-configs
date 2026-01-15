@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "site-configs"
+SPDX-PackageSupplier = "Noah Fontes <noah@noahfontes.com>"
+SPDX-PackageDownloadLocation = "https://github.com/impl/site-configs"
+
+[[annotations]]
+path = "keys/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021-2026 Noah Fontes"
+SPDX-License-Identifier = "CC0-1.0"

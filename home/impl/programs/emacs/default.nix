@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Noah Fontes
+# SPDX-FileCopyrightText: 2025-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -20,6 +20,7 @@
       go-tag
       godoctor
       lsp-mode
+      lsp-pyright
       lsp-ui
       marginalia
       nerd-icons
@@ -30,6 +31,7 @@
       racket-mode
       rainbow-delimiters
       rainbow-mode
+      rustic
       treesit-grammars.with-all-grammars
       undo-tree
       use-package
@@ -48,7 +50,7 @@
   };
 
   systemd.user.services.emacs.Service.Environment =
-    [ "PATH=${config.home.profileDirectory}/bin:${makeBinPath [ pkgs.coreutils pkgs.racket ]}" ];
+    [ "PATH=${config.home.profileDirectory}/bin:${makeBinPath [ pkgs.basedpyright pkgs.beamPackages.elixir-ls pkgs.coreutils pkgs.racket ]}" ];
 
   home.file.".emacs.el".source = pkgs.replaceVars ./init.el {
     userLispDir = ./user-lisp;

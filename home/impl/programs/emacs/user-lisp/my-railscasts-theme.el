@@ -1,5 +1,9 @@
 ;;; my-railscasts-theme.el --- Set up the RailsCasts theme  -*- lexical-binding: t; -*-
 
+;; SPDX-FileCopyrightText: 2025-2026 Noah Fontes
+;;
+;; SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
 ;;; Commentary:
 
 ;;; Code:

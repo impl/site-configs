@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -31,6 +31,7 @@
     ./programs/xmonad
     ./programs/zsh
     ./programs/autorandr.nix
+    ./programs/bambu-studio.nix
     ./programs/bat.nix
     ./programs/deezer.nix
     ./programs/flatpak.nix

@@ -1,8 +1,0 @@
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: site-configs
-Upstream-Contact: Noah Fontes <noah@noahfontes.com>
-Source: https://github.com/impl/site-configs
-
-Files: keys/*
-Copyright: 2021-2024 Noah Fontes
-License: CC0-1.0
