@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -9,6 +9,9 @@ creation_rules:
 - path_regex: ^machines/fougasse/
   pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
   age: age17ys40qjrck7sd5n3e6qc08arlr2tjdwdtxv4g3xkj2zkwqnxmf8sfey9mt
+- path_regex: ^machines/levain/
+  pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
+  age: age1pcssf6c5n4k8eu0ezmdeyv2y6qh2m8t0xelwsurwfu6tku4604vqhuwdhj
 - path_regex: ^machines/palmier/
   pgp: F5B2BE1B9AAD98FE291655973665FFF79D387BAA
   age: age1cle72q8zkh8ks4p436t2dv633k4me4j5lfv8m20qxjy0cx609yjqf275hu

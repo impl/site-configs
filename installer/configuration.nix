@@ -1,16 +1,9 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { config, lib, pkgs, pkgsX, ... }: with lib;
 {
-  # Latest kernel ensures drivers are fully up to date on new systems.
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-
-  # Don't know what interfaces we'll end up installing with, so have to enable
-  # this globally.
-  networking.useDHCP = true;
-
   # Assume installer is physical and user-interactive.
   profiles = {
     physical.enable = true;
@@ -45,7 +38,7 @@
       chmod 0700 /root/{.gnupg,.ssh}
       echo allow-loopback-pinentry >>/root/.gnupg/gpg-agent.conf
       echo enable-ssh-support >>/root/.gnupg/gpg-agent.conf
-      echo pinentry-program ${pkgs.pinentry.tty}/bin/pinentry >>/root/.gnupg/gpg-agent.conf
+      echo pinentry-program ${pkgs.pinentry-tty}/bin/pinentry >>/root/.gnupg/gpg-agent.conf
       echo pinentry-mode loopback >>/root/.gnupg/gpg.conf
       echo 'Match host * exec "gpg-connect-agent updatestartuptty /bye"' >>/root/.ssh/config
       echo 'export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)' >>/root/.profile
