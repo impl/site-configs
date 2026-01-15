@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -27,7 +27,7 @@
         roboto-mono
         roboto-slab
         noto-fonts
-        noto-fonts-emoji
+        noto-fonts-color-emoji
       ];
 
       generalFont = "Noto Sans";

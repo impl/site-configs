@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -7,10 +7,6 @@
     dns = {
       url = "github:kirelagin/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    dwarffs = {
-      url = "github:edolstra/dwarffs/master";
     };
 
     home-manager = {
@@ -30,8 +26,8 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixpkgs_2505 = {
-      url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs_2511 = {
+      url = "github:nixos/nixpkgs/nixos-25.11";
     };
 
     nur = {
@@ -64,7 +60,7 @@
         (_: nixosConfiguration:
           let
             system = nixosConfiguration.config.nixpkgs.system;
-            installerConfiguration = lib.mkNixosConfiguration (build: build "25.05" {
+            installerConfiguration = lib.mkNixosConfiguration (build: build "25.11" {
               inherit system;
               modules = [
                 ./installer

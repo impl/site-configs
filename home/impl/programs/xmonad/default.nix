@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -27,7 +27,7 @@
     };
   };
 
-  home.file.".xmonad/xmonad-${pkgs.hostPlatform.system}".force = true;
+  home.file.".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}".force = true;
 
   systemd.user.services.xmonad = {
     Unit = {

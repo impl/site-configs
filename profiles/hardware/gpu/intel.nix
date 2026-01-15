@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2025 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -28,7 +28,7 @@ in
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages = with pkgsUnstable; [ vaapiIntel vaapiVdpau libvdpau-va-gl intel-media-driver ];
+        extraPackages = with pkgsUnstable; [ intel-vaapi-driver libva-vdpau-driver libvdpau-va-gl intel-media-driver ];
       };
     }
     (mkIf config.profiles.gui.enable {

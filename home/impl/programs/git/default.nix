@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -16,21 +16,42 @@
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
-    userEmail = "noah@noahfontes.com";
-    userName = "Noah Fontes";
     signing = {
       key = null;
       signByDefault = true;
       format = "openpgp";
     };
-    aliases = {
-      "ci" = "commit";
-      "st" = "status";
-      "br" = "branch";
-      "co" = "checkout";
-      "df" = "diff";
-      "who" = "shortlog -s --";
-      "slog" = "log --graph --date=local --abbrev-commit --pretty='%Cred%h %Cblue%p %Creset— %Cgreen%aN %Cresetcommitted %Cgreen%ar%Creset: %s'";
+    settings = {
+      alias = {
+        "ci" = "commit";
+        "st" = "status";
+        "br" = "branch";
+        "co" = "checkout";
+        "df" = "diff";
+        "who" = "shortlog -s --";
+        "slog" = "log --graph --date=local --abbrev-commit --pretty='%Cred%h %Cblue%p %Creset— %Cgreen%aN %Cresetcommitted %Cgreen%ar%Creset: %s'";
+      };
+      user = {
+        email = "noah@noahfontes.com";
+        name = "Noah Fontes";
+      };
+      init = {
+        defaultBranch = "main";
+      };
+      pull = {
+        ff = "only";
+      };
+      color = {
+        status = "auto";
+        branch = "auto";
+        diff = "auto";
+      };
+      rerere = {
+        enabled = true;
+      };
+      sendemail = {
+        confirm = "always";
+      };
     };
     ignores = [
       # NixOS
@@ -60,25 +81,6 @@
         };
       }
     ];
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-      pull = {
-        ff = "only";
-      };
-      color = {
-        status = "auto";
-        branch = "auto";
-        diff = "auto";
-      };
-      rerere = {
-        enabled = true;
-      };
-      sendemail = {
-        confirm = "always";
-      };
-    };
   };
 
   home.packages = [

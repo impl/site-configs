@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -14,7 +14,7 @@ in
 
   config = mkIf cfg.enable {
     # Enable common cross-system build compatibility.
-    boot.binfmt.emulatedSystems = lib.remove pkgs.hostPlatform.system [
+    boot.binfmt.emulatedSystems = lib.remove pkgs.stdenv.hostPlatform.system [
       "aarch64-linux"
       "mips64el-linux"
       "powerpc64-linux"
