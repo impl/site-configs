@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 Noah Fontes
+# SPDX-FileCopyrightText: 2023-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -30,8 +30,8 @@ in
     };
 
     systemd.services.postgresql.postStart = mkAfter ''
-      $PSQL -tAc "select 1 from pg_database where datname = 'quassel'" | grep -q 1 \
-        || $PSQL -tAc "create database quassel owner quassel encoding 'utf8'"
+      psql -tAc "select 1 from pg_database where datname = 'quassel'" | grep -q 1 \
+        || psql -tAc "create database quassel owner quassel encoding 'utf8'"
     '';
   };
 }
