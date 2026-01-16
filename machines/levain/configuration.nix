@@ -10,7 +10,7 @@
 
   boot.loader.grub = {
     enable = true;
-    device = "nodev";
+    device = "/dev/disk/by-id/ata-YMTC_JGS_2201060100871";
   };
 
   fileSystems."/".device = lib.mkDefault "/dev/loop0";
@@ -22,7 +22,10 @@
   time.timeZone = "Etc/UTC";
 
   profiles = {
-    physical.enable = true;
+    physical = {
+      enable = true;
+      serial.enable = true;
+    };
     userInteractive.enable = true;
   };
 

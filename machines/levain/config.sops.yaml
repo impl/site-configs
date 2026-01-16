@@ -4,7 +4,7 @@ config:
     users:
         users:
             root:
-                hashedPassword: ENC[AES256_GCM,data:gIuxDKhxDihQC2L8Lpf4emUp6VWX6Shw4zt3/elVdwR7LQix39n19iCk/mZ7ko5KxnDDWEK7asPBk3Xe2kdZDRMSIjCj1ZJ1PwBloXZ1zjUnZN+Vf0qfhcvdGo5vgP3wCUwkbW3iS9wcWw==,iv:KSFd/kxH/eFIbYT4ODOps4C3d2EzQURE5R2MKEOx6i8=,tag:pgFpN1SDcieq5hW2+SQKmQ==,type:str]
+                hashedPassword: ENC[AES256_GCM,data:HCWjIa7pe+fVfrHSJ0/5ChGfRSdpWWa1yzsZF1uVd5pjYXpaAvszQC4OREoTCXrVjJiNr8CudVFyQbyo5CCqTkiMEBLwbv3fedoS46bYb9MtkD2tOrStxI+SzuZfsdbaxLYFNRK2ZSsXog==,iv:+llYsWGY6tdDiT5Zgfelej75r/2z2cWqDJsgQXeOpZA=,tag:Mno4j+ES6zeItwvygScdKQ==,type:str]
 sops:
     age:
         - recipient: age1pcssf6c5n4k8eu0ezmdeyv2y6qh2m8t0xelwsurwfu6tku4604vqhuwdhj
@@ -16,8 +16,8 @@ sops:
             bkIwWUJIMUpJbFJpMFJadUtFZjRuWHMKyFSzUwFf1ap0IHvzlw4nZa/SAkSnrtGN
             V/LsRCdWVmk6GkpcitBmYpwE3cl7f0A4avhrS2Q9zKVPqiEN293Suw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-01-15T19:00:14Z"
-    mac: ENC[AES256_GCM,data:xgmaADjRb/yPlDmwz/4UKOnoSbF4gHqkGSiWebynqXwQT8xuYvIzNN3xPJ97Hyp4je/soGo5jyN7/OfusTeRD8lxX5Yc3J6dRZ5q8f9B/8TxwwaLDRNx5JgKn5r3TDMOv9C0qf29ugd75S+FRhvGiJrMH31A9Rmy9uatinXWR8M=,iv:uogZdGw6zHLbNDXw79NRR3v5LVrZI7cmtMU78i+FBQU=,tag:43/gZ+jv3rqIn3SXDLQRGQ==,type:str]
+    lastmodified: "2026-01-16T00:19:14Z"
+    mac: ENC[AES256_GCM,data:yCyJmbKM3fIWmJsgUXhhc1bi6d133TutUCOHyNtOLvqg70b4Ivf/Jlzqvku33JomxmXBecmCeVSUUc+6FU714vItLKt0ew87fSO3u4hww3e6qxwDxhK7ZZtKSjspOlxB8UKTjwTjXbwKMnmSnRC0Ic9tpmheCQ1aLYQGLmoryfw=,iv:0UU7+C+2x+1Ybbe8kXOzK1kTFccgqJ+KOVw+nbnCziQ=,tag:TEvwionFZ88aAsl9sFci+Q==,type:str]
     pgp:
         - created_at: "2026-01-15T19:00:14Z"
           enc: |-
