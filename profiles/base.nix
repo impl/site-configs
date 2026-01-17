@@ -23,6 +23,7 @@ in
     {
       # Nix (for Flakes support, required).
       nix = {
+        enable = true;
         package = pkgs.nixVersions.latest;
         settings = {
           experimental-features = [ "nix-command" "flakes" ];
@@ -61,9 +62,6 @@ in
       # Must configure firewall for each machine.
       networking.firewall.enable = true;
       networking.nftables.enable = true;
-    })
-    (optionalAttrs (class == "darwin") {
-      services.nix-daemon.enable = true;
     })
   ];
 }

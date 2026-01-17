@@ -36,6 +36,8 @@
         editorconfig.editorconfig
         elixir-lsp.vscode-elixir-ls
         esbenp.prettier-vscode
+        github.copilot
+        github.copilot-chat
         golang.go
         haskell.haskell
         jnoortheen.nix-ide
@@ -49,18 +51,6 @@
         yzhang.markdown-all-in-one
         zxh404.vscode-proto3
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          publisher = "GitHub";
-          name = "copilot";
-          version = "1.241.1169";
-          sha256 = "sha256-jJJqes1O/hKUKYGL+5CG5QtK2t/l1UmoJozS2gDAKIc=";
-        }
-        {
-          publisher = "GitHub";
-          name = "copilot-chat";
-          version = "0.21.2024101501";
-          sha256 = "sha256-UiJhv58jqTSXEY6FG6woOyr0Ok8kV2RWfgdg6ZmKtRw=";
-        }
         {
           publisher = "SteefH";
           name = "external-formatters";
