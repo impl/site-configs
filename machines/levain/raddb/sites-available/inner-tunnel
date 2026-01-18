@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2026 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
+server inner-tunnel {
+  listen {
+    type = auth
+    ipaddr = *
+    port = 18120
+  }
+  authorize {
+    filter_username
+    chap
+    mschap
+    eap {
+      ok = return
+    }
+    files
+    expiration
+    logintime
+    pap
+  }
+  authenticate {
+    Auth-Type PAP {
+      pap
+    }
+    Auth-Type CHAP {
+      chap
+    }
+    Auth-Type MS-CHAP {
+      mschap
+    }
+    eap
+  }
+  post-auth {
+    update reply {
+      User-Name !* ANY
+      Message-Authenticator !* ANY
+      EAP-Message !* ANY
+      Proxy-State !* ANY
+      MS-MPPE-Encryption-Types !* ANY
+      MS-MPPE-Encryption-Policy !* ANY
+      MS-MPPE-Send-Key !* ANY
+      MS-MPPE-Recv-Key !* ANY
+    }
+    Post-Auth-Type REJECT {
+      attr_filter.access_reject
+    }
+  }
+}

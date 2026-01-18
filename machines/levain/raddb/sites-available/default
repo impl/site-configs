@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2026 Noah Fontes
+#
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+
+server default {
+  listen {
+    type = auth
+    ipaddr = *
+    port = 0
+    limit {
+      max_connections = 16
+      lifetime = 0
+      idle_timeout = 900
+    }
+  }
+  authorize {
+    filter_username
+    chap
+    mschap
+    eap {
+      ok = return
+      updated = return
+    }
+    files
+    expiration
+    logintime
+    pap
+  }
+  authenticate {
+    Auth-Type PAP {
+      pap
+    }
+    Auth-Type CHAP {
+      chap
+    }
+    Auth-Type MS-CHAP {
+      mschap
+    }
+    eap
+  }
+  post-auth {
+    remove_reply_message_if_eap
+    Post-Auth-Type REJECT {
+      attr_filter.access_reject
+      eap
+      remove_reply_message_if_eap
+    }
+  }
+}
