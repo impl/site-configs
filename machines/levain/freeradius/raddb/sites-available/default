@@ -13,6 +13,11 @@ server default {
       idle_timeout = 900
     }
   }
+  listen {
+    type = acct
+    ipaddr = *
+    port = 0
+  }
   authorize {
     filter_username
     chap
@@ -45,5 +50,10 @@ server default {
       eap
       remove_reply_message_if_eap
     }
+  }
+  accounting {
+    detail
+    sradutmp
+    attr_filter.accounting_response
   }
 }
