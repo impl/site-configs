@@ -54,5 +54,6 @@
 
   imports = [
     ./freeradius
+    ./openbao
   ];
 }
