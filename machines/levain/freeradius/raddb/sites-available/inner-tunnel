@@ -5,46 +5,55 @@
 server inner-tunnel {
   listen {
     type = auth
-    ipaddr = *
+    ipaddr = 127.0.0.1
+    port = 18120
+  }
+  listen {
+    type = auth
+    ipaddr = ::1
     port = 18120
   }
   authorize {
     filter_username
-    chap
-    mschap
-    eap {
-      ok = return
+    if (&outer.request:User-Name && &outer.request:User-Name != "anonymous") {
+      update request {
+        Module-Failure-Message = "User-Name is not anonymized"
+      }
+      reject
     }
-    files
-    expiration
-    logintime
-    pap
+    if (!&control:Auth-Type && request:User-Password) {
+      update control {
+        &Auth-Type := PAM
+      }
+    }
   }
   authenticate {
-    Auth-Type PAP {
-      pap
+    Auth-Type PAM {
+      pam
     }
-    Auth-Type CHAP {
-      chap
-    }
-    Auth-Type MS-CHAP {
-      mschap
-    }
-    eap
   }
   post-auth {
     update reply {
-      User-Name !* ANY
-      Message-Authenticator !* ANY
-      EAP-Message !* ANY
-      Proxy-State !* ANY
-      MS-MPPE-Encryption-Types !* ANY
-      MS-MPPE-Encryption-Policy !* ANY
-      MS-MPPE-Send-Key !* ANY
-      MS-MPPE-Recv-Key !* ANY
+      &Message-Authenticator !* ANY
+      &EAP-Message !* ANY
+      &Proxy-State !* ANY
+      &MS-MPPE-Encryption-Types !* ANY
+      &MS-MPPE-Encryption-Policy !* ANY
+      &MS-MPPE-Send-Key !* ANY
+      &MS-MPPE-Recv-Key !* ANY
+    }
+    if (&outer.session-state:) {
+      update {
+        &outer.session-state: += &reply:
+      }
     }
     Post-Auth-Type REJECT {
       attr_filter.access_reject
+      if (&outer.session-state: && &request:Module-Failure-Message) {
+        update outer.session-state {
+          &Module-Failure-Message := &request:Module-Failure-Message
+        }
+      }
     }
   }
 }

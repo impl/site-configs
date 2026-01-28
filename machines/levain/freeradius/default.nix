@@ -5,8 +5,8 @@
 { config, pkgs, ... }: {
   users.users.radius.extraGroups = [ "keys" ];
 
-  sops.secrets."services/freeradius/configDir/mods-config/files/authorize" = {
-    sources = [{ file = ./raddb/mods-config/files/authorize.sops; }];
+  sops.secrets."services/freeradius/configDir/mods-config/files_mac_addrs/authorize" = {
+    sources = [{ file = ./raddb/mods-config/files_mac_addrs/authorize.sops; }];
     owner = "radius";
   };
 
@@ -17,7 +17,7 @@
 
   services.freeradius =
     let
-      mods = [ "always" "attr_filter" "chap" "detail" "expiration" "logintime" "mschap" "pap" "sradutmp" ];
+      mods = [ "always" "attr_filter" "detail" "expr" "pam" "pap" "sradutmp" "unpack" ];
       sites = [ "default" "inner-tunnel" ];
 
       raddbDir = pkgs.linkFarm "raddb" (
@@ -26,12 +26,12 @@
           { name = "certs/realms"; path = pkgs.emptyDirectory; }
           { name = "clients.conf"; path = config.sops.secrets."services/freeradius/configDir/clients.conf".target; }
           { name = "mods-enabled/eap"; path = ./raddb/mods-available/eap; }
-          { name = "mods-enabled/files"; path = ./raddb/mods-available/files; }
+          { name = "mods-enabled/files_mac_addrs"; path = ./raddb/mods-available/files_mac_addrs; }
         ] ++
         (map (mod: { name = "mods-enabled/${mod}"; path = "${config.services.freeradius.package}/etc/raddb/mods-available/${mod}"; }) mods) ++
         [
           { name = "mods-config/attr_filter"; path = "${config.services.freeradius.package}/etc/raddb/mods-config/attr_filter"; }
-          { name = "mods-config/files/authorize"; path = config.sops.secrets."services/freeradius/configDir/mods-config/files/authorize".target; }
+          { name = "mods-config/files_mac_addrs/authorize"; path = config.sops.secrets."services/freeradius/configDir/mods-config/files_mac_addrs/authorize".target; }
         ] ++
         (map (site: { name = "sites-enabled/${site}"; path = ./raddb/sites-available/${site}; }) sites) ++
         [
@@ -40,8 +40,14 @@
       );
     in {
       enable = true;
+      package = pkgs.freeradius.overrideAttrs (oldAttrs: {
+        buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.linux-pam ];
+      });
       configDir = raddbDir;
     };
+
+  security.pam.services.radiusd = { };
+  systemd.services.freeradius.serviceConfig.SupplementaryGroups = [ "shadow" ];
 
   networking.firewall.allowedUDPPortRanges = [{ from = 1812; to = 1813; }];
 }

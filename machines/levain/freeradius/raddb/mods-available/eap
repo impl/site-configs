@@ -11,11 +11,4 @@ eap {
 
   md5 {
   }
-
-  gtc {
-    auth_type = PAP
-  }
-
-  mschapv2 {
-  }
 }

@@ -19,36 +19,66 @@ server default {
     port = 0
   }
   authorize {
-    filter_username
-    chap
-    mschap
+    rewrite_calling_station_id
     eap {
       ok = return
       updated = return
     }
-    files
-    expiration
-    logintime
-    pap
+    if ((&Service-Type && &Service-Type == Call-Check) || &User-Name =~ /^%{&Calling-Station-ID}$/i) {
+      files_mac_addrs
+      if (ok) {
+        update control {
+          &Auth-Type := MAB
+        }
+      }
+    }
   }
   authenticate {
-    Auth-Type PAP {
-      pap
+    Auth-Type eap {
+      eap
     }
-    Auth-Type CHAP {
-      chap
+    Auth-Type MAB {
+      ok
     }
-    Auth-Type MS-CHAP {
-      mschap
-    }
-    eap
   }
   post-auth {
+    if (&control:Auth-Type == "MAB" && &reply:Tunnel-Private-Group-ID) {
+      update reply {
+        &Tunnel-Type := VLAN
+        &Tunnel-Medium-Type := IEEE-802
+      }
+    }
+    if (&session-state:User-Name && &reply:User-Name && &request:User-Name && &reply:User-Name == &request:User-Name) {
+      update reply {
+        &User-Name !* ANY
+      }
+    }
+    update {
+      &reply: += &session-state:
+    }
     remove_reply_message_if_eap
     Post-Auth-Type REJECT {
       attr_filter.access_reject
       eap
       remove_reply_message_if_eap
+    }
+    if (&EAP-Key-Name && &reply:EAP-Session-ID) {
+      update reply {
+        &EAP-Key-Name := &reply:EAP-Session-ID
+      }
+    }
+  }
+  preacct {
+    rewrite_calling_station_id
+    if (!&NAS-Port || &NAS-Port == 0) {
+      # Workaround for Unifi APs that don't set the NAS-Port to anything usable:
+      # https://lists.freeradius.org/pipermail/freeradius-users/2018-September/092623.html
+      update control {
+        &Tmp-Octets-0 := "0x%{md5:%{&Calling-Station-ID}:%{&Called-Station-ID}}"
+      }
+      update request {
+        &NAS-Port := "%{unpack:&control:Tmp-Octets-0 0 integer}"
+      }
     }
   }
   accounting {
