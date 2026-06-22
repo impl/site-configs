@@ -9,7 +9,7 @@
 , pinentryPackage ? null
 }:
 let
-  base = (builtins.getFlake "github:impl/karp/d5051334ea0771350d5e3492e1cbc96bae1e53ed").outputs.packages.${stdenv.hostPlatform.system}.karp;
+  base = (builtins.getFlake "github:impl/karp/e84485a2e51b2db3ea129793307d60ad24e1840a").outputs.packages.${stdenv.hostPlatform.system}.karp;
 in
 if pinentryPackage != null
 then
