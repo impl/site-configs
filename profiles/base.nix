@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -10,7 +10,7 @@ in
   options = {
     profiles.base = {
       allowUnfreePackages = mkOption {
-        type = types.listOf types.package;
+        type = types.listOf (types.oneOf [ types.package types.str ]);
         description = ''
           The list of unfree packages that are allowed to be installed.
         '';

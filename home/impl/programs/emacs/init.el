@@ -15,6 +15,16 @@
 (eval-when-compile
   (require 'use-package))
 
+;; c-ts-mode
+(use-package c-ts-mode
+  :init
+  (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode)))
+
+;; c++-ts-mode
+(use-package c++-ts-mode
+  :init
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
+
 ;; company
 (use-package company
   :diminish
@@ -101,12 +111,13 @@
 
 ;; lsp
 (use-package lsp-mode
-  :hook ((go-ts-mode elixir-ts-mode python-ts-mode) . my-lsp-deferred)
+  :hook ((c-ts-mode c++-ts-mode go-ts-mode elixir-ts-mode python-ts-mode) . my-lsp-deferred)
   :init
   (defun my-lsp-deferred ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t)
     (lsp-deferred))
+  (setq lsp-enable-suggest-server-download nil)
   :commands lsp)
 (use-package lsp-pyright
   :hook (python-ts-mode . (lambda () (require 'lsp-pyright)))

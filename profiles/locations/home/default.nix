@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -16,6 +16,24 @@ in
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (class == "nixos") {
       profiles.wireless.encryptedConfigs = [ ./wpa_supplicant.sops.conf ];
+
+      profiles.base.allowUnfreePackages = [
+        pkgs.brscan5
+        "brscan5-etc-files"
+      ];
+
+      hardware.sane = {
+        enable = true;
+        brscan5 = {
+          enable = true;
+          netDevices = {
+            "mfp-storage-room" = {
+              model = "DCP-L2540DW";
+              nodename = "mfp-storage-room.local";
+            };
+          };
+        };
+      };
     })
   ]);
 }
