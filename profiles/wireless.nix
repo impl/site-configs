@@ -30,6 +30,14 @@ in
         '';
       };
 
+      userControlled = mkOption {
+        type = types.bool;
+        description = ''
+          Whether to allow temporary changes using, e.g., wpa_cli.
+        '';
+        default = false;
+      };
+
       encryptedConfigs = mkOption {
         type = types.listOf types.path;
         description = ''
@@ -42,20 +50,19 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.wireless = {
-      inherit (cfg) enable interfaces;
-
-      # We will replace the networks with our own encrypted configurations.
-      userControlled = mkForce false;
-      networks = mkForce {};
-      extraConfig = mkForce "";
-    };
+    users.users.wpa_supplicant.extraGroups = [ "keys" ];
 
     sops.secrets."etc/wpa_supplicant.conf" = {
       sources = map (f: { file = f; }) cfg.encryptedConfigs;
+      owner = "wpa_supplicant";
     };
-    environment.etc."wpa_supplicant.conf" = {
-      source = config.sops.secrets."etc/wpa_supplicant.conf".target;
+
+    networking.wireless = {
+      inherit (cfg) enable interfaces userControlled;
+      enableHardening = mkForce true;
+
+      # We will replace the networks with our own encrypted configurations.
+      extraConfigFiles = [ config.sops.secrets."etc/wpa_supplicant.conf".target ];
     };
   };
 }

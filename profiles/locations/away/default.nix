@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2023-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -15,7 +15,10 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (class == "nixos") {
-      profiles.wireless.encryptedConfigs = [ ./wpa_supplicant.sops.conf ];
+      profiles.wireless = {
+        userControlled = true;
+        encryptedConfigs = [ ./wpa_supplicant.sops.conf ];
+      };
     })
   ]);
 }
