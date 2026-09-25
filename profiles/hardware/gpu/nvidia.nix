@@ -28,6 +28,7 @@ in
     {
       profiles.base.allowUnfreePackages = [
         config.hardware.nvidia.package
+        config.hardware.nvidia.package.mod
         config.hardware.nvidia.package.persistenced
         config.hardware.nvidia.package.settings
       ];
@@ -61,7 +62,7 @@ in
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages = with pkgsUnstable; [ vaapiVdpau ];
+        extraPackages = with pkgsUnstable; [ libva-vdpau-driver ];
       };
     }
     (mkIf (config.profiles.hardware.gpu.amd.enable || config.profiles.hardware.gpu.intel.enable) {
