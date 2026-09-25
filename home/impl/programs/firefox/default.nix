@@ -104,6 +104,7 @@
       in
       {
         enable = true;
+        configPath = ".mozilla/firefox";
         multiUserContainers = {
           maxUserContextId = 4294967295;
           identities = mkMerge [

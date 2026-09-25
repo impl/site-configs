@@ -5,6 +5,6 @@
 { lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
   programs.rofi = {
     enable = true;
-    terminal = getExe pkgs.alacritty;
+    settings.terminal = getExe pkgs.alacritty;
   };
 }

@@ -14,9 +14,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-darwin_2511 = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
-      inputs.nixpkgs.follows = "nixpkgs_2511_darwin";
+    nix-darwin_2605 = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs_2605_darwin";
     };
 
     nix-flatpak = {
@@ -31,12 +31,12 @@
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
-    nixos_2511 = {
-      url = "github:nixos/nixpkgs/nixos-25.11";
+    nixos_2605 = {
+      url = "github:nixos/nixpkgs/nixos-26.05";
     };
 
-    nixpkgs_2511_darwin = {
-      url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
+    nixpkgs_2605_darwin = {
+      url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
     };
 
     nur = {
@@ -70,7 +70,7 @@
         (_: nixosConfiguration:
           let
             system = nixosConfiguration.config.nixpkgs.system;
-            installerConfiguration = lib.machines.mkMachineConfiguration ({ nixos_2511, ...}: nixos_2511 {
+            installerConfiguration = lib.machines.mkMachineConfiguration ({ nixos_2605, ...}: nixos_2605 {
               inherit system;
               modules = [
                 ./installer

@@ -13,7 +13,10 @@
     device = "/dev/disk/by-id/ata-YMTC_JGS_2201060100871";
   };
 
-  fileSystems."/".device = lib.mkDefault "/dev/loop0";
+  fileSystems."/" = {
+    device = lib.mkDefault "/dev/loop0";
+    fsType = "ext4";
+  };
 
   swapDevices = [
     { device = "/swap"; }

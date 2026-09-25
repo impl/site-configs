@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -16,7 +16,10 @@
     device = "/dev/sda";
   };
 
-  fileSystems."/".device = lib.mkDefault "/dev/loop0";
+  fileSystems."/" = {
+    device = lib.mkDefault "/dev/loop0";
+    fsType = "ext4";
+  };
 
   swapDevices = [
     { device = "/swap"; }

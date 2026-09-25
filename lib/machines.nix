@@ -85,8 +85,8 @@ in
 
   mkMachineConfiguration = eval: eval {
     nixos_unstable = self.machines.mkNixosSystem inputs.nixpkgs;
-    nixos_2511 = self.machines.mkNixosSystem inputs.nixos_2511;
-    nix-darwin_2511 = self.machines.mkDarwinSystem inputs.nix-darwin_2511;
+    nixos_2605 = self.machines.mkNixosSystem inputs.nixos_2605;
+    nix-darwin_2605 = self.machines.mkDarwinSystem inputs.nix-darwin_2605;
   };
 
   mkMachineConfigurations = machines:

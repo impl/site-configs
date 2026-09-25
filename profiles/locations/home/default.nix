@@ -14,26 +14,28 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (class == "nixos") {
-      profiles.wireless.encryptedConfigs = [ ./wpa_supplicant.sops.conf ];
+    (optionalAttrs (class == "nixos") (mkMerge [
+      {
+        profiles.wireless.encryptedConfigs = [ ./wpa_supplicant.sops.conf ];
+      }
+      (mkIf config.profiles.printing.enable {
+        profiles.base.allowUnfreePackages = [
+          pkgs.brscan5
+          "brscan5-etc-files"
+        ];
 
-      profiles.base.allowUnfreePackages = [
-        pkgs.brscan5
-        "brscan5-etc-files"
-      ];
-
-      hardware.sane = {
-        enable = true;
-        brscan5 = {
-          enable = true;
-          netDevices = {
-            "mfp-storage-room" = {
-              model = "DCP-L2540DW";
-              nodename = "mfp-storage-room.local";
+        hardware.sane = {
+          brscan5 = {
+            enable = true;
+            netDevices = {
+              "mfp-storage-room" = {
+                model = "DCP-L2540DW";
+                nodename = "mfp-storage-room.local";
+              };
             };
           };
         };
-      };
-    })
+      })
+    ]))
   ]);
 }

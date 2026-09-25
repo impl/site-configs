@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2023 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -55,6 +55,7 @@ lib.mkMerge [
 
     fileSystems = lib.genAttrs [ "/" "/home" "/nix" "/snapshots" ] (fileSystem: {
       device = lib.mkDefault "/dev/loop0";
+      fsType = "btrfs";
       options = [ "compress=zstd" ];
     });
 

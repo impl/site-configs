@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -44,6 +44,7 @@ in
     }
     (optionalAttrs (class == "nixos") {
       home.pointerCursor = {
+        enable = true;
         inherit (cfg) package name size;
         x11.enable = true;
       };

@@ -5,7 +5,6 @@
 { config, lib, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.userInteractive.enable {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs30;
     extraPackages = emacsPkgs: with emacsPkgs; [
       company
       company-pollen

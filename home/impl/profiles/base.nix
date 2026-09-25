@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024 Noah Fontes
+# SPDX-FileCopyrightText: 2024-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -22,6 +22,7 @@
     xdg.userDirs = {
       enable = true;
       createDirectories = false;
+      setSessionVariables = true;
     };
 
     systemd.user.startServices = "sd-switch";

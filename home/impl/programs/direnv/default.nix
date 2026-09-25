@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -23,16 +23,19 @@
       export NIX_STORE_DIR="$TMPDIR/nix/store"
       export NIX_STATE_DIR="$TMPDIR/nix/var"
 
+      export NIX_CACHE_HOME="$TMPDIR/var/cache/nix"
+
       mkdir -p "$NIX_CONF_DIR"
       cat >>"$NIX_CONF_DIR/nix.conf" <<EOT
       experimental-features = nix-command flakes
       flake-registry = $registryConf
+      substitute = false
       EOT
 
       for flake in ${./support}/*.nix; do
         mkdir -p "$out/$(basename "$flake" .nix)"
         cp "$flake" "$out/$(basename "$flake" .nix)/flake.nix"
-        nix --offline --extra-experimental-features "nix-command flakes" flake lock "$out/$(basename "$flake" .nix)" --show-trace
+        nix --offline flake lock "$out/$(basename "$flake" .nix)" --show-trace
       done
     '';
   in {

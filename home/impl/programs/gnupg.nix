@@ -20,7 +20,7 @@
     enableExtraSocket = true;
     pinentry.package = with pkgs;
       if machineConfig.profiles.gui.enable
-      then if pkgs.stdenv.hostPlatform.isDarwin then pinentry_mac else pinentry-gtk2
+      then if pkgs.stdenv.hostPlatform.isDarwin then pinentry_mac else pinentry-gnome3
       else pinentry-curses;
   };
 

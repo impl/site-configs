@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -46,7 +46,7 @@ in
       inherit (cfg) enable interfaces;
 
       # We will replace the networks with our own encrypted configurations.
-      userControlled.enable = mkForce false;
+      userControlled = mkForce false;
       networks = mkForce {};
       extraConfig = mkForce "";
     };

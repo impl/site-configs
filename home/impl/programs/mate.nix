@@ -1,20 +1,50 @@
-# SPDX-FileCopyrightText: 2022-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2022-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
 { config, lib, libX, machineConfig, pkgs, ... }: with lib; mkIf machineConfig.profiles.gui.enable {
-  home.packages = with pkgs; mate.basePackages ++
-    mate.extraPackages ++
-    [
-      at-spi2-core
-      dconf
-      desktop-file-utils
-      glib
-      gtk3.out
-      shared-mime-info
-      xdg-user-dirs
-      yelp
-    ];
+  home.packages = with pkgs; [
+    at-spi2-core
+    atril
+    caja-extensions
+    caja-with-extensions
+    dconf
+    desktop-file-utils
+    engrampa
+    eom
+    glib
+    gtk3.out
+    libmatekbd
+    libmatemixer
+    libmateweather
+    marco
+    mate-applets
+    mate-backgrounds
+    mate-calc
+    mate-common
+    mate-control-center
+    mate-desktop
+    mate-icon-theme
+    mate-indicator-applet
+    mate-media
+    mate-menus
+    mate-netbook
+    mate-notification-daemon
+    mate-polkit
+    mate-power-manager
+    mate-screensaver
+    mate-session-manager
+    mate-settings-daemon
+    mate-settings-daemon-wrapped
+    mate-system-monitor
+    mate-themes
+    mate-utils
+    mozo
+    pluma
+    shared-mime-info
+    xdg-user-dirs
+    yelp
+  ];
 
   home.sessionVariables = {
     "CAJA_EXTENSION_DIRS" = "${config.home.profileDirectory}/lib/caja/extensions-2.0";
@@ -61,7 +91,7 @@
       pkgs.xdg-desktop-portal-gtk
     ];
     configPackages = [
-      pkgs.mate.mate-desktop
+      pkgs.mate-desktop
     ];
   };
 
@@ -168,7 +198,7 @@
 
   xsession = {
     windowManager.command = mkForce ''
-      XDG_CURRENT_DESKTOP=MATE XDG_SESSION_DESKTOP=mate ${pkgs.mate.mate-session-manager}/bin/mate-session
+      XDG_CURRENT_DESKTOP=MATE XDG_SESSION_DESKTOP=mate ${pkgs.mate-session-manager}/bin/mate-session
     '';
   };
 }
