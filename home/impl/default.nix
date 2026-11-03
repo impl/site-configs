@@ -7,12 +7,15 @@
     pkgsHome = pkgs.callPackage ./pkgs { };
   };
 
+  disabledModules = [
+    "services/dropbox.nix"
+  ];
+
   imports = [
     ./locations/home
     ./profiles
     ./programs/cachix
     ./programs/direnv
-    ./programs/dropbox
     ./programs/git
     ./programs/vim
     ./programs/zsh
@@ -30,8 +33,10 @@
     ./programs/valgrind.nix
     ./programs/vscode.nix
     ./programs/yubikey-touch-detector.nix
+    ./services/dropbox.nix
     ./theme
   ] ++ optionals (class == "nixos") [
+    ./programs/dropbox
     ./programs/emacs
     ./programs/firefox
     ./programs/xmonad
