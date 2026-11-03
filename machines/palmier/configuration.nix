@@ -69,6 +69,7 @@ lib.mkMerge [
 
     # Enable profiles for this configuration.
     profiles = {
+      bluetooth.enable = true;
       hardware.cpu.amd.enable = true;
       hardware.disk.ssd.enable = true;
       hardware.display.internal.edid =

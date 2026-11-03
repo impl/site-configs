@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2024 Noah Fontes
+# SPDX-FileCopyrightText: 2021-2026 Noah Fontes
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
@@ -26,6 +26,7 @@
     ./sound.nix
     ./user-interactive.nix
   ] ++ optionals (class == "nixos") [
+    ./bluetooth.nix
     ./servers/authoritative-dns.nix
     ./servers/cloudflare.nix
     ./servers/quassel.nix

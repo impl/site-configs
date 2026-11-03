@@ -36,7 +36,6 @@
     ./programs/firefox
     ./programs/xmonad
     ./programs/autorandr.nix
-    ./programs/bambu-studio.nix
     ./programs/flatpak.nix
     ./programs/keepass
     ./programs/mate.nix

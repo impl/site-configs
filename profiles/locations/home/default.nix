@@ -24,6 +24,10 @@ in
           "brscan5-etc-files"
         ];
 
+        services.printing.drivers = [
+          pkgs.brlaser
+        ];
+
         hardware.sane = {
           brscan5 = {
             enable = true;

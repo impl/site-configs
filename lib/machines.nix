@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 
-{ self, inputs, lib, overlaysDir, pkgsDir, profilesDir, ... }:
+{ self, inputs, lib, pkgsDir, profilesDir, ... }:
 let
   enhanceMachine = { class, check ? true }: machine@{ modules, specialArgs ? { }, ... }:
     machine // {
@@ -21,21 +21,19 @@ let
     };
 in
 {
-  mkSystem = nixpkgs: builder: machine: (builder machine).extendModules {
+  mkSystem = builder: machine: (builder machine).extendModules {
+    specialArgs = {
+      libX = self;
+      libSops = inputs.nix-sops.lib;
+      libDNS = inputs.dns.lib;
+    };
+
     modules = [
-      {
-        nixpkgs.overlays = [
-          (import "${overlaysDir}/${nixpkgs.lib.trivial.release}")
-        ];
-        nix.registry.nixpkgs.flake = nixpkgs;
-      }
+      self.configs.shared
       profilesDir
       ({ pkgs, ... }: {
         _module = {
           args = {
-            libX = self;
-            libSops = inputs.nix-sops.lib;
-            libDNS = inputs.dns.lib;
             pkgsNUR = import inputs.nur {
               nurpkgs = pkgs;
               inherit pkgs;
@@ -63,7 +61,7 @@ in
           ];
         };
     in
-    self.machines.mkSystem nixpkgs builder;
+    self.machines.mkSystem builder;
 
   mkDarwinSystem = nix-darwin:
     let
@@ -81,7 +79,7 @@ in
         in
         mkExtensible cfg;
     in
-    self.machines.mkSystem nix-darwin.inputs.nixpkgs builder;
+    self.machines.mkSystem builder;
 
   mkMachineConfiguration = eval: eval {
     nixos_unstable = self.machines.mkNixosSystem inputs.nixpkgs;

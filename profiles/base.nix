@@ -21,6 +21,18 @@ in
 
   config = mkMerge [
     {
+      # This bans the unfiltered version of cacert from showing up in
+      # derivations used by the system at runtime. (Not caught:
+      # physical copies of the CA bundle at build time, sadly.)
+      system.forbiddenDependenciesRegexes =
+        map
+          (output:
+            "-${lib.escapeRegex pkgs.cacert-unfiltered.name}"
+            + lib.optionalString (output != "out") "-${lib.escapeRegex output}"
+            + "$"
+          )
+          pkgs.cacert-unfiltered.outputs;
+
       # Nix (for Flakes support, required).
       nix = {
         enable = true;
